@@ -1,1 +1,1 @@
-# asset-allocation
+# asset-allocation-for-dummies
