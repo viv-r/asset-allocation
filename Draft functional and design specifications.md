@@ -23,7 +23,7 @@
        - Constructs a query to fetch the required data.
      - Inputs: Fields to fetch from the data (time period, stock/bond name, etc.)
      - Outputs: Rows from the DB
-   ### A function to plot Risk/Reward graph:
+   ### A function calculate Risk/Reward values:
      - Description:
         - Call the data loader component.
         - Calculates the output.
@@ -45,9 +45,7 @@ Time-series / probabilistic model. Say you want to invest for a 20-year timeline
 
 Investment companies always tell us "past performance is no guarantee of future results". Can we quantify how uncertain it is?
 
-# FUNCTIONS / USE CASES
-
-## 0. Allows the user to see the risk vs reward values for a combination of risk measure, allocation strategy and time period
+# Use cases
 
 ## 1. Deciding on acceptable level of risk for a given measure
 
