@@ -2,13 +2,21 @@
 
 ## Database containing data of stock, bonds, inflation and other market data sources.
 ## Frontend components:
-    ### Inputs:
+   ### Inputs:
         - Risk measure selection.
         - Asset alloction model selection (list of portfolios)
         - Time period selection.
-    ### Graphs
+   ### Graphs
         - Plot of risk vs reward.
 ## Backend components:
+   ### Data processing and setup:
+     - Description:
+       - Populates the DB with data from multiple CSV files.
+       - Pre-processing and cleaning the raw data.
+     - Inputs:
+       - CSV files
+     - Outpus:
+       - None
    ### Data loader:
      - Description:
        - Opens a connection to the database.
