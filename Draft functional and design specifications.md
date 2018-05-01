@@ -1,5 +1,16 @@
 # COMPONENTS
 
+## Database containing data of stock, bonds, inflation and other market data sources.
+## Frontend components:
+   - Inputs:
+     - Risk measure selection.
+     - Asset alloction model selection (list of portfolios)
+     - Time period selection.
+   - Outputs:
+     - Graph, plotting risk vs reward.
+## Backend components:
+
+
 ## 1. Risk-reward tradeoff analysis
 
 Compare levels of risk and reward in different portfolios. Allow user to select various time horizons and measures of risk.
@@ -16,6 +27,8 @@ Time-series / probabilistic model. Say you want to invest for a 20-year timeline
 Investment companies always tell us "past performance is no guarantee of future results". Can we quantify how uncertain it is?
 
 # FUNCTIONS / USE CASES
+
+## 0. Allows the user to see the risk vs reward values for a combination of risk measure, allocation strategy and time period
 
 ## 1. Deciding on acceptable level of risk for a given measure
 
