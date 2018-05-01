@@ -20,7 +20,7 @@
         - Call the data loader component.
         - Calculates the output.
      - Inputs: the user selection from the frontend
-     - Call the data loader component.
+     - Outputs: List of data points to be plotted.
 
 ## 1. Risk-reward tradeoff analysis
 
