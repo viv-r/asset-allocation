@@ -2,14 +2,25 @@
 
 ## Database containing data of stock, bonds, inflation and other market data sources.
 ## Frontend components:
-   - Inputs:
-     - Risk measure selection.
-     - Asset alloction model selection (list of portfolios)
-     - Time period selection.
-   - Outputs:
-     - Graph, plotting risk vs reward.
+    ### Inputs:
+        - Risk measure selection.
+        - Asset alloction model selection (list of portfolios)
+        - Time period selection.
+    ### Graphs
+        - Plot of risk vs reward.
 ## Backend components:
-
+   ### Data loader:
+     - Description:
+       - Opens a connection to the database.
+       - Constructs a query to fetch the required data.
+     - Inputs: Fields to fetch from the data (time period, stock/bond name, etc.)
+     - Outputs: Rows from the DB
+   ### A function to plot Risk/Reward graph:
+     - Description:
+        - Call the data loader component.
+        - Calculates the output.
+     - Inputs: the user selection from the frontend
+     - Call the data loader component.
 
 ## 1. Risk-reward tradeoff analysis
 
