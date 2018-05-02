@@ -2,10 +2,12 @@
 
 ## Database containing data of stock, bonds, inflation and other market data sources.
 ## Frontend components:
-   ### Inputs:
-        - Risk measure selection.
-        - Asset allocation model selection (list of portfolios)
-        - Time period selection.
+   Short descriptions of what each risk measure does
+   List of portfolios to display on the graph
+   ### Input components:
+        - Risk measure selection dropdown menu
+        - Check boxes to allow selection of multiple portfolios
+        - Time period selection (possibly as a slider on graph)
    ### Graphs
         - Plot of risk vs reward.
 ## Backend components:
