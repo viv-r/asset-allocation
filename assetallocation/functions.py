@@ -35,8 +35,8 @@ def calc_return(data, start, end, kind='percent'):
     Allows for either percentage rate or log growth.
     INPUTS: start, end = datetimes; data = data frame of investment values
     """
-    startval = data.loc[start]
-    endval = data.loc[end]
+    startval = data.loc[start][0]
+    endval = data.loc[end][0]
     if kind == 'percent':
         return endval / startval - 1
     elif kind == 'log':
@@ -117,7 +117,7 @@ def track_portfolio(percent, rebal_time, start, end):
     start, end = start and end dates to compute values
     """
     assert np.isclose(sum(p[1] for p in percent), 1)
-    #assert len(percent) == len(set(p[0] for p in percent))
+    # assert len(percent) == len(set(p[0] for p in percent))
     portfolio_value = {}
     shares = [(k, 100 * v / (k.loc[start][0])) for k, v in percent]
     # Standardize to value of 100 starting out
@@ -141,7 +141,7 @@ def track_portfolio(percent, rebal_time, start, end):
     return pd.DataFrame.from_dict(portfolio_value, orient='index')
 
 
-def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -169,7 +169,7 @@ def get_risk_return(portfolios, start, end, return_type='percent', risk_type='st
     return pd.DataFrame({'Risk': x, 'Return': y})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
     """
     INPUTS:
     labels = how we want the portfolios described/labeled in the graph
@@ -182,7 +182,7 @@ def label_risk_return(labels, portfolios, start, end, return_type='percent', ris
     return df
 
 
-def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
     """
     INPUTS:
     see get_risk_return

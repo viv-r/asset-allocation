@@ -7,15 +7,8 @@ from datetime import date
 app = dash.Dash()
 
 
-def getData():
-    sp = functions.invest_dataframe('./data/SP500.csv')
-    ru2 = functions.invest_dataframe('./data/RU200TR.csv')
-    ru3 = functions.invest_dataframe('./data/RU300TR.csv')
-    a = functions.track_portfolio(
-        [(sp, 0.4), (ru2, 0.3), (ru3, 0.3)], date('1990'), date('2000'))
-
-
-getData()
+data = getOutput()
+print(data.head())
 
 x, y = [], []
 app.layout = html.Div(children=[
