@@ -23,3 +23,8 @@ s4b6 = gen_allocation(stock, bond, .4)
 s3b7 = gen_allocation(stock, bond, .3)
 s2b8 = gen_allocation(stock, bond, .2)
 s1b9 = gen_allocation(stock, bond, .1)
+
+labels = [str(x/10.) + " stocks " + str(1 - x/10.) + " bonds"  for x in range(1, 10)]
+
+label_risk_return(labels=[], 
+	portfolios=[s9b1, s8b2, s7b3, s6b4, s5b5, s4b6, s3b7, s2b8, s1b9])
