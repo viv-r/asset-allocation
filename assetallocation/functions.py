@@ -119,24 +119,25 @@ def track_portfolio(percent, rebal_time, start, end):
     assert np.isclose(sum(p[1] for p in percent), 1)
     #assert len(percent) == len(set(p[0] for p in percent))
     portfolio_value = {}
-    shares = [(k, 100*v / (k.loc[start][0])) for k, v in percent]
-    #Standardize to value of 100 starting out
+    shares = [(k, 100 * v / (k.loc[start][0])) for k, v in percent]
+    # Standardize to value of 100 starting out
     day = start
     rebal = 0
     # Probably want to change this to an operation on entire DataFrames for time periods between rebalances
     while day < end:
         # Need to get around missing days for now
         try:
-            portfolio_value[day] = sum(s*k.loc[day][0] for k, s in shares)
+            portfolio_value[day] = sum(s * k.loc[day][0] for k, s in shares)
             if rebal >= rebal_time:
-                shares = [(k, portfolio_value[day]*v / (k.loc[day][0])) for k, v in percent]
+                shares = [(k, portfolio_value[day] * v / (k.loc[day][0]))
+                          for k, v in percent]
                 rebal = 0
         except KeyError:
             pass
         day += timedelta(days=1)
         rebal += 1
-    #Need to add extra dates
-    #Need to add DateTimeIndex
+    # Need to add extra dates
+    # Need to add DateTimeIndex
     return pd.DataFrame.from_dict(portfolio_value, orient='index')
 
 
@@ -163,7 +164,8 @@ def get_risk_return(portfolios, start, end, return_type='percent', risk_type='st
         y = [calc_risk_proba(p, start, end, rate=rate, period=period, freq=freq, kind=kind)
              for p in portfolios]
     else:
-        raise "Risk type must be stddev or proba." #This will change as we add more risk measures.
+        # This will change as we add more risk measures.
+        raise "Risk type must be stddev or proba."
     return pd.DataFrame({'Risk': x, 'Return': y})
 
 
@@ -173,7 +175,8 @@ def label_risk_return(labels, portfolios, start, end, return_type='percent', ris
     labels = how we want the portfolios described/labeled in the graph
     others = see get_risk_return
     """
-    df = get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None)
+    df = get_risk_return(portfolios, start, end, return_type='percent',
+                         risk_type='stddev', period=365, freq=None, rate=None)
     assert len(labels) == len(df)
     df['Label'] = labels
     return df
@@ -184,8 +187,9 @@ def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='s
     INPUTS:
     see get_risk_return
     """
-    df = get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None)
+    df = get_risk_return(portfolios, start, end, return_type='percent',
+                         risk_type='stddev', period=365, freq=None, rate=None)
     plt.scatter(['Risk', 'Return'], data=df)
-    plt.xlabel("Total %s return over given time period") %(return_type)
+    plt.xlabel("Total %s return over given time period") % (return_type)
     plt.ylabel("Risk over given time period")
     plt.show()
