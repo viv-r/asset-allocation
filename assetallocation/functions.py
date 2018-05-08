@@ -34,8 +34,8 @@ def calc_return(data, start, end, kind='percent'):
     Allows for either percentage rate or log growth.
     INPUTS: start, end = datetimes; data = data frame of investment values
     """
-    startval = data.loc[start]
-    endval = data.loc[end]
+    startval = data.loc[start][0]
+    endval = data.loc[end][0]
     if kind == 'percent':
         return endval/startval - 1
     elif kind == 'log':
@@ -119,7 +119,7 @@ def track_portfolio(percent, rebal_time, start, end):
     day = start
     rebal = 0
     #Probably want to change this to an operation on entire DataFrames for time periods between rebalances
-    while day < end:
+    while day <= end:
         #Need to get around missing days for now
         try:
             portfolio_value[day] = sum(s*k.loc[day][0] for k, s in shares)
@@ -135,7 +135,7 @@ def track_portfolio(percent, rebal_time, start, end):
     return pd.DataFrame.from_dict(portfolio_value, orient='index')
 
 
-def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -159,22 +159,22 @@ def get_risk_return(portfolios, start, end, return_type='percent', risk_type='st
             for p in portfolios]
     else:
         raise "Risk type must be stddev or proba." #This will change as we add more risk measures.
-    return pd.DataFrame({'Risk': x, 'Return': y})
+    return pd.DataFrame({'Risk': y, 'Return': x})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
     """
     INPUTS:
     labels = how we want the portfolios described/labeled in the graph
     others = see get_risk_return
     """
-    df = get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None)
+    df = get_risk_return(portfolios, start, end, return_type, risk_type, period, freq, rate, kind)
     assert len(labels) == len(df)
     df['Label'] = labels
     return df
 
 
-def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
     """
     INPUTS:
     see get_risk_return
