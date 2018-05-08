@@ -31,5 +31,5 @@ s1b9 = gen_allocation(stock, bond, .1)
 
 labels = [str(x) + "%% stocks " + str(100-x) + "%% bonds"  for x in range(10, 100, 10)]
 
-label_risk_return(labels=labels, 
+functions.label_risk_return(labels=labels, 
 	portfolios=[s9b1, s8b2, s7b3, s6b4, s5b5, s4b6, s3b7, s2b8, s1b9])
