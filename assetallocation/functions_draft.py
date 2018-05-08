@@ -128,14 +128,14 @@ def track_portfolio(percent, rebal_time, start, end):
                 portfolio_value[day] = sum(v * k.loc[day] for k in percent.keys())
         except KeyError:
             pass
-        day += 1
+        day += timedelta(days=1)
         rebal += 1
     #Need to add extra dates
     #Need to add DateTimeIndex
     return pd.DataFrame(portfolio_value)
 
 
-def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -159,7 +159,28 @@ def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='s
             for p in portfolios]
     else:
         raise "Risk type must be stddev or proba." #This will change as we add more risk measures.
-    plt.scatter(x, y)
+    return pd.DataFrame({'Risk': x, 'Return': y})
+
+
+def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+    """
+    INPUTS:
+    labels = how we want the portfolios described/labeled in the graph
+    others = see get_risk_return
+    """
+    df = get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None)
+    assert len(labels) = len(df)
+    df['Label'] = labels
+    return df
+
+
+def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+    """
+    INPUTS:
+    see get_risk_return
+    """
+    df = get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None)
+    plt.scatter(['Risk', 'Return'], data=df)
     plt.xlabel("Total %s return over given time period") %(return_type)
     plt.ylabel("Risk over given time period")
-    #Need to label points with name of dataframe
+    plt.show()
