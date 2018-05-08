@@ -64,7 +64,7 @@ def return_list(data, start, end, period=365, freq=1, kind='percent'):
     rates = []
     #Can't use "range" with dates instead of integers so using a while loop for now
     day = start
-    while day < end:
+    while day <= end - timedelta(days=period):
         try:
             rates.append(calc_return(data, day, day + timedelta(days=period), kind=kind))
             day += timedelta(days=freq)
