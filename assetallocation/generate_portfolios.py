@@ -1,3 +1,8 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import date, timedelta
+
 import functions
 
 stock = functions.invest_dataframe('Data/SP500.csv')
