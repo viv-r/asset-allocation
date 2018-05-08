@@ -5,6 +5,7 @@ from datetime import date, timedelta
 
 # Basic functions for asset allocation tool
 
+
 def invest_dataframe(filename, sep=','):
     """
     Loads a data set containing an investment (stock or bond index).
@@ -14,18 +15,18 @@ def invest_dataframe(filename, sep=','):
     INPUT: filename = name of CSV file, sep = separator in CSV file
     """
     data = pd.read_csv(filename, sep=sep, index_col=0,
-        parse_dates=[0], infer_datetime_format=True)
-    #Get rid of misisng and non-numeric values
+                       parse_dates=[0], infer_datetime_format=True)
+    # Get rid of misisng and non-numeric values
     data = data.apply(pd.to_numeric, errors='coerce').dropna()
     assert data.shape[1] == 1
     assert type(data.index) == pd.core.indexes.datetimes.DatetimeIndex
     assert data.index.nunique() == len(data)
-    #Need to fill missing dates with most recent value
+    # Need to fill missing dates with most recent value
 
     return data
 
 
-#May want a function to convert data frame to dictionary
+# May want a function to convert data frame to dictionary
 
 
 def calc_return(data, start, end, kind='percent'):
@@ -37,7 +38,7 @@ def calc_return(data, start, end, kind='percent'):
     startval = data.loc[start]
     endval = data.loc[end]
     if kind == 'percent':
-        return endval/startval - 1
+        return endval / startval - 1
     elif kind == 'log':
         return np.log(endval) - np.log(startval)
     else:
@@ -46,9 +47,11 @@ def calc_return(data, start, end, kind='percent'):
 
 def annualized_return(data, start, end, kind='percent'):
     pass
-    #Write later
+    # Write later
 
-#We will want to cache this
+# We will want to cache this
+
+
 def return_list(data, start, end, period=365, freq=1, kind='percent'):
     """
     Calculates a list of rates of return over a range of time.
@@ -62,14 +65,16 @@ def return_list(data, start, end, period=365, freq=1, kind='percent'):
     Ignores partial periods at the end when freq > 1 day.
     """
     rates = []
-    #Can't use "range" with dates instead of integers so using a while loop for now
+    # Can't use "range" with dates instead of integers so using a while loop for now
     day = start
     while day < end:
         try:
-            rates.append(calc_return(data, day, day + timedelta(days=period), kind=kind))
+            rates.append(calc_return(data, day, day +
+                                     timedelta(days=period), kind=kind))
             day += timedelta(days=freq)
         except KeyError:
-            day += timedelta(days=1) #Lazy - this will shift all the future dates too, but can fix
+            # Lazy - this will shift all the future dates too, but can fix
+            day += timedelta(days=1)
     return np.array(rates)
 
 
@@ -81,9 +86,9 @@ def calc_risk_stddev(data, start, end, period=365, kind='percent'):
         Example: yearly return = 365
     kind = measure of return (percent or log)
     """
-    return np.std(return_list(data, start, end, period, 
-        freq=period, kind=kind))
-    #Requires frequency and period to be the same...is this correct?
+    return np.std(return_list(data, start, end, period,
+                              freq=period, kind=kind))
+    # Requires frequency and period to be the same...is this correct?
 
 
 def calc_risk_proba(data, start, end, rate=0, period=365, freq=1, kind='percent'):
@@ -93,15 +98,15 @@ def calc_risk_proba(data, start, end, rate=0, period=365, freq=1, kind='percent'
     period = # of days over which to calculate rate of return
         Example: yearly return = 365
     freq = how often to sample
-        Example: calculate return every day = 1, once a year = 365  
+        Example: calculate return every day = 1, once a year = 365
     rate = threshold rate of return
     kind = measure of return (percent or log)
     """
-    return np.mean(return_list(data, start, end, period, 
-        freq, kind) < rate)
+    return np.mean(return_list(data, start, end, period,
+                               freq, kind) < rate)
 
 
-#We will want to cache this
+# We will want to cache this
 def track_portfolio(percent, rebal_time, start, end):
     """
     Computes values of a portfolio with given percentages of certain indices.
@@ -114,24 +119,25 @@ def track_portfolio(percent, rebal_time, start, end):
     assert np.isclose(sum(percent.values()), 1)
     portfolio_value = {}
     shares = {}
-    #Standardize to value of 100 starting out
+    # Standardize to value of 100 starting out
     day = start
     rebal = 0
-    #Probably want to change this to an operation on entire DataFrames for time periods between rebalances
+    # Probably want to change this to an operation on entire DataFrames for time periods between rebalances
     while day < end:
-        #Need to get around missing days for now
+        # Need to get around missing days for now
         try:
             for k, v in enumerate(percent):
                 if rebal == rebal_time:
-                    shares[k] = k.loc[day] / (v*100)
+                    shares[k] = k.loc[day] / (v * 100)
                     rebal = 0
-                portfolio_value[day] = sum(v * k.loc[day] for k in percent.keys())
+                portfolio_value[day] = sum(v * k.loc[day]
+                                           for k in percent.keys())
         except KeyError:
             pass
         day += 1
         rebal += 1
-    #Need to add extra dates
-    #Need to add DateTimeIndex
+    # Need to add extra dates
+    # Need to add DateTimeIndex
     return pd.DataFrame(portfolio_value)
 
 
@@ -148,18 +154,19 @@ def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='s
     """
     x = [calc_return(p, start, end, kind) for p in portfolios]
     if risk_type == 'stddev':
-        y = [calc_risk_stddev(p, start, end, period=period, kind=kind) 
-            for p in portfolios]
+        y = [calc_risk_stddev(p, start, end, period=period, kind=kind)
+             for p in portfolios]
     elif risk_type == 'proba':
         if freq == 'None' or rate == 'None':
             raise "You must specify freq and rate for probability risk measure."
         else:
             pass
-        y = [calc_risk_proba(p, start, end, rate=rate, period=period, freq=freq, kind=kind) 
-            for p in portfolios]
+        y = [calc_risk_proba(p, start, end, rate=rate, period=period, freq=freq, kind=kind)
+             for p in portfolios]
     else:
-        raise "Risk type must be stddev or proba." #This will change as we add more risk measures.
+        # This will change as we add more risk measures.
+        raise "Risk type must be stddev or proba."
     plt.scatter(x, y)
-    plt.xlabel("Total %s return over given time period") %(return_type)
+    plt.xlabel("Total %s return over given time period") % (return_type)
     plt.ylabel("Risk over given time period")
-    #Need to label points with name of dataframe
+    # Need to label points with name of dataframe
