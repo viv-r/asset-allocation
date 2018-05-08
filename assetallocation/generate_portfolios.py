@@ -1,7 +1,12 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import date, timedelta
+
 import functions
 
-stock = invest_dataframe('Data/SP500.csv')
-bond = invest_dataframe('Data/BAMLCC0A1AAATRIV.csv')
+stock = functions.invest_dataframe('Data/SP500.csv')
+bond = functions.invest_dataframe('Data/BAMLCC0A1AAATRIV.csv')
 
 """Generate portfolios ranging from 10-90% stocks with the remainder in bonds.
 4-year time horizon (2014-18), rebalance every 90 days."""
@@ -13,7 +18,7 @@ b = date(2018, 1, 3)
 def gen_allocation(stock, bond, stockshare, start=a, end=b, rebal_time=90):
     assert stockshare >= 0 and stockshare <= 1
     alloc = [(stock, stockshare), (bond, 1 - stockshare)]
-    return track_portfolio(alloc, rebal_time, a, b)
+    return functions.track_portfolio(alloc, rebal_time, a, b)
 
 
 s9b1 = gen_allocation(stock, bond, .9)
