@@ -39,3 +39,6 @@ def getOutput():
                                                      s5b5, s4b6, s3b7, s2b8, s1b9],
                                          start=a, end=b)
     return output
+
+
+getOutput()

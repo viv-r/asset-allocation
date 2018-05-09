@@ -124,7 +124,7 @@ def track_portfolio(percent, rebal_time, start, end):
     day = start
     rebal = 0
     # Probably want to change this to an operation on entire DataFrames for time periods between rebalances
-    while day < end:
+    while day <= end:
         # Need to get around missing days for now
         try:
             portfolio_value[day] = sum(s * k.loc[day][0] for k, s in shares)
