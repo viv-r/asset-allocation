@@ -15,9 +15,9 @@ a = date(2014, 1, 2)
 b = date(2018, 1, 3)
 
 def gen_allocation(stock, bond, stockshare, start=a, end=b, rebal_time=90):
-	assert stockshare >= 0 and stockshare <= 1
-	alloc = [(stock, stockshare), (bond, 1 - stockshare)]
-	return functions.track_portfolio(alloc, rebal_time, a, b)
+    assert stockshare >= 0 and stockshare <= 1
+    alloc = [(stock, stockshare), (bond, 1 - stockshare)]
+    return functions.track_portfolio(alloc, rebal_time, a, b)
 
 s9b1 = gen_allocation(stock, bond, .9)
 s8b2 = gen_allocation(stock, bond, .8)
@@ -32,5 +32,5 @@ s1b9 = gen_allocation(stock, bond, .1)
 labels = [str(100-x) + "% stocks " + str(x) + "% bonds"  for x in range(10, 100, 10)]
 
 output = functions.label_risk_return(labels=labels, 
-	portfolios=[s9b1, s8b2, s7b3, s6b4, s5b5, s4b6, s3b7, s2b8, s1b9],
-	start=a, end=b)
+    portfolios=[s9b1, s8b2, s7b3, s6b4, s5b5, s4b6, s3b7, s2b8, s1b9],
+    start=a, end=b)
