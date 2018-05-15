@@ -148,7 +148,7 @@ def get_risk_return(portfolios, start, end, return_type='percent', risk_type='st
     return_type = percent or log
     risk_type = stddev or proba
     """
-    x = [calc_return(p, start, end, kind) for p in portfolios]
+    x = [calc_return(p, start, end, kind=return_type) for p in portfolios]
     if risk_type == 'stddev':
         y = [calc_risk_stddev(p, start, end, period=period, kind=return_type)
              for p in portfolios]
