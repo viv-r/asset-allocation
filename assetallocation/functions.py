@@ -123,8 +123,7 @@ def track_portfolio(initial, percent, rebal_time, start, end):
         portfolio = pd.concat([portfolio, share_growth(shares, rebal_day + timedelta(days=1),
                         min(end, rebal_day + timedelta(days=rebal_time)))])
     return pd.DataFrame(portfolio, columns=['Value'])
-        
-    
+   
 
 #Track portfolio for unchanging number of shares, no rebalancing
 def share_growth(shares, start, end):
@@ -137,7 +136,7 @@ def share_growth(shares, start, end):
     return sum(s*k.loc[start:end].iloc[:, 0] for k, s in shares)
 
 
-def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
+def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -150,14 +149,14 @@ def get_risk_return(portfolios, start, end, return_type='percent', risk_type='st
     """
     x = [calc_return(p, start, end, kind) for p in portfolios]
     if risk_type == 'stddev':
-        y = [calc_risk_stddev(p, start, end, period=period, kind=kind) 
+        y = [calc_risk_stddev(p, start, end, period=period, kind=return_type) 
             for p in portfolios]
     elif risk_type == 'proba':
         if freq == 'None' or rate == 'None':
             raise Exception("You must specify freq and rate for probability risk measure.")
         else:
             pass
-        y = [calc_risk_proba(p, start, end, rate=rate, period=period, freq=freq, kind=kind) 
+        y = [calc_risk_proba(p, start, end, rate=rate, period=period, freq=freq, kind=return_type) 
             for p in portfolios]
     else:
         raise Exception("Risk type must be stddev or proba.") #This will change as we add more risk measures.
@@ -181,7 +180,8 @@ def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='s
     INPUTS:
     see get_risk_return
     """
-    df = get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None)
+    df = get_risk_return(portfolios, start, end, return_type='percent', 
+        risk_type='stddev', period=365, freq=None, rate=None)
     plt.scatter(['Risk', 'Return'], data=df)
     plt.xlabel("Total %s return over given time period") %(return_type)
     plt.ylabel("Risk over given time period")
