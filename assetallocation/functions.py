@@ -163,7 +163,7 @@ def get_risk_return(portfolios, start, end, return_type='percent', risk_type='st
     return pd.DataFrame({'Risk': y, 'Return': x})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
+def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     labels = how we want the portfolios described/labeled in the graph
@@ -175,7 +175,7 @@ def label_risk_return(labels, portfolios, start, end, return_type='percent', ris
     return df
 
 
-def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None, kind='percent'):
+def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     see get_risk_return
