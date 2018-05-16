@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from datetime import date, timedelta
 
 # Basic functions for asset allocation tool
@@ -178,14 +178,14 @@ def label_risk_return(labels, portfolios, start, end, return_type='percent', ris
     return df
 
 
-def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
-    """
-    INPUTS:
-    see get_risk_return
-    """
-    df = get_risk_return(portfolios, start, end, return_type='percent',
-                         risk_type='stddev', period=365, freq=None, rate=None)
-    plt.scatter(['Risk', 'Return'], data=df)
-    plt.xlabel("Total %s return over given time period") % (return_type)
-    plt.ylabel("Risk over given time period")
-    plt.show()
+# def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+#     """
+#     INPUTS:
+#     see get_risk_return
+#     """
+#     df = get_risk_return(portfolios, start, end, return_type='percent',
+#                          risk_type='stddev', period=365, freq=None, rate=None)
+#     plt.scatter(['Risk', 'Return'], data=df)
+#     plt.xlabel("Total %s return over given time period") % (return_type)
+#     plt.ylabel("Risk over given time period")
+#     plt.show()

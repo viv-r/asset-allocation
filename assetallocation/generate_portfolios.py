@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from assetallocation import functions
+import functions
 import pandas as pd
 
 
