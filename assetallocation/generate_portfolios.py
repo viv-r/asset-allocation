@@ -1,16 +1,18 @@
 from datetime import date, timedelta
 import functions
+import pandas as pd
 
 
-def get_graph_data(from_year=2013, to_year=2018):
+def get_graph_data(from_year=2014, to_year=2018):
     """Generate portfolios ranging from 10-90% stocks with the remainder in bonds.
     4-year time horizon (2014-18), rebalance every 90 days."""
 
     stock = functions.invest_dataframe('../Data/SP500.csv')
     bond = functions.invest_dataframe('../Data/BAMLCC0A1AAATRIV.csv')
 
-    a = date(from_year, 1, 2)
-    b = date(to_year, 1, 3)
+    a = pd.Timestamp(str(from_year) + '-01-02 00:00:00', tz=None)
+    b = pd.Timestamp(str(to_year) + '-01-03 00:00:00', tz=None)
+    print(from_year, to_year)
 
     def gen_allocation(stock, bond, stockshare, start=a, end=b, rebal_time=90):
         assert stockshare >= 0 and stockshare <= 1

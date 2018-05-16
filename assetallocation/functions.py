@@ -119,6 +119,7 @@ def track_portfolio(initial, percent, rebal_time, start, end):
     portfolio = pd.Series()
     portfolio[start] = initial
     for rebal_day in pd.date_range(start, end, freq=timedelta(days=rebal_time)):
+
         value = portfolio[rebal_day]
         shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
         portfolio = pd.concat([portfolio, share_growth(shares, rebal_day + timedelta(days=1),
