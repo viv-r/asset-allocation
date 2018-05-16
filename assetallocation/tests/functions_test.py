@@ -14,8 +14,6 @@ Exceptions:
 import unittest
 from assetallocation import generate_portfolios
 
-print('asdf')
-
 
 class UnitTests(unittest.TestCase):
     def test_check_key(self):
