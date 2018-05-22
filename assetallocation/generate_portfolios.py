@@ -1,6 +1,6 @@
 from datetime import date, timedelta
-import functions
 import pandas as pd
+from assetallocation import functions
 
 
 def get_graph_data(from_year=2014, to_year=2018):

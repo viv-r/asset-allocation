@@ -38,8 +38,8 @@ def calc_return(data, start, end, kind='percent', annualize=False):
     INPUTS: start, end = datetimes; data = data frame of investment values
     Annualize = whether to return annualized return instead of total return
     """
-    startval = data.loc[start][0]
-    endval = data.loc[end][0]
+    startval = float(data.loc[start][0])
+    endval = float(data.loc[end][0])
     # Divisor = number of years if annualized return, else 1
     if annualize:
         div = (end - start) / timedelta(days=365.2425)
