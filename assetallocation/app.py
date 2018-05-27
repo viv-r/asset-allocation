@@ -58,7 +58,9 @@ cached_readme = requests.get('https://raw.githubusercontent.com/viv-r/asset-allo
 @app.callback(Output('tab-output', 'children'), [Input('tabs', 'value')])
 def display_content(value):
     if value == 1:
-        return dcc.Markdown(cached_readme)
+        return dcc.Markdown('''*_Note: This file is pulled directly from github.
+        One README.md is updated, change this location to point to it._*\n\n'''
+                            + cached_readme)
     elif value == 2:
         return html.Div(children=[
             riskreturn_graph.get_component(*get_graph_data()),
