@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output
 from generate_portfolios import get_graph_data
 from frontend import timeperiod_input
 from frontend import riskreturn_graph
+from frontend import datasets
 
 app = dash.Dash()
 app.config['suppress_callback_exceptions'] = True
@@ -63,6 +64,15 @@ def display_content(value):
             riskreturn_graph.get_component(*get_graph_data()),
             timeperiod_input.get_component()
         ])
+    elif value == 3:
+        return datasets.get_component()
+
+
+@app.callback(
+    dash.dependencies.Output('datasets-container', 'children'),
+    [dash.dependencies.Input('datasets-dropdown', 'value')])
+def update_output(value):
+    return datasets.update_graph(value)
 
 
 if __name__ == '__main__':
