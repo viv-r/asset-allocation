@@ -31,7 +31,7 @@ def invest_dataframe(filename, sep=','):
     return data
 
 
-def calc_return(data, start, end, kind='percent', annualize=False):
+def calc_return(data, start, end, return_type='percent', annualize=False):
     """
     Calculates rate of return on a data set between two dates.
     Allows for either percentage rate or log growth.
@@ -46,10 +46,10 @@ def calc_return(data, start, end, kind='percent', annualize=False):
     else:
         div = 1
     # Calculate percentage or log return
-    if kind == 'percent':
+    if return_type == 'percent':
         total = endval / startval
         return total**(1 / div) - 1
-    elif kind == 'log':
+    elif return_type == 'log':
         total = np.log(endval) - np.log(startval)
         return total / div
     else:
@@ -57,7 +57,7 @@ def calc_return(data, start, end, kind='percent', annualize=False):
 
 
 # We will want to cache this
-def return_list(data, start, end, period=365, freq=1, kind='percent'):
+def return_list(data, start, end, period=365, freq=1, return_type='percent'):
     """
     Calculates a list of rates of return over a range of time.
     INPUTS:
@@ -66,29 +66,29 @@ def return_list(data, start, end, period=365, freq=1, kind='percent'):
         Example: yearly return = 365
     freq = how often to sample
         Example: calculate return every day = 1, once a year = 365
-    kind = measure of return (percent or log)
+    return_type = measure of return (percent or log)
     Ignores partial periods at the end when freq > 1 day.
     """
     # Use date_range
-    return np.array([calc_return(data, day, day + timedelta(days=period), kind=kind)
+    return np.array([calc_return(data, day, day + timedelta(days=period), return_type=return_type)
                      for day in pd.date_range(start, end - timedelta(days=period),
                                               freq=timedelta(days=freq))])
 
 
-def calc_risk_stddev(data, start, end, period=365, kind='percent'):
+def calc_risk_stddev(data, start, end, period=365, return_type='percent'):
     """
     Risk measure: standard deviation of rate of return.
     INPUTS:
     period = # of days over which to calculate rate of return
         Example: yearly return = 365
-    kind = measure of return (percent or log)
+    return_type = measure of return (percent or log)
     """
     return np.std(return_list(data, start, end, period,
-                              freq=period, kind=kind))
+                              freq=period, return_type=return_type))
     # Requires frequency and period to be the same...is this correct?
 
 
-def calc_risk_proba(data, start, end, rate=0, period=365, freq=1, kind='percent'):
+def calc_risk_proba(data, start, end, rate=0, period=365, freq=1, return_type='percent'):
     """
     Risk measure: historical probability of return below a certain value.
     INPUTS:
@@ -97,10 +97,10 @@ def calc_risk_proba(data, start, end, rate=0, period=365, freq=1, kind='percent'
     freq = how often to sample
         Example: calculate return every day = 1, once a year = 365
     rate = threshold rate of return
-    kind = measure of return (percent or log)
+    return_type = measure of return (percent or log)
     """
     return np.mean(return_list(data, start, end, period,
-                               freq, kind) < rate)
+                               freq, return_type) < rate)
 
 
 # Refactored track_portfolio - we will want to cache this
@@ -138,7 +138,8 @@ def share_growth(shares, start, end):
     return sum(s * k.loc[start:end].iloc[:, 0] for k, s in shares)
 
 
-def get_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def get_risk_return(portfolios, start, end, return_type='percent', 
+    risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -149,23 +150,24 @@ def get_risk_return(portfolios, start, end, return_type='percent', risk_type='st
     return_type = percent or log
     risk_type = stddev or proba
     """
-    x = [calc_return(p, start, end, kind=return_type) for p in portfolios]
+    x = [calc_return(p, start, end, return_type=return_type) for p in portfolios]
     if risk_type == 'stddev':
-        y = [calc_risk_stddev(p, start, end, period=period, kind=return_type)
+        y = [calc_risk_stddev(p, start, end, period=period, return_type=return_type)
              for p in portfolios]
     elif risk_type == 'proba':
         if freq == 'None' or rate == 'None':
             raise Exception("You must specify freq and rate for probability risk measure.")
         else:
             pass
-        y = [calc_risk_proba(p, start, end, rate=rate, period=period, freq=freq, kind=return_type)
+        y = [calc_risk_proba(p, start, end, rate=rate, period=period, freq=freq, return_type=return_type)
              for p in portfolios]
     else:
         raise Exception("Risk type must be stddev or proba.")  # This will change as we add more risk measures.
     return pd.DataFrame({'Risk': y, 'Return': x})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+def label_risk_return(labels, portfolios, start, end, return_type='percent', 
+    risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     labels = how we want the portfolios described/labeled in the graph
