@@ -1,8 +1,8 @@
 import dash
+import requests
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-
 from generate_portfolios import get_graph_data
 from frontend import timeperiod_input
 from frontend import riskreturn_graph
@@ -37,8 +37,8 @@ app.layout = html.Div(children=[
     ),
         style={'width': '20%', 'float': 'left'}
     ),
-    html.Div(id='tab-output', style={'width': '80%', 'padding':
-                                     '10px', 'float': 'right'})
+    html.Div(id='tab-output', style={'width': '80%-50px', 'padding':
+                                     '25px', 'margin-left': '20%'})
 ])
 
 
@@ -51,19 +51,13 @@ def update_timeperiod(value):
     return riskreturn_graph.get_params(*get_graph_data(*value))
 
 
+cached_readme = requests.get('https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/Design.md').text
+
+
 @app.callback(Output('tab-output', 'children'), [Input('tabs', 'value')])
 def display_content(value):
     if value == 1:
-        return dcc.Markdown('''
-            # Dash and Markdown
-
-            Dash supports [Markdown](http://commonmark.org/help).
-
-            Markdown is a simple way to write and format text.
-            It includes a syntax for things like **bold text** and *italics*,
-            [links](http://commonmark.org/help), inline `code` snippets, lists,
-            quotes, and more.
-            ''')
+        return dcc.Markdown(cached_readme)
     elif value == 2:
         return html.Div(children=[
             riskreturn_graph.get_component(*get_graph_data()),
