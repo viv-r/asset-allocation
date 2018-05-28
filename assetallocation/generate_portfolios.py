@@ -3,7 +3,14 @@ import pandas as pd
 import functions
 
 
+# store calls to get_graph_data
+cache = {}
+
+
 def get_graph_data(from_year=2014, to_year=2018):
+    if (from_year, to_year) in cache:
+        return cache[(from_year, to_year)]
+
     """Generate portfolios ranging from 10-90% stocks with the remainder in bonds.
     4-year time horizon (2014-18), rebalance every 90 days."""
 
@@ -25,4 +32,7 @@ def get_graph_data(from_year=2014, to_year=2018):
               "% bonds" for x in range(10, 100, 10)]
 
     data = functions.label_risk_return(labels=labels, portfolios=portfolios, start=a, end=b)
-    return data.Return.values, data.Risk.values, data.Label.values
+
+    res = (data.Return.values, data.Risk.values, data.Label.values)
+    cache[(from_year, to_year)] = res
+    return res

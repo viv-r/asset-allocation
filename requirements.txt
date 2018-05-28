@@ -3,7 +3,7 @@ chardet==3.0.4
 click==6.7
 cycler==0.10.0
 dash==0.21.1
-dash-core-components==0.22.1
+dash-core-components==0.13.0-rc4
 dash-html-components==0.10.1
 dash-renderer==0.12.1
 decorator==4.3.0
@@ -26,7 +26,6 @@ python-dateutil==2.7.3
 pytz==2018.4
 requests==2.18.4
 six==1.11.0
--e git+https://github.com/LAL/trackml-library.git@ae5c48100c7d2858276e7e27da7ca8d6297b5735#egg=trackml
 traitlets==4.3.2
 urllib3==1.22
 Werkzeug==0.14.1
