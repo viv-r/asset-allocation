@@ -41,6 +41,9 @@ def portfolio_from_input(user_input):
     rebal_time = user_input['Rebalancing frequency (days)']
     start = user_input['Start date']
     end = user_input['End date']
+    #Every investment class should be different
+    assert len(set(user_input['Investment classes'].keys())) == \
+           len(user_input['Investment classes'].keys())
     percent_tuple = [(investment_class_dict[invest_class], pct)
         for invest_class, pct in user_input['Investment classes'].items()
     ]
@@ -62,6 +65,7 @@ return_period_dict = {
     '90-day': 90,
     '30-day': 30,
     'Daily': 1
+    #We want to allow them to put in any number of days or years
 }
 
 
