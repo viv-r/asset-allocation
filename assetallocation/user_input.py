@@ -12,9 +12,12 @@ investment_class_dict = {
     'U.S. mid-cap stocks (Wilshire index)': invest_dataframe('../Data/WILLMIDCAP.csv'),
     'U.S. small-cap stocks (Wilshire index)': invest_dataframe('../Data/WILLSMLCAP.csv'),
     'U.S. corporate bonds (investment-grade)': invest_dataframe('../Data/BAMLCC0A1AAATRIV.csv'),
-    'U.S. long-term government bonds': None, #fill in
-    'U.S. mid-term government bonds': None, #fill in
-    'U.S. short-term government bonds': None, #fill in
+    'U.S. Treasury bonds, total market (S&P index)': invest_dataframe('../Data/SPUSBOND.csv'),
+    'U.S. Treasury bonds, 0-1 year (S&P index)': invest_dataframe('../Data/SP01BOND.csv'),
+    'U.S. Treasury bonds, 1-3 year (S&P index)': invest_dataframe('../Data/SP13BOND.csv'),
+    'U.S. Treasury bonds, 3-5 year (S&P index)': invest_dataframe('../Data/SP35BOND.csv'),
+    'U.S. Treasury bonds, 5-7 year (S&P index)': invest_dataframe('../Data/SP57BOND.csv'),
+    'U.S. Treasury bonds, long-term': None, #fill in
     'U.S. municipal tax-exempt bonds': None, #fill in
     'International growth stocks': None, #fill in
     'International value stocks': None, #fill in
