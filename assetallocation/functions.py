@@ -103,12 +103,6 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
 
 
 # Track portfolio with rebalancing
-portfolio_cache = {}
-
-def index_to_portfolio(initial, portfolio_index, start, end):
-    portfolio = pd.DataFrame(initial / portfolio_index.loc[start] * portfolio_index.loc[start:end+1], columns=['Value'])
-    return portfolio
-
 def track_portfolio(initial, percent, rebal_time, start, end):
     """
     Computes values of a portfolio with given percentages of certain indices.
@@ -118,28 +112,57 @@ def track_portfolio(initial, percent, rebal_time, start, end):
         (must add to 1)
     rebal_time = how often to rebalance the portfolio (measured in days)
     start, end = start and end dates to compute values
-    CACHE:
-    Contains index for each (percent, rebal) pair - no need for separate initial investments
     """
-    if (percent, rebal) in portfolio_cache:
-        portfolio_index = portfolio_cache[(percent, rebal)]
-    else:
-        assert np.isclose(sum(p[1] for p in percent), 1)
-        #assert len(percent) == len(set(p[0] for p in percent))
-        #If not in cache, create a new index, then multiply by initial value
-        #NOTE: This does not allow flexibility in the start date for rebalancing counter...
-        portfolio_index = pd.Series()
-        index_start = max([min(data.index) for data, pct in percent])
-        index_end = min([max(data.index) for data, pct in percent])
-        portfolio_index[index_start] = 100
-        for rebal_day in pd.date_range(index_start, index_end, freq=timedelta(days=rebal_time)):
-            value = portfolio_index[rebal_day]
-            shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
-            portfolio_index = pd.concat([portfolio_index,
-                                         share_growth(shares, rebal_day + timedelta(days=1),
-                                                      min(end, rebal_day + timedelta(days=rebal_time)))])
-        portfolio_cache[(percent, rebal)] = portfolio_index
-    return index_to_portfolio(initial, portfolio_index, start, end)
+    assert np.isclose(sum(p[1] for p in percent), 1)
+    #assert len(percent) == len(set(p[0] for p in percent))
+    portfolio = pd.Series()
+    portfolio[start] = initial
+    for rebal_day in pd.date_range(start, end, freq=timedelta(days=rebal_time)):
+
+        value = portfolio[rebal_day]
+        shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
+        portfolio = pd.concat([portfolio, share_growth(shares, rebal_day + timedelta(days=1),
+                                                       min(end, rebal_day + timedelta(days=rebal_time)))])
+    return pd.DataFrame(portfolio, columns=['Value'])
+
+#Track portfolio with rebalancing and cacheing - needs fix to unhashable types problem
+# portfolio_cache = {}
+
+# def index_to_portfolio(initial, portfolio_index, start, end):
+#     portfolio = pd.DataFrame(initial / portfolio_index.loc[start] * portfolio_index.loc[start:end+1], columns=['Value'])
+#     return portfolio
+
+# def track_portfolio_cache(initial, percent, rebal_time, start, end):
+#     """
+#     Computes values of a portfolio with given percentages of certain indices.
+#     INPUTS:
+#     initial = amount invested on starting day
+#     percent = list of tuples of investment data frames with percentages
+#         (must add to 1)
+#     rebal_time = how often to rebalance the portfolio (measured in days)
+#     start, end = start and end dates to compute values
+#     CACHE:
+#     Contains index for each (percent, rebal) pair - no need for separate initial investments
+#     """
+#     if (percent, rebal) in portfolio_cache:
+#         portfolio_index = portfolio_cache[(percent, rebal)]
+#     else:
+#         assert np.isclose(sum(p[1] for p in percent), 1)
+#         #assert len(percent) == len(set(p[0] for p in percent))
+#         #If not in cache, create a new index, then multiply by initial value
+#         #NOTE: This does not allow flexibility in the start date for rebalancing counter...
+#         portfolio_index = pd.Series()
+#         index_start = max([min(data.index) for data, pct in percent])
+#         index_end = min([max(data.index) for data, pct in percent])
+#         portfolio_index[index_start] = 100
+#         for rebal_day in pd.date_range(index_start, index_end, freq=timedelta(days=rebal_time)):
+#             value = portfolio_index[rebal_day]
+#             shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
+#             portfolio_index = pd.concat([portfolio_index,
+#                                          share_growth(shares, rebal_day + timedelta(days=1),
+#                                                       min(end, rebal_day + timedelta(days=rebal_time)))])
+#         portfolio_cache[(percent, rebal)] = portfolio_index
+#     return index_to_portfolio(initial, portfolio_index, start, end)
 
 
 # Track portfolio for unchanging number of shares, no rebalancing
