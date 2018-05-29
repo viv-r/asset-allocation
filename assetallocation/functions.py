@@ -76,7 +76,7 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent'):
 
 
 def calc_risk(data, start, end, risk_type='stddev', period=365,
-    freq=1, threshold=0, return_type='percent', annualize=False):
+              freq=1, threshold=0, return_type='percent', annualize=False):
     """
     Risk measure:
     - proba = historical probability of return below a certain value
@@ -94,7 +94,7 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
         return np.std(return_list(data, start, end, period=period, freq=freq,
                                   return_type=return_type, annualize=annualize))
     elif risk_type == 'proba':
-        return np.mean(return_list(data, start, end, period=period, freq=freq, 
+        return np.mean(return_list(data, start, end, period=period, freq=freq,
                                    return_type=return_type, annualize=annualize) < threshold)
     else:
         raise Exception('Risk measure must be sttdev or proba.')
@@ -119,8 +119,12 @@ def track_portfolio(initial, percent, rebal_time, start, end):
     for rebal_day in pd.date_range(start, end, freq=timedelta(days=rebal_time)):
         value = portfolio[rebal_day]
         shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
-        portfolio = pd.concat([portfolio, share_growth(shares, rebal_day + timedelta(days=1),
-                                                       min(end, rebal_day + timedelta(days=rebal_time)))])
+        portfolio_val = portfolio
+        min_val = min(end, rebal_day + timedelta(days=rebal_time))
+        share_val = share_growth(shares, rebal_day + timedelta(days=1), min_val)
+        portfolio = pd.concat([portfolio_val, share_val])
+        # portfolio = pd.concat([portfolio, share_growth(shares, rebal_day + timedelta(days=1),
+        #                  min(end, rebal_day + timedelta(days=rebal_time)))])
     return pd.DataFrame(portfolio, columns=['Value'])
 
 #Track portfolio with rebalancing and cacheing - needs fix to unhashable types problem
@@ -174,8 +178,9 @@ def share_growth(shares, start, end):
     return sum(s * k.loc[start:end].iloc[:, 0] for k, s in shares)
 
 
-def get_risk_return(portfolios, start, end, return_type='percent', annualize_return=False, 
-    risk_type='stddev', annualize_risk=False, period=365, freq=None, threshold=None):
+def get_risk_return(portfolios, start, end, return_type='percent',
+                    annualize_return=False, risk_type='stddev', annualize_risk=False,
+                    period=365, freq=None, threshold=None):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -188,25 +193,32 @@ def get_risk_return(portfolios, start, end, return_type='percent', annualize_ret
     annualize_return = whether to display annualized return (y axis)
     annualize_risk = whether to use annualized return for measuring risk (x axis)
     """
-    y = [calc_return(p, start, end, return_type=return_type, annualize=annualize_return) for p in portfolios]
-    x = [calc_risk(p, start, end, threshold=threshold, period=period, freq=freq, 
-                   risk_type=risk_type, return_type=return_type, annualize=annualize_risk)
-            for p in portfolios]
-    return pd.DataFrame({'Risk': x, 'Return': y})
+    r_type = return_type
+    ann_bool = annualize_return
+    y_val = [calc_return(p, start, end, return_type=r_type, annualize=ann_bool) for p in portfolios]
+    x_val = [calc_risk(p, start, end, threshold=threshold, period=period, freq=freq,
+                   risk_type=risk_type, return_type=r_type, annualize=annualize_risk)
+         for p in portfolios]
+    return pd.DataFrame({'Risk': x_val, 'Return': y_val})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent', annualize_return=False, 
-    risk_type='stddev', annualize_risk=False, period=365, freq=None, threshold=None):
+def label_risk_return(labels, portfolios, start, end, return_type='percent',
+                      annualize_return=False, risk_type='stddev',
+                      annualize_risk=False, period=365, freq=None,
+                      threshold=None):
     """
     INPUTS:
     labels = how we want the portfolios described/labeled in the graph
     others = see get_risk_return
     """
-    df = get_risk_return(portfolios, start, end, return_type=return_type, annualize_return=annualize_return,
-                         risk_type=risk_type, annualize_risk=annualize_risk, period=period, freq=freq, threshold=threshold)
-    assert len(labels) == len(df)
-    df['Label'] = labels
-    return df
+    r_type = return_type #storing return_type
+    ar_bool = annualize_return #storing annualize_return boolean value
+    df_rr = get_risk_return(portfolios, start, end, return_type=r_type, annualize_return=ar_bool,
+                         risk_type=risk_type, annualize_risk=annualize_risk, period=period,
+                         freq=freq, threshold=threshold)
+    assert len(labels) == len(df_rr)
+    df_rr['Label'] = labels
+    return df_rr
 
 
 # def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
