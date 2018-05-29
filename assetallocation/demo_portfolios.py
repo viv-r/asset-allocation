@@ -52,17 +52,18 @@ def demo_portfolios(initial, rebal_time, start, end, user_parameters,
                         'U.S. Treasury bonds, total market (S&P index)': s/10.
                         }
 
-    portfolios = {label:
+    portfolios = [{'name': label, 
+        'input': 
         {'Initial investment': initial,
         'Investment classes': ivc,
         'Rebalancing frequency (days)': rebal_time,
         'Start date': start,
-        'End date': end}
-        for label, ivc in splits.items()}
+        'End date': end}}
+        for label, ivc in splits.items()]
     #Needs refactoring - not efficient
-    user_portfolio_list = portfolios.values()
-    user_labels = portfolios.keys()
-    return ui.export_user_portfolios(user_portfolio_list, user_labels, user_parameters)
+    #user_portfolio_list = portfolios.values()
+    #user_labels = portfolios.keys()
+    return portfolios
 
 test_user_param_A = {
     'Measure of return': 'Change in log of portfolio value',
