@@ -1,11 +1,10 @@
 from datetime import date, timedelta
 import pandas as pd
-import functions
+from assetallocation import functions
 
 
 # store calls to get_graph_data
 cache = {}
-
 
 def get_graph_data(from_year=2014, to_year=2018):
     if (from_year, to_year) in cache:
@@ -14,8 +13,8 @@ def get_graph_data(from_year=2014, to_year=2018):
     """Generate portfolios ranging from 10-90% stocks with the remainder in bonds.
     4-year time horizon (2014-18), rebalance every 90 days."""
 
-    stock = functions.invest_dataframe('../Data/SP500.csv')
-    bond = functions.invest_dataframe('../Data/BAMLCC0A1AAATRIV.csv')
+    stock = functions.invest_dataframe('./Data/SP500.csv')
+    bond = functions.invest_dataframe('./Data/BAMLCC0A1AAATRIV.csv')
 
     a = pd.Timestamp(str(from_year) + '-01-02 00:00:00', tz=None)
     b = pd.Timestamp(str(to_year) + '-01-03 00:00:00', tz=None)
