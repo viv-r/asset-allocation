@@ -1,12 +1,9 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import dash
 import os
 import pandas as pd
-
-
-def read_dataset(value):
-    df = pd.read_csv('../Data/' + value + '.csv').values
-    return df[:, 0], df[:, 1]
+import user_input
 
 
 def get_params(x, y):
@@ -34,31 +31,27 @@ def get_params(x, y):
     }
 
 
-def update_graph(value):
-    if value is None:
-        return "Nothing here"
-
-    return dcc.Graph(
-        id='datasets-graph',
-        figure=get_params(*read_dataset(value))
-    )
-
-
-def get_data_filenames():
-    files = os.listdir('../Data')
-    return [f.split('.')[0] for f in files if f.endswith('.csv')]
-
-
 def get_component():
-    files = get_data_filenames()
     return html.Div(children=[
         dcc.Dropdown(
             options=[
-                {'label': 'Index: ' + i, 'value': i}
-                for i in files
+                {'label': i, 'value': i} for i in user_input.investment_class_dict
             ],
-            value=files[0],
+            value=list(user_input.investment_class_dict)[0],
             id='datasets-dropdown'
         ),
         html.Div(id='datasets-container')
     ])
+
+
+def attach_callbacks(app):
+    @app.callback(
+        dash.dependencies.Output('datasets-container', 'children'),
+        [dash.dependencies.Input('datasets-dropdown', 'value')])
+    def update_output(value):
+        if value is None:
+            return ""
+        df = user_input.investment_class_dict[value]
+        return dcc.Graph(
+            id='datasets-graph',
+            figure=get_params(df.index, df.values[:, 0]))
