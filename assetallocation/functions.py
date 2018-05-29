@@ -176,8 +176,8 @@ def share_growth(shares, start, end):
     return sum(s * k.loc[start:end].iloc[:, 0] for k, s in shares)
 
 
-def get_risk_return(portfolios, start, end, return_type='percent',
-    annualize=False, risk_type='stddev', period=365, freq=None, rate=None):
+def get_risk_return(portfolios, start, end, return_type='percent', annualize_return=False, 
+    risk_type='stddev', annualize_risk=False, period=365, freq=None, threshold=None):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -187,23 +187,25 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     rate = threshold rate of return (for probability risk measure)
     return_type = percent or log
     risk_type = stddev or proba
+    annualize_return = whether to display annualized return (y axis)
+    annualize_risk = whether to use annualized return for measuring risk (x axis)
     """
-    x = [calc_return(p, start, end, return_type=return_type, annualize=annualize) for p in portfolios]
-    y = [calc_risk(p, start, end, rate=rate, period=period, freq=freq, 
-                         risk_type=risk_type, return_type=return_type, annualize=annualize)
+    y = [calc_return(p, start, end, return_type=return_type, annualize=annualize_return) for p in portfolios]
+    x = [calc_risk(p, start, end, rate=rate, period=period, freq=freq, 
+                   risk_type=risk_type, return_type=return_type, annualize=annualize_risk)
             for p in portfolios]
-    return pd.DataFrame({'Risk': y, 'Return': x})
+    return pd.DataFrame({'Risk': x, 'Return': y})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent', 
-    annualize=False, risk_type='stddev', period=365, freq=None, rate=None):
+def label_risk_return(labels, portfolios, start, end, return_type='percent', annualize_return=False, 
+    risk_type='stddev', annualize_risk=False, period=365, freq=None, threshold=None):
     """
     INPUTS:
     labels = how we want the portfolios described/labeled in the graph
     others = see get_risk_return
     """
-    df = get_risk_return(portfolios, start, end, return_type='percent', annualize=annualize,
-                         risk_type='stddev', period=365, freq=None, rate=None)
+    df = get_risk_return(portfolios, start, end, return_type=return_type, annualize_return=annualize_return,
+                         risk_type=risk_type, annualize_risk=annualize_risk, period=period, freq=freq, threshold=threshold)
     assert len(labels) == len(df)
     df['Label'] = labels
     return df
