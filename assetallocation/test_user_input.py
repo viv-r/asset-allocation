@@ -4,7 +4,9 @@ import numpy as np
 import pandas as pd
 import user_input as ui
 
-test_user_input_1 = {
+test_user_input = {
+    'Portfolio 1':
+    {
     'Initial investment': 10000,
     'Investment classes': {
         'U.S. large-cap stocks (Wilshire index)': 0.4,
@@ -14,9 +16,9 @@ test_user_input_1 = {
     'Rebalancing frequency (days)': 90,
     'Start date': pd.Timestamp('2008-01-01 00:00:00'),
     'End date': pd.Timestamp('2018-01-01 00:00:00')
-}
-
-test_user_input_2 = {
+    },
+    'Portfolio 2':
+    {
     'Initial investment': 10000,
     'Investment classes': {
         'U.S. large-cap stocks (S&P 500 index)': 0.5,
@@ -26,6 +28,7 @@ test_user_input_2 = {
     'Rebalancing frequency (days)': 90,
     'Start date': pd.Timestamp('2010-01-01 00:00:00'),
     'End date': pd.Timestamp('2018-01-01 00:00:00')
+    }
 }
 
 test_user_param_A = {
@@ -52,15 +55,15 @@ test_user_param_B = {
     'Use annualized return for risk measure': True
 }
 
-portfolio_1 = ui.portfolio_from_input(test_user_input_1)
-portfolio_2 = ui.portfolio_from_input(test_user_input_2)
+portfolio_1 = ui.portfolio_from_input(test_user_input['Portfolio 1'])
+portfolio_2 = ui.portfolio_from_input(test_user_input['Portfolio 2'])
 export_data_A = ui.export_user_portfolios(
-    user_portfolio_list=[test_user_input_1, test_user_input_2],
-    user_labels=['Portfolio 1', 'Portfolio 2'],
+    user_portfolio_list=test_user_input.values(),
+    user_labels=test_user_input.keys(),
     user_parameters=test_user_param_A
     )
 export_data_B = ui.export_user_portfolios(
-    user_portfolio_list=[test_user_input_1, test_user_input_2],
-    user_labels=['Portfolio 1', 'Portfolio 2'],
+    user_portfolio_list=test_user_input.values(),
+    user_labels=test_user_input.keys(),
     user_parameters=test_user_param_B
     )
