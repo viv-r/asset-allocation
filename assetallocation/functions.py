@@ -57,7 +57,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
 
 
 # We will want to cache this
-def return_list(data, start, end, period=365, freq=1, return_type='percent'):
+def return_list(data, start, end, period=365, freq=1, return_type='percent', annualize=None):
     """
     Calculates a list of rates of return over a range of time.
     INPUTS:
@@ -127,7 +127,7 @@ def track_portfolio(initial, percent, rebal_time, start, end):
         #                  min(end, rebal_day + timedelta(days=rebal_time)))])
     return pd.DataFrame(portfolio, columns=['Value'])
 
-#Track portfolio with rebalancing and cacheing - needs fix to unhashable types problem
+# Track portfolio with rebalancing and cacheing - needs fix to unhashable types problem
 # portfolio_cache = {}
 
 # def index_to_portfolio(initial, portfolio_index, start, end):
@@ -197,8 +197,8 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     ann_bool = annualize_return
     y_val = [calc_return(p, start, end, return_type=r_type, annualize=ann_bool) for p in portfolios]
     x_val = [calc_risk(p, start, end, threshold=threshold, period=period, freq=freq,
-                   risk_type=risk_type, return_type=r_type, annualize=annualize_risk)
-         for p in portfolios]
+                       risk_type=risk_type, return_type=r_type, annualize=annualize_risk)
+             for p in portfolios]
     return pd.DataFrame({'Risk': x_val, 'Return': y_val})
 
 
@@ -211,11 +211,11 @@ def label_risk_return(labels, portfolios, start, end, return_type='percent',
     labels = how we want the portfolios described/labeled in the graph
     others = see get_risk_return
     """
-    r_type = return_type #storing return_type
-    ar_bool = annualize_return #storing annualize_return boolean value
+    r_type = return_type  # storing return_type
+    ar_bool = annualize_return  # storing annualize_return boolean value
     df_rr = get_risk_return(portfolios, start, end, return_type=r_type, annualize_return=ar_bool,
-                         risk_type=risk_type, annualize_risk=annualize_risk, period=period,
-                         freq=freq, threshold=threshold)
+                            risk_type=risk_type, annualize_risk=annualize_risk, period=period,
+                            freq=freq, threshold=threshold)
     assert len(labels) == len(df_rr)
     df_rr['Label'] = labels
     return df_rr

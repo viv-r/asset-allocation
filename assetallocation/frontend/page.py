@@ -5,10 +5,13 @@ from dash.dependencies import Input, Output
 from frontend import datasets_tab
 from frontend import portfolios_tab
 from frontend import introduction_tab
+from frontend import risk_return_tab
+
 
 TAB_COMPONENT_MAP = [
     {'label': 'Introduction', 'component': introduction_tab},
     {'label': 'Portfolios', 'component': portfolios_tab},
+    {'label': 'Risk return graph', 'component': risk_return_tab},
     {'label': 'Datasets', 'component': datasets_tab}
 ]
 

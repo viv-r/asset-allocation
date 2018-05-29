@@ -51,7 +51,7 @@ def attach_callbacks(app):
     def update_output(value):
         if value is None:
             return ""
-        df = user_input.investment_class_dict[value].values
+        df = user_input.investment_class_dict[value]
         return dcc.Graph(
             id='datasets-graph',
-            figure=get_params(df[:, 0], df[:, 1]))
+            figure=get_params(df.index, df.values[:, 0]))

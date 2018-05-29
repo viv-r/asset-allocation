@@ -82,17 +82,17 @@ def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
     ]
     risk_type = risk_type_dict[
         user_parameters['Measure of risk']
-        ]
+    ]
     period = user_parameters['Period of return (days) to use for risk measure']
     start = user_parameters['Start of period to display']
     end = user_parameters['End of period to display']
-    freq = user_parameters['Frequency to measure return'] #Not sure if this should be a user input
-    threshold = user_parameters['Threshold rate of return'] #can be None if risk_type=stddev
+    freq = user_parameters['Frequency to measure return']  # Not sure if this should be a user input
+    threshold = user_parameters['Threshold rate of return']  # can be None if risk_type=stddev
     annualize_return = user_parameters['Display annualized return']
     annualize_risk = user_parameters['Use annualized return for risk measure']
     assert type(period) == int or type(period) == float
-    return label_risk_return(labels=user_labels, portfolios=portfolio_list, 
-        start=start, end=end,
-        return_type=return_type, annualize_return=annualize_return, 
-        risk_type=risk_type, annualize_risk=annualize_risk, 
-        period=period, freq=freq, threshold=threshold)
+    return label_risk_return(labels=user_labels, portfolios=portfolio_list,
+                             start=start, end=end,
+                             return_type=return_type, annualize_return=annualize_return,
+                             risk_type=risk_type, annualize_risk=annualize_risk,
+                             period=period, freq=freq, threshold=threshold)
