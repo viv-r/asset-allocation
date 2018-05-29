@@ -119,7 +119,6 @@ def track_portfolio(initial, percent, rebal_time, start, end):
     portfolio = pd.Series()
     portfolio[start] = initial
     for rebal_day in pd.date_range(start, end, freq=timedelta(days=rebal_time)):
-
         value = portfolio[rebal_day]
         shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
         portfolio = pd.concat([portfolio, share_growth(shares, rebal_day + timedelta(days=1),
@@ -138,8 +137,8 @@ def share_growth(shares, start, end):
     return sum(s * k.loc[start:end].iloc[:, 0] for k, s in shares)
 
 
-def get_risk_return(portfolios, start, end, return_type='percent', 
-    risk_type='stddev', period=365, freq=None, rate=None):
+def get_risk_return(portfolios, start, end, return_type='percent',
+                    risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     portfolios = list of portfolio data frames
@@ -166,8 +165,8 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     return pd.DataFrame({'Risk': y, 'Return': x})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent', 
-    risk_type='stddev', period=365, freq=None, rate=None):
+def label_risk_return(labels, portfolios, start, end, return_type='percent',
+                      risk_type='stddev', period=365, freq=None, rate=None):
     """
     INPUTS:
     labels = how we want the portfolios described/labeled in the graph
