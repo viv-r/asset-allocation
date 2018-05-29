@@ -10,7 +10,7 @@ state = [{
     'input': {
         'Initial investment': 10000,
         'Investment classes': {
-            'U.S. large-cap stocks (S&P 500 index)': 0.4,
+            'U.S. large-cap stocks (Wilshire index)': 0.4,
             'U.S. mid-cap stocks (Wilshire index)': 0.3,
             'U.S. small-cap stocks (Wilshire index)': 0.3
         },
@@ -25,10 +25,11 @@ state = [{
         'Initial investment': 10000,
         'Investment classes': {
             'U.S. large-cap stocks (S&P 500 index)': 0.5,
-            'U.S. Treasury bonds, total market (S&P index)': 0.5
+            'U.S. Treasury bonds, 0-1 year (S&P index)': 0.25,
+            'U.S. Treasury bonds, 3-5 year (S&P index)': 0.25
         },
         'Rebalancing frequency (days)': 90,
-        'Start date': pd.Timestamp('2014-01-01 00:00:00'),
+        'Start date': pd.Timestamp('2010-01-01 00:00:00'),
         'End date': pd.Timestamp('2018-01-01 00:00:00')
     }
 }]
