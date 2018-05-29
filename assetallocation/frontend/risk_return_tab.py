@@ -4,6 +4,7 @@ from dash.dependencies import Input, Output
 import user_input as ui
 import pandas as pd
 import frontend.portfolios_tab as pt
+from frontend.state import options
 
 
 def get_params(x, y, text):
@@ -29,19 +30,6 @@ def get_params(x, y, text):
             }
         }
     }
-
-
-options = {
-    'Measure of return': 'Change in log of portfolio value',
-    'Measure of risk': 'Probability of return below a threshold',
-    'Period of return (days) to use for risk measure': 365,
-    'Threshold rate of return': 0.0,
-    'Frequency to measure return': 10,
-    'Start of period to display': pd.Timestamp('2013-01-01 00:00:00'),
-    'End of period to display': pd.Timestamp('2018-01-01 00:00:00'),
-    'Display annualized return': False,
-    'Use annualized return for risk measure': False
-}
 
 
 def get_component():
@@ -99,7 +87,8 @@ def get_component():
                     {'label': 'Return', 'value': 'return'},
                     {'label': 'Risk', 'value': 'risk'},
                 ],
-                values=[]
+                values=(['return'] if options['Display annualized return'] else []) +
+                (['risk'] if options['Use annualized return for risk measure'] else [])
             )
         ]),
 
