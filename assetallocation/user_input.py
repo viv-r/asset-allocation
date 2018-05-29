@@ -11,6 +11,7 @@ investment_class_dict = {
     'U.S. large-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLLRGCAP.csv'),
     'U.S. mid-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLMIDCAP.csv'),
     'U.S. small-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLSMLCAP.csv'),
+    'U.S. corporate bonds (investment-grade)': invest_dataframe('./Data/BAMLCC0A1AAATRIV.csv'),
     'U.S. Treasury bonds, total market (S&P index)': invest_dataframe('./Data/SPUSBOND.csv'),
     'U.S. Treasury bonds, 0-1 year (S&P index)': invest_dataframe('./Data/SP01BOND.csv'),
     'U.S. Treasury bonds, 1-3 year (S&P index)': invest_dataframe('./Data/SP13BOND.csv'),
@@ -59,14 +60,6 @@ risk_type_dict = {
     'Probability of return below a threshold': 'proba'
 }
 
-return_period_dict = {
-    'Annual': 365,
-    '90-day': 90,
-    '30-day': 30,
-    'Daily': 1
-    # We want to allow them to put in any number of days or years
-}
-
 
 def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
     """INPUTS:
@@ -74,6 +67,8 @@ def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
     user_labels: user-defined (or auto-generated?) labels for each portfolio
     return_type: user's preferred return measure (percent or log)
     risk_type: user's preferred risk measure
+    annualize_return = whether to display annualized return on y axis
+    annualize_risk = whether to use annualized return for risk calculation on x axis
     period = period for measuring risk
     freq = how often to sample for measuring risk
     rate = threshold rate of return (for probability risk measure)
@@ -87,13 +82,17 @@ def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
     ]
     risk_type = risk_type_dict[
         user_parameters['Measure of risk']
-    ]
-    period = return_period_dict[
-        user_parameters['Period of return to measure']
-    ]
+        ]
+    period = user_parameters['Period of return (days) to use for risk measure']
     start = user_parameters['Start of period to display']
     end = user_parameters['End of period to display']
-    freq = user_parameters['Frequency to measure return']  # can be None; not sure if this should be a user input
-    rate = user_parameters['Threshold rate of return']  # can be None
-    return label_risk_return(user_labels, portfolio_list, start, end,
-                             return_type, risk_type, period, freq, rate)
+    freq = user_parameters['Frequency to measure return'] #Not sure if this should be a user input
+    threshold = user_parameters['Threshold rate of return'] #can be None if risk_type=stddev
+    annualize_return = user_parameters['Display annualized return']
+    annualize_risk = user_parameters['Use annualized return for risk measure']
+    assert type(period) == int or type(period) == float
+    return label_risk_return(labels=user_labels, portfolios=portfolio_list, 
+        start=start, end=end,
+        return_type=return_type, annualize_return=annualize_return, 
+        risk_type=risk_type, annualize_risk=annualize_risk, 
+        period=period, freq=freq, threshold=threshold)
