@@ -72,12 +72,22 @@ def get_component():
         ]),
         html.Div(),
         html.Span(children=[
-            "Period of return (days) to use for risk measure",
+            "Threshold rate of return",
             dcc.Input(
                 placeholder='Enter a value...',
                 type='number',
                 id='period-of-return',
-                value=options['Period of return (days) to use for risk measure']
+                value=options['Threshold rate of return']
+            )
+        ]),
+        html.Div(),
+        html.Span(children=[
+            "Frequency to measure return",
+            dcc.Input(
+                placeholder='Enter a value...',
+                type='number',
+                id='period-of-return',
+                value=options['Frequency to measure return']
             )
         ]),
         html.Div(children=[
