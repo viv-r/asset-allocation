@@ -57,8 +57,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
 
 
 # We will want to cache this
-def return_list(data, start, end, period=365, freq=1,
-    return_type='percent', annualize=False):
+def return_list(data, start, end, period=365, freq=1, return_type='percent'):
     """
     Calculates a list of rates of return over a range of time.
     INPUTS:
@@ -71,8 +70,7 @@ def return_list(data, start, end, period=365, freq=1,
     Ignores partial periods at the end when freq > 1 day.
     """
     # Use date_range
-    return np.array([calc_return(data, day, day + timedelta(days=period), 
-                                return_type=return_type, annualize=annualize)
+    return np.array([calc_return(data, day, day + timedelta(days=period), return_type=return_type)
                      for day in pd.date_range(start, end - timedelta(days=period),
                                               freq=timedelta(days=freq))])
 
@@ -103,6 +101,7 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
 
 
 # Track portfolio with rebalancing
+
 def track_portfolio(initial, percent, rebal_time, start, end):
     """
     Computes values of a portfolio with given percentages of certain indices.
@@ -118,7 +117,6 @@ def track_portfolio(initial, percent, rebal_time, start, end):
     portfolio = pd.Series()
     portfolio[start] = initial
     for rebal_day in pd.date_range(start, end, freq=timedelta(days=rebal_time)):
-
         value = portfolio[rebal_day]
         shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
         portfolio = pd.concat([portfolio, share_growth(shares, rebal_day + timedelta(days=1),

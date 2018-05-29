@@ -13,12 +13,16 @@ Exceptions:
 
 import unittest
 import pandas as pd
-#facing issues in my system with imports
-import sys
-sys.path.append('/Users/whamsy/Documents/asset-allocation')
 
-from assetallocation import generate_portfolios
-from assetallocation import functions
+import os,sys,inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+gparent_dir = os.path.dirname(parent_dir)
+
+sys.path.insert(0, gparent_dir)
+#facing issues in my system with imports
+
+from assetallocation import generate_portfolios, functions
 
 file_name = "./Data/SP500.csv"
 
@@ -118,7 +122,7 @@ class UnitTests(unittest.TestCase):
         df_to_test = functions.invest_dataframe(file_name)
         start = pd.Timestamp(str(2016) + '-01-02 00:00:00', tz=None)
         end = pd.Timestamp(str(2018) + '-01-03 00:00:00', tz=None)
-        rate_of_return_percent = functions.calc_return(df_to_test,start,end,kind='percent',annualize=True)
+        rate_of_return_percent = functions.calc_return(df_to_test,start,end,return_type='percent',annualize=True)
         self.assertGreaterEqual(rate_of_return_percent, 0)
         self.assertLessEqual(rate_of_return_percent,100)
 

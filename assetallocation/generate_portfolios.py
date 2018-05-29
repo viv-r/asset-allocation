@@ -1,11 +1,15 @@
 from datetime import date, timedelta
 import pandas as pd
-import functions
+from assetallocation import functions
 
 
 # store calls to get_graph_data
 cache = {}
-
+'''
+from, to
+rebal_time
+alloc = [{portfolio, weight}]
+'''
 
 def get_graph_data(from_year=2014, to_year=2018):
     if (from_year, to_year) in cache:
