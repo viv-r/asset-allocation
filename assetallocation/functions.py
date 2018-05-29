@@ -96,8 +96,8 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
         return np.std(return_list(data, start, end, period=period, freq=freq,
                                   return_type=return_type, annualize=annualize))
     elif risk_type == 'proba':
-        return np.mean(return_list(data, start, end, period,
-                                   freq, return_type, annualize) < threshold)
+        return np.mean(return_list(data, start, end, period=period, freq=freq, 
+                                   return_type=return_type, annualize=annualize) < threshold)
     else:
         raise Exception('Risk measure must be sttdev or proba.')
 
@@ -191,7 +191,7 @@ def get_risk_return(portfolios, start, end, return_type='percent', annualize_ret
     annualize_risk = whether to use annualized return for measuring risk (x axis)
     """
     y = [calc_return(p, start, end, return_type=return_type, annualize=annualize_return) for p in portfolios]
-    x = [calc_risk(p, start, end, rate=rate, period=period, freq=freq, 
+    x = [calc_risk(p, start, end, threshold=threshold, period=period, freq=freq, 
                    risk_type=risk_type, return_type=return_type, annualize=annualize_risk)
             for p in portfolios]
     return pd.DataFrame({'Risk': x, 'Return': y})
