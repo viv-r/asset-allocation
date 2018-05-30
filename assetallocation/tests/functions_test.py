@@ -16,18 +16,31 @@ import os
 import sys
 import inspect
 import pandas as pd
-from assetallocation import generate_portfolios, functions
+
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
 GPARENT_DIR = os.path.dirname(PARENT_DIR)
 
 sys.path.insert(0, GPARENT_DIR)
-#facing issues in my system with imports
 
-
-
+from assetallocation import generate_portfolios, functions
+# facing issues in my system with imports
 FILE_NAME = "./Data/SP500.csv"
+
+# stock = functions.invest_dataframe(FILE_NAME)
+# bond = functions.invest_dataframe('./Data/BAMLCC0A1AAATRIV.csv')
+
+# a = pd.Timestamp(str(2016) + '-01-02 00:00:00', tz=None)
+# b = pd.Timestamp(str(2018) + '-01-03 00:00:00', tz=None)
+
+# print(b-a)
+# alloc = [(stock, 0.8), (bond, 0.2)]
+
+# print(alloc)
+# portfolios = functions.track_portfolio(10000, alloc, start=a, end=b, rebal_time=90)
+
+
 
 
 class UnitTests(unittest.TestCase):
@@ -39,10 +52,10 @@ class UnitTests(unittest.TestCase):
     without using and global results or variables.
     """
 
-    def test_check_key(self):
-        """Tests if get_graph_data returns a tuple of 3 elements """
-        out = generate_portfolios.get_graph_data(2014, 2018)
-        self.assertEqual(len(out), 3)
+    # def test_check_key(self):
+    #     """Tests if get_graph_data returns a tuple of 3 elements """
+    #     out = generate_portfolios.get_graph_data(2014, 2018)
+    #     self.assertEqual(len(out), 3)
 
     def test_date_time_indices(self):
         """check if index is a DateTime index
@@ -128,6 +141,13 @@ class UnitTests(unittest.TestCase):
         ror_percent = functions.calc_return(df_t, start, end, return_type='percent', annualize=True)
         self.assertGreaterEqual(ror_percent, 0)
         self.assertLessEqual(ror_percent, 100)
+
+    def test_risk_return(self):
+        """
+
+
+        """
+        
 
 
 
