@@ -30,7 +30,8 @@ def get_graph_data(from_year=2014, to_year=2018):
         alloc = [(stock, stockshare), (bond, 1 - stockshare)]
         return functions.track_portfolio(10000, alloc, rebal_time, a, b)
 
-    portfolios = [gen_allocation(stock, bond, i / 10) for i in range(1, 10)]
+    portfolios = [
+        gen_allocation(stock, bond, i / 10) for i in range(1, 10)]
 
     labels = [str(100 - x) + "% stocks " + str(x) +
               "% bonds" for x in range(10, 100, 10)]

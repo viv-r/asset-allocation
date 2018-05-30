@@ -5,11 +5,29 @@ import user_input as ui
 import pandas as pd
 import frontend.portfolios_tab as pt
 from frontend.state import options
+import plotly.graph_objs as go
 
 
 def get_params(x, y, text):
+    # return go.Figure(
+    #     data=[
+    #         go.Scatter(
+    #             x=x,
+    #             y=y,
+    #             text=text,
+    #             marker=go.Marker(
+    #                 color='rgb(55, 83, 109)'
+    #             )
+    #         )
+    #     ],
+    #     layout=go.Layout(
+    #         title='Risk-return graph',
+    #         margin=go.Margin(l=40, r=0, t=40, b=30)
+    #     )
+    # )
+    print(x.shape, y.shape)
     return {
-        'data': [{
+        'data': [go.Scatter({
             'x': x,
             'y': y,
             'text': text,
@@ -18,8 +36,13 @@ def get_params(x, y, text):
                 size=18,
                 color='#1f77b4'
             ),
-            'type': 'line'
-        }],
+            # 'type': 'scatter',
+            'mode': 'markers',
+            'marker': dict(
+                color='black',
+                size=7
+            )
+        })],
         'layout': {
             'title': 'Risk-Return Chart',
             'xaxis': {
@@ -35,8 +58,9 @@ def get_params(x, y, text):
 def get_component():
     s = ui.export_user_portfolios(
         [s['input'] for s in pt.state],
-        [s['name'] for s in pt.state], options).values
-    x, y, text = s[:, 0], s[:, 1], s[:, 2]
+        [s['name'] for s in pt.state], options)
+    print(s)
+    x, y, text = s['Risk'].values, s['Return'].values, s['Label'].values
     return html.Div(children=[
         html.Div(children=[
             "Measure of return",
