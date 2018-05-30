@@ -1,4 +1,4 @@
-# Use Case Scenario
+# Use Cases
 
 This is a brief overview of how a user will interact with the tool and how this ties in to the various components defined above:
 
