@@ -6,7 +6,7 @@ import user_input as ui
 
 
 def demo_portfolios(initial, rebal_time, start, end, user_parameters,
-                    stock_only=True, bond_only=True, mix=True):
+                    stock_only=True, bond_only=False, mix=False):
 
     # Large-medium-small capitalization U.S. stock splits
 

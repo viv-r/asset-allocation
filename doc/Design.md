@@ -18,7 +18,7 @@ In the background, the user inputs will interact with all the backend components
 The user interacts with the third front-end component where they graph the relationship between risk and return, but restrict the data source to a certain time period in the past. This allows them to compare (for example) the results if they had run the same query 20 years ago to the results today, and gives a sense of how uncertain the risk and reward levels shwon by our tool are.
 
 # Overview
-![Interaction diagram](./components_diagram.jpg)
+![Interaction diagram](https://github.com/viv-r/asset-allocation/blob/master/doc/components_diagram.jpg)
 
 # COMPONENTS
 ## Database containing data of stock, bonds, inflation and other market data sources.
