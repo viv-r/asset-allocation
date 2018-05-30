@@ -4,11 +4,30 @@ from dash.dependencies import Input, Output
 import user_input as ui
 import pandas as pd
 import frontend.portfolios_tab as pt
+from frontend.state import options
+import plotly.graph_objs as go
 
 
 def get_params(x, y, text):
+    # return go.Figure(
+    #     data=[
+    #         go.Scatter(
+    #             x=x,
+    #             y=y,
+    #             text=text,
+    #             marker=go.Marker(
+    #                 color='rgb(55, 83, 109)'
+    #             )
+    #         )
+    #     ],
+    #     layout=go.Layout(
+    #         title='Risk-return graph',
+    #         margin=go.Margin(l=40, r=0, t=40, b=30)
+    #     )
+    # )
+    print(x.shape, y.shape)
     return {
-        'data': [{
+        'data': [go.Scatter({
             'x': x,
             'y': y,
             'text': text,
@@ -17,8 +36,13 @@ def get_params(x, y, text):
                 size=18,
                 color='#1f77b4'
             ),
-            'type': 'line'
-        }],
+            # 'type': 'scatter',
+            'mode': 'markers',
+            'marker': dict(
+                color='black',
+                size=7
+            )
+        })],
         'layout': {
             'title': 'Risk-Return Chart',
             'xaxis': {
@@ -34,20 +58,74 @@ def get_params(x, y, text):
 def get_component():
     s = ui.export_user_portfolios(
         [s['input'] for s in pt.state],
-        [s['name'] for s in pt.state], {
-            'Measure of return': 'Change in log of portfolio value',
-            'Measure of risk': 'Probability of return below a threshold',
-            'Period of return (days) to use for risk measure': 365,
-            'Threshold rate of return': 0.0,
-            'Frequency to measure return': 10,
-            'Start of period to display': pd.Timestamp('2013-01-01 00:00:00'),
-            'End of period to display': pd.Timestamp('2018-01-01 00:00:00'),
-            'Display annualized return': False,
-            'Use annualized return for risk measure': False
-        }).values
+        [s['name'] for s in pt.state], options)
     print(s)
-    x, y, text = s[:, 0], s[:, 1], s[:, 2]
+    x, y, text = s['Risk'].values, s['Return'].values, s['Label'].values
     return html.Div(children=[
+        html.Div(children=[
+            "Measure of return",
+            dcc.Dropdown(
+                options=[
+                    {'label': i, 'value': i}
+                    for i in ui.return_type_dict
+                ],
+                value=options['Measure of return'],
+                id='measure-of-return'
+            )
+        ]),
+        html.Div(children=[
+            "Measure of risk",
+            dcc.Dropdown(
+                options=[
+                    {'label': i, 'value': i}
+                    for i in ui.risk_type_dict
+                ],
+                value=options['Measure of risk'],
+                id='measure-of-risk'
+            )
+        ]),
+        html.Div(),
+        html.Span(children=[
+            "Period of return (days) to use for risk measure",
+            dcc.Input(
+                placeholder='Enter a value...',
+                type='number',
+                id='period-of-return',
+                value=options['Period of return (days) to use for risk measure']
+            )
+        ]),
+        html.Div(),
+        html.Span(children=[
+            "Threshold rate of return",
+            dcc.Input(
+                placeholder='Enter a value...',
+                type='number',
+                id='period-of-return',
+                value=options['Threshold rate of return']
+            )
+        ]),
+        html.Div(),
+        html.Span(children=[
+            "Frequency to measure return",
+            dcc.Input(
+                placeholder='Enter a value...',
+                type='number',
+                id='period-of-return',
+                value=options['Frequency to measure return']
+            )
+        ]),
+        html.Div(children=[
+            "Use annualized return",
+            dcc.Checklist(
+                options=[
+                    {'label': 'Return', 'value': 'return'},
+                    {'label': 'Risk', 'value': 'risk'},
+                ],
+                values=(['return'] if options['Display annualized return'] else []) +
+                (['risk'] if options['Use annualized return for risk measure'] else [])
+            )
+        ]),
+
         dcc.Graph(
             id='riskreturn_graph',
             figure=get_params(x, y, text)),
@@ -55,4 +133,4 @@ def get_component():
 
 
 def attach_callbacks(app):
-    pass
+    return None
