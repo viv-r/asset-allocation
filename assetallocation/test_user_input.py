@@ -56,6 +56,7 @@ test_user_param_B = {
 
 portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
 portfolio_2 = ui.portfolio_from_input(test_user_input[1]['input'])
+
 export_data_A = ui.export_user_portfolios(
     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
     user_labels=[portfolio['name'] for portfolio in test_user_input],

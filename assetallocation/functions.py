@@ -5,7 +5,6 @@ from datetime import date, timedelta
 
 # Basic functions for asset allocation tool
 
-
 def invest_dataframe(filename, sep=','):
     """
     Loads a data set containing an investment (stock or bond index).
