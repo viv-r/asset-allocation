@@ -129,6 +129,29 @@ class UnitTests(unittest.TestCase):
         df_to_test = functions.invest_dataframe(FILE_NAME)
         rows_to_have = df_to_test.index.nunique()
         self.assertEqual(len(df_to_test), rows_to_have)
+    
+    def test_calc_return_type(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        # file_name = "./Data/SP500.csv"
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.calc_return(data_input,start,end)
+        self.assertEqual(float, type(out_return))
 
     def test_num_rows_portfolio(self):
         """check if number of records is as expected.
