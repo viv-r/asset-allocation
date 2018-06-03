@@ -4,31 +4,33 @@ import numpy as np
 import pandas as pd
 import user_input as ui
 
-test_user_input = [{'name':'Portfolio 1', 
+test_user_input = [{
+    'name':'Portfolio 1',
     'input': {
-    'Initial investment': 10000,
-    'Investment classes': {
-        'U.S. large-cap stocks (Wilshire index)': 0.4,
-        'U.S. mid-cap stocks (Wilshire index)': 0.3,
-        'U.S. small-cap stocks (Wilshire index)': 0.3
+        'Initial investment': 10000,
+        'Investment classes': {
+            'U.S. large-cap stocks (Wilshire index)': 0.4,
+            'U.S. mid-cap stocks (Wilshire index)': 0.3,
+            'U.S. small-cap stocks (Wilshire index)': 0.3
         },
-    'Rebalancing frequency (days)': 90,
-    'Start date': pd.Timestamp('2008-01-01 00:00:00'),
-    'End date': pd.Timestamp('2018-01-01 00:00:00')
-    }},
-    {'name': 'Portfolio 2',
-    'input': {
-    'Initial investment': 10000,
-    'Investment classes': {
-        'U.S. large-cap stocks (S&P 500 index)': 0.5,
-        'U.S. Treasury bonds, 0-1 year (S&P index)': 0.25,
-        'U.S. Treasury bonds, 3-5 year (S&P index)': 0.25
-        },
-    'Rebalancing frequency (days)': 90,
-    'Start date': pd.Timestamp('2010-01-01 00:00:00'),
-    'End date': pd.Timestamp('2018-01-01 00:00:00')
-    }}
-    ]
+        'Rebalancing frequency (days)': 90,
+        'Start date': pd.Timestamp('2008-01-01 00:00:00'),
+        'End date': pd.Timestamp('2018-01-01 00:00:00')
+        }
+    }, {
+        'name': 'Portfolio 2',
+        'input': {
+            'Initial investment': 10000,
+            'Investment classes': {
+                'U.S. large-cap stocks (S&P 500 index)': 0.5,
+                'U.S. Treasury bonds, 0-1 year (S&P index)': 0.25,
+                'U.S. Treasury bonds, 3-5 year (S&P index)': 0.25
+            },
+            'Rebalancing frequency (days)': 90,
+            'Start date': pd.Timestamp('2010-01-01 00:00:00'),
+            'End date': pd.Timestamp('2018-01-01 00:00:00')
+        }
+    }]
 
 test_user_param_A = {
     'Measure of return': 'Change in log of portfolio value',
