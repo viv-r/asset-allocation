@@ -14,22 +14,28 @@ from assetallocation import functions
 
 FILE_NAME = "./Data/SP500.csv"
 
-data = functions.invest_dataframe(FILE_NAME)
+# data = functions.invest_dataframe(FILE_NAME)
 
 # print(data)
 
-start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+start = pd.Timestamp('1986-01-02 00:00:00', tz=None)
 end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
-# pd.datetime(1975-01-01)
-# startval = float(data.loc[start][0])
-# endval = float(data.loc[end][0])
+# # pd.datetime(1975-01-01)
+# # startval = float(data.loc[start][0])
+# # endval = float(data.loc[end][0])
 
-# print(startval,endval)
-o = functions.calc_return(data,start,end)
+# # print(startval,endval)
+# # o = functions.calc_return(data,start,end,return_type='log',annualize=True)
+# # print(type(o))
 
-print(type(o))
+# o2 = functions.return_list(data,start,end)
+# print(type(o2))
+# print(o2.shape)
 
-print(o)
+num_days = end-start
+days = str(num_days)
+print(days[:days.find(" ")])
+# print(o)
 # FILE_NAME_1 = "./Data/SP35BOND.csv"
 
 # a = functions.invest_dataframe(FILE_NAME)

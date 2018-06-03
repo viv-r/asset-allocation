@@ -16,6 +16,7 @@ import os
 import inspect
 import unittest
 import pandas as pd
+import numpy as np
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
@@ -152,6 +153,55 @@ class UnitTests(unittest.TestCase):
         end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
         out_return = functions.calc_return(data_input,start,end)
         self.assertEqual(float, type(out_return))
+    
+    def test_return_list_type(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        # file_name = "./Data/SP500.csv"
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.return_list(data_input,start,end)
+        self.assertEqual(np.ndarray, type(out_return))
+
+    def test_return_list_num_rows(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        # file_name = "./Data/SP500.csv"
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.return_list(data_input,start,end)
+        num_days_str = str(end - start)
+        num_days = int(num_days_str[:num_days_str.find(" ")])
+        self.assertLessEqual(out_return.shape[0], num_days)
+
 
     def test_num_rows_portfolio(self):
         """check if number of records is as expected.
