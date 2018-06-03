@@ -6,14 +6,14 @@ import user_input as ui
 
 
 def demo_portfolios(initial, rebal_time, start, end, user_parameters,
-                    stock_only=True, bond_only=False, mix=False):
+                    stock_only=True, bond_only=True, mix=True):
 
     # Large-medium-small capitalization U.S. stock splits
 
     splits = {}
     if stock_only:
-        for x in range(11):
-            for y in range(11 - x):
+        for x in range(0, 11, 2):
+            for y in range(0, 11 - x, 2):
                 z = 10 - x - y
                 label = "Stock LMS %d-%d-%d" % (x, y, z)
                 splits[label] = \
@@ -40,9 +40,9 @@ def demo_portfolios(initial, rebal_time, start, end, user_parameters,
     # Stock (3-tier) and total bond market mixed portfolios
 
     if mix:
-        for p in range(11):
-            for q in range(11 - p):
-                for r in range(11 - p - q):
+        for p in range(0, 11, 2):
+            for q in range(0, 11 - p, 2):
+                for r in range(0, 11 - p - q, 2):
                     s = 10 - p - q - r
                     label = "Stock LMS - Total bond %d-%d-%d-%d" % (p, q, r, s)
                     splits[label] = \

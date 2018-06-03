@@ -9,23 +9,6 @@ import plotly.graph_objs as go
 
 
 def get_params(x, y, text):
-    # return go.Figure(
-    #     data=[
-    #         go.Scatter(
-    #             x=x,
-    #             y=y,
-    #             text=text,
-    #             marker=go.Marker(
-    #                 color='rgb(55, 83, 109)'
-    #             )
-    #         )
-    #     ],
-    #     layout=go.Layout(
-    #         title='Risk-return graph',
-    #         margin=go.Margin(l=40, r=0, t=40, b=30)
-    #     )
-    # )
-    print(x.shape, y.shape)
     return {
         'data': [go.Scatter({
             'x': x,
