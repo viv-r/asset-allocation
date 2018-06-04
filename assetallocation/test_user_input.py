@@ -2,6 +2,12 @@
 
 import numpy as np
 import pandas as pd
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+PARENT_DIR = os.path.dirname(CURRENT_DIR)
+
+sys.path.insert(0, PARENT_DIR)
+
 import user_input as ui
 
 test_user_input = [{

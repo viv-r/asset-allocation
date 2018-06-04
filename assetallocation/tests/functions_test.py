@@ -303,7 +303,5 @@ class UnitTests(unittest.TestCase):
         """
         
 
-
-
 SUITE = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE)
