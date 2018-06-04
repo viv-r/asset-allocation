@@ -24,7 +24,7 @@ GPARENT_DIR = os.path.dirname(PARENT_DIR)
 
 sys.path.insert(0, GPARENT_DIR)
 
-from assetallocation import generate_portfolios, functions
+from assetallocation import functions
 
 FILE_NAME = "./Data/SP500.csv"
 
