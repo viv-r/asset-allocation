@@ -201,6 +201,52 @@ class UnitTests(unittest.TestCase):
         num_days_str = str(end - start)
         num_days = int(num_days_str[:num_days_str.find(" ")])
         self.assertLessEqual(out_return.shape[0], num_days)
+    
+    def test_calc_risk_return_type(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        # file_name = "./Data/SP500.csv"
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.calc_risk(data_input,start,end)
+        self.assertEqual(np.float64, type(out_return))
+
+    def test_calc_risk_return_val(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        # file_name = "./Data/SP500.csv"
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.calc_risk(data_input,start,end)
+        self.assertGreaterEqual(out_return, 0)
 
 
     def test_num_rows_portfolio(self):
