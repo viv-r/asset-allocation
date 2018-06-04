@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 import user_input as ui
+from timeit import default_timer as timer
 
 test_user_input = [{'name':'Portfolio 1', 
     'input': {
@@ -56,13 +57,20 @@ test_user_param_B = {
 
 portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
 portfolio_2 = ui.portfolio_from_input(test_user_input[1]['input'])
+s = timer()
 export_data_A = ui.export_user_portfolios(
     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
     user_labels=[portfolio['name'] for portfolio in test_user_input],
     user_parameters=test_user_param_A
     )
+e = timer()
+print("Total time to generate set A", e-s)
+
+s = timer()
 export_data_B = ui.export_user_portfolios(
     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
     user_labels=[portfolio['name'] for portfolio in test_user_input],
     user_parameters=test_user_param_B
     )
+e = timer()
+print("Total time to generate set B", e-s)

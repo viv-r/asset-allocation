@@ -44,10 +44,10 @@ def portfolio_from_input(user_input):
     # Every investment class should be different
     assert len(set(user_input['Investment classes'].keys())) == \
         len(user_input['Investment classes'].keys())
-    percent_tuple = [(investment_class_dict[invest_class], pct)
-                     for invest_class, pct in user_input['Investment classes'].items()
-                     ]
-    return track_portfolio(initial, percent_tuple, rebal_time, start, end)
+    percent_list = [(invest_class, pct)
+                    for invest_class, pct in user_input['Investment classes'].items()]
+    percent_tuple = tuple(percent_list)
+    return track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, investment_class_dict)
 
 
 return_type_dict = {
