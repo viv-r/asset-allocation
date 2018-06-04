@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 import pandas as pd
-from assetallocation import functions
+import functions
 
 
 # store calls to get_graph_data
