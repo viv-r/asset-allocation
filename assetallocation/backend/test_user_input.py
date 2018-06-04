@@ -3,7 +3,6 @@
 import numpy as np
 import pandas as pd
 import user_input as ui
-from timeit import default_timer as timer
 
 test_user_input = [{'name':'Portfolio 1', 
     'input': {

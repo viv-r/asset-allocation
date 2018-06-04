@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 # import matplotlib.pyplot as plt
 from datetime import date, timedelta
-from timeit import default_timer as timer
 
 # Basic functions for asset allocation tool
 
