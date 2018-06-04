@@ -19,13 +19,13 @@ install:
     - pip install flake8
     - pip install -r requirements.txt
 
-
-
 # the actual commands to run
 script:
-    - coverage run -m unittest discover
+    - pytest
+    - pylint
+    # - coverage run -m unittest discover
 
 # generate a coverage report to send to back to user
-after_success:
-    - coverage report
-    - coveralls
+# after_success:
+#     - coverage report
+#     - coveralls
