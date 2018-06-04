@@ -2,8 +2,17 @@
 
 import numpy as np
 import pandas as pd
-import functions
-# from functions import *
+
+import sys
+import os
+import inspect
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+
+sys.path.insert(0, CURRENT_DIR)
+
+# import functions
+from functions import *
 
 
 # Dictionary translating descriptions of investment classes to data sets
