@@ -3,10 +3,10 @@
 This is a brief overview of how a user will interact with the tool and how this ties in to the various components defined above:
 
 ### Deciding on a risk measure
-This is where the users interact with the first frontend component "Risk measure selection". A list of different risk measure models with a brief description of each will be available to users, who can then select one of these.
+This is where the users interact with the first frontend component 'Risk measure selection'. A list of different risk measure models with a brief description of each will be available to users, who can then select one of these.
 
 ### Selecting a list of portfolio (asset allocation models) for the chosen risk measure
-Users interact with the second frontend component "Asset allocation model selection" where from a list of different portfolios, they can select which ones they wish to compare.
+Users interact with the second frontend component 'Asset allocation model selection' where from a list of different portfolios, they can select which ones they wish to compare.
 
 ### Selecting a time period to view returns and risk
 Here the users interact with the third frontend component where they select the time period (in years) over which they wish to see returns vs. risk for the preselected combinations of risk measure and portfolios.
@@ -21,24 +21,45 @@ The user interacts with the third front-end component where they graph the relat
 ![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/components_diagram.jpg)
 
 # Components
-## Database containing data of stock, bonds, inflation and other market data sources.
 ## Frontend components:
    Short descriptions of what each risk measure does
    List of portfolios to display on the graph
-   ### Input components:
-        - Risk measure selection dropdown menu
-        - Check boxes to allow selection of multiple portfolios
-        - Time period selection (possibly as a slider on graph)
-   ### Graphs
-        - Plot of risk vs reward.
+   ### Tab 1: Introduction:
+      - A dash markdown component showing the readme file.
+
+   ### Tab 2: Portfolios:
+      - A tab containing the configuration for each portfolio
+        that the user wants to see on the risk-return plot.
+      - Each group of inputs represents a portfolio
+      - A portfolio has the following input components.
+         - Portfolio name text input
+         - The initial investment amount
+         - Re-balancing time period
+         - Start and end dates
+         - A list of investment classes (assets)
+      - Each investment class contains a single asset and it's weight in the portfolio.
+
+   ### Tab 3: Risk return graph:
+      - Inputs that specify the type of risk/reward metric to be
+        used in calculating the co-ordinates of the data points
+          - Measure of return: (log change or percent change)
+          - Measure of risk: (probability or standard deviation)
+          - Period of return to use for risk measure
+          - Threshold rate of return
+          - Frequency to measure return
+          - If to use annualized return for risk/reward.
+        - A plotly graph component showing the final plot.
+
+![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/fontend.jpg)
+
 ## Backend components:
    ### Data processing and setup:
      - Description:
-       - Populates the DB with data from multiple CSV files.
+       - Loads the csv data files into the app.
        - Pre-processing and cleaning the raw data.
      - Inputs:
        - CSV files
-     - Outpus:
+     - Outputs:
        - None
    ### Data loader:
      - Description:
@@ -57,3 +78,5 @@ The user interacts with the third front-end component where they graph the relat
         - Calculates output of risk/reward value function as if it had been run at many different times in the past.
      - Inputs: user selection from the front end
      - Outputs: a measure of how robust the risk/reward measures are over different time periods
+
+![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/backend.jpg)

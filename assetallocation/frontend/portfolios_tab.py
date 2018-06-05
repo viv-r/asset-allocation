@@ -14,20 +14,22 @@ Classes:
     None
 """
 
+import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 from backend.demo_portfolios import TEST_DEMO_PORTFOLIOS_A as state
+from backend.demo_portfolios import TEST_USER_PARAM_A as options
 
 
 def name_component(template):
     """
     Renders the name input for a portfolio
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'name-' + template['id']
@@ -45,10 +47,10 @@ def name_callback(app, template):
     Attaches the callback function for the portfolio
     name input component
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'name-' + template['id']
@@ -65,10 +67,10 @@ def initial_investment_component(template):
     """
     Renders the input for initial investment amount of the portfolio
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'initial-investment-' + template['id']
@@ -86,10 +88,10 @@ def initial_investment_callback(app, template):
     Attaches the callback function for the portfolio
     initial investment amount input
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'initial-investment-' + template['id']
@@ -107,10 +109,10 @@ def rebal_freq_component(template):
     Renders the input component to capture the rebalancing
     frequency
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'rebal-freq-' + template['id']
@@ -129,10 +131,10 @@ def rebal_freq_callback(app, template):
     Attaches the callback function for the portfolio
     rebalancing frequency
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'rebal-freq-' + template['id']
@@ -150,15 +152,15 @@ def time_period_component(template):
     Renders the time period slider for the start and end dates of the
     portfolio
 
-    INPUTS:
+    :
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'time-period-' + template['id']
     component = html.Div(style={'padding-bottom': '5px'}, children=[
-        "Rebalancing frequency (days): ",
+        "Start and End dates",
         html.Span(id=component_id + 'out', children=''),
         html.Div(style={'margin': '10px', "padding": '5px'}, children=[
             dcc.RangeSlider(
@@ -179,10 +181,10 @@ def time_period_callback(app, template):
     Attaches the callback function for the portfolio
     time period
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'time-period-' + template['id']
@@ -190,9 +192,20 @@ def time_period_callback(app, template):
     @app.callback(
         Output(component_id + 'out', 'children'),
         [Input(component_id, 'value')])
-    def _callback(_value):
-        # template['input']['Start date'] = pd.Timestamp(year=value[0], month=1, day=1, hour=12)
-        # template['input']['End date'] = pd.Timestamp(year=value[1], month=1, day=1, hour=12)
+    def _callback(value):
+
+        new_st = pd.Timestamp(str(value[0]) + '-01-01 00:00:00')
+        old_st = options['Start of period to display']
+        new_et = pd.Timestamp(str(value[1]) + '-01-01 00:00:00')
+        old_et = options['End of period to display']
+
+        if new_st > old_st:
+            options['Start of period to display'] = new_st
+        if new_et < old_et:
+            options['End of period to display'] = new_et
+
+        template['input']['Start date'] = new_st
+        template['input']['End date'] = new_et
         return ''
 
 
@@ -202,10 +215,10 @@ def investment_classes_component(template):
     of assets in the portfolio template given and inputs to
     specify the weights of each asset.
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'investment-classes-' + template['id']
@@ -233,10 +246,10 @@ def investment_classes_callback(app, template):
     Attaches the callback function for all the asset weight
     input components.
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'investment-classes-' + template['id']
@@ -247,7 +260,7 @@ def investment_classes_callback(app, template):
         of this asset in a closure, both of which are needed in
         the actual callback function.
 
-        INPUTS:
+        Args:
             cid: the id of the asset.
             investment_class: the name of the asset.
         """
@@ -266,10 +279,10 @@ def get_component():
     """
     Renders all the input component in this tab.
 
-    INPUTS:
+    Args:
         None
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing all the inputs on this tab
     """
     return html.Div(children=[
@@ -288,9 +301,9 @@ def attach_callbacks(app):
     """
     Attaches the callbacks for all the inputs in this tab.
 
-    INPUTS:
+    Args:
         app = the dash app
-    OUTPUTS:
+    Returns:
         None
     """
     for template in state:

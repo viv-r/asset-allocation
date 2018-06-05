@@ -22,11 +22,11 @@ def get_params(x_cords, y_cords):
     Constructs the plotly specific graph parameters. This configuration
     object can be passed to a Graph dash component.
 
-    INPUTS:
+    Args:
         x_cords = the vector containing the x-coordinates of all the points
         y_cords = the vector containing the y-coordinates of all the points
 
-    OUTPUTS:
+    Returns:
         Plotly graph configuration object
     """
     return {
@@ -58,9 +58,9 @@ def get_component():
     Returns a div containing the dropdown and
     the graph of the dataset selected.
 
-    INPUTS:
+    Args:
         None
-    OUTPUTS:
+    Returns:
         div containing the component in this tab.
     """
     return html.Div(children=[

@@ -38,9 +38,9 @@ def init():
     Defines the tabs component, attaches callbacks,
     and external CSS files
 
-    INPUTS:
+    Args:
         None
-    OUTPUTS:
+    Returns:
         dash app
     """
     app = dash.Dash()
