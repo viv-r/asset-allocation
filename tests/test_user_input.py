@@ -6,6 +6,7 @@ import inspect
 import unittest
 import pandas as pd
 import numpy as np
+import time
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
@@ -67,20 +68,20 @@ test_user_param_B = {
 
 portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
 portfolio_2 = ui.portfolio_from_input(test_user_input[1]['input'])
-s = timer()
+s = time.time()
 export_data_A = ui.export_user_portfolios(
     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
     user_labels=[portfolio['name'] for portfolio in test_user_input],
     user_parameters=test_user_param_A
     )
-e = timer()
+e = time.time()
 print("Total time to generate set A", e-s)
 
-s = timer()
+s = time.time()
 export_data_B = ui.export_user_portfolios(
     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
     user_labels=[portfolio['name'] for portfolio in test_user_input],
     user_parameters=test_user_param_B
     )
-e = timer()
+e = time.time()
 print("Total time to generate set B", e-s)
