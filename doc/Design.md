@@ -50,7 +50,7 @@ The user interacts with the third front-end component where they graph the relat
           - If to use annualized return for risk/reward.
         - A plotly graph component showing the final plot.
 
-![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/fontend.jpg)
+![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/frontend.png)
 
 ## Backend components:
    ### Data processing and setup:
@@ -79,4 +79,4 @@ The user interacts with the third front-end component where they graph the relat
      - Inputs: user selection from the front end
      - Outputs: a measure of how robust the risk/reward measures are over different time periods
 
-![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/backend.jpg)
+![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/backend.png)
