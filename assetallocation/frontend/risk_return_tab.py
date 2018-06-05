@@ -12,6 +12,7 @@ Functions:
 Classes:
     None
 """
+#pylint: disable=wrong-import-order
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -19,7 +20,7 @@ import backend.user_input as ui
 from backend.demo_portfolios import TEST_USER_PARAM_A as options
 import frontend.portfolios_tab as pt
 import plotly.graph_objs as go
-
+#pylint: enable=wrong-import-order
 
 def get_params(x_cords, y_cords, text):
     """
