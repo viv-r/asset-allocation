@@ -44,6 +44,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
     """
     Calculates rate of return on a data set between two dates.
     Allows for either percentage rate or log growth.
+
     Args:
         data = data frame of investment values
         start, end = start and end dates of investment
@@ -75,6 +76,7 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent', ann
     """
     Calculates a list of rates of return over a range of time.
     Ignores partial periods at the end when freq > 1 day.
+
     Args:
         data = dataframe of investment values
         start, end = overall start and end date of investment
@@ -103,6 +105,7 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
     Risk measure:
     - proba = historical probability of return below a certain value
     - stddev = standard deviation of rate of return
+
     Args:
         data = dataframe of investment values
         start, end = overall start and end dates of investment
@@ -132,6 +135,7 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
 def track_portfolio(initial, percent, rebal_time, start, end):
     """
     Computes values of a portfolio with given percentages of certain investments.
+
     Args:
         initial = amount invested on starting day
         percent = list of tuples of investment classes with percentages
@@ -163,6 +167,7 @@ PORTFOLIO_CACHE = {}
 def index_to_portfolio(initial, portfolio_index, start, end):
     """
     Translates index to portfolio value by multiplying by initial investment.
+
     Args:
         portfolio_index = portfolio index created by track_portfolio_cache
         initial = amount invested on starting day
@@ -179,6 +184,7 @@ def index_to_portfolio(initial, portfolio_index, start, end):
 def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, investment_class_dict):
     """
     Caches a portfolio so it can be called later.
+
     Args:
         initial = amount invested on starting day
         percent_tuple = tuple of tuples of investment classes with percentages
@@ -207,6 +213,7 @@ def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, invest
 def share_growth(shares, start, end):
     """
     Computes growth of a portfolio with a given number of shares of different indices.
+
     Args:
         shares = list of tuples of investment data frames with number of shares
         start, end = start and end dates to compute values
@@ -222,6 +229,7 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     """
     Gets risk and return measures for a variety of portfolios,
     preparing for export to graph.
+    
     Args:
         portfolios = list of portfolio data frames
         start, end = start and end dates for measuring risk and return
@@ -247,6 +255,7 @@ def get_risk_return(portfolios, start, end, return_type='percent',
 def label_risk_return(labels, **kwargs):
     """
     Labels risk and return measures with portfolio names for export to graph.
+    
     Args:
         labels = how we want the portfolios described/labeled in the graph
         **kwargs = arguments of get_risk_return
