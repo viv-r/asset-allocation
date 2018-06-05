@@ -30,7 +30,7 @@ def attach_callbacks(_app):
 def get_component():
     """
     The UI component is a markdown web page that is pulled directly
-    from the github repository spcified in 'README_PATH'
+    from the github repository specified in 'README_PATH'
 
     INPUTS:
         None

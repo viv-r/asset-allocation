@@ -1,19 +1,13 @@
-"""Functions to translate user input into portfolio"""
-
-import numpy as np
-import pandas as pd
+"""
+Functions to translate user input into portfolio
+"""
 import sys
 import os
 import inspect
+from backend.functions import invest_dataframe, track_portfolio_cache, label_risk_return
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 sys.path.insert(0, CURRENT_DIR)
-
-#pylint: disable=import-error
-#pylint: disable=wildcard-import
-from functions import *
-#pylint: enable=import-error
-#pylint: enable=wildcard-import
 
 # Dictionary translating descriptions of investment classes to data sets
 # Expand as necessary, possibly including individual stock and bond data sets

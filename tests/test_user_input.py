@@ -13,10 +13,10 @@ PARENT_DIR = os.path.dirname(CURRENT_DIR)
 FINAL_DIR = os.path.join(str(PARENT_DIR), "assetallocation")
 sys.path.insert(0, PARENT_DIR)
 sys.path.insert(0, FINAL_DIR)
-#pylint: disable=wrong-import-position
+# pylint: disable=wrong-import-position
 from backend import user_input as ui
-#pylint: enable=wrong-import-position
-TEST_USER_INPUT = [{'name':'Portfolio 1',
+# pylint: enable=wrong-import-position
+TEST_USER_INPUT = [{'name': 'Portfolio 1',
                     'input': {
                         'Initial investment': 10000,
                         'Investment classes': {
@@ -64,6 +64,7 @@ TEST_USER_PARAM_B = {
     'Display annualized return': True,
     'Use annualized return for risk measure': True
 }
+
 
 class UnitTests(unittest.TestCase):
     """Set of unittests for the functions and generate_portfolios
@@ -196,7 +197,7 @@ class UnitTests(unittest.TestCase):
             user_portfolio_list=[portfolio['input'] for portfolio in TEST_USER_INPUT],
             user_labels=[portfolio['name'] for portfolio in TEST_USER_INPUT],
             user_parameters=TEST_USER_PARAM_A
-            )
+        )
         actual_col_names = sorted(list(export_data))
         expected_col_names = ["Label", "Return", "Risk"]
         self.assertEqual(actual_col_names, expected_col_names)
@@ -221,7 +222,7 @@ class UnitTests(unittest.TestCase):
             user_portfolio_list=[portfolio['input'] for portfolio in TEST_USER_INPUT],
             user_labels=[portfolio['name'] for portfolio in TEST_USER_INPUT],
             user_parameters=TEST_USER_PARAM_A
-            )
+        )
         col_num = len(list(export_data))
         self.assertEqual(col_num, 3)
 
@@ -245,10 +246,11 @@ class UnitTests(unittest.TestCase):
             user_portfolio_list=[portfolio['input'] for portfolio in TEST_USER_INPUT],
             user_labels=[portfolio['name'] for portfolio in TEST_USER_INPUT],
             user_parameters=TEST_USER_PARAM_A
-            )
+        )
         actual_row_num = len(export_data)
         expected_row_num = len(TEST_USER_INPUT)
         self.assertEqual(actual_row_num, expected_row_num)
+
 
 SUITE1 = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE1)
@@ -259,7 +261,7 @@ _ = unittest.TextTestRunner().run(SUITE1)
 # export_data_A = ui.export_user_portfolios(
 #     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
 #     user_labels=[portfolio['name'] for portfolio in test_user_input],
-#     user_parameters=test_user_param_A
+#     user_parameters=TEST_USER_PARAM_A
 #     )
 # e = time.time()
 # print("Total time to generate set A", e-s)
@@ -268,7 +270,7 @@ _ = unittest.TextTestRunner().run(SUITE1)
 # export_data_B = ui.export_user_portfolios(
 #     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
 #     user_labels=[portfolio['name'] for portfolio in test_user_input],
-#     user_parameters=test_user_param_B
+#     user_parameters=TEST_USER_PARAM_B
 #     )
 # e = time.time()
 # print("Total time to generate set B", e-s)

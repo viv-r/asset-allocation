@@ -1,14 +1,10 @@
 [TYPECHECK]
 
-ignored-modules = dash, dash_html_components, dash_core_components
+ignored-modules = numpy, pandas, dash, dash_html_components, dash_core_components
 
 [MASTER]
 init-hook='import sys; sys.path.append("./assetallocation")'
 
 [MESSAGES CONTROL]
 disable=duplicate-code,
-        too-many-arguments,
-        unused-argument,
-        unused-import,
-        wrong-import-position,
-        wrong-import-order
+        too-many-arguments

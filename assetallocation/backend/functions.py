@@ -3,12 +3,10 @@ This file contains the various functions which are used to extract
 the desired information (risk and return values) from the data.
 
 """
-from datetime import date, timedelta
+from datetime import timedelta
 import numpy as np
 import pandas as pd
-# import matplotlib.pyplot as plt
 
-# Basic functions for asset allocation tool
 
 def invest_dataframe(filename, sep=','):
     """
@@ -62,7 +60,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
 
 # We will want to cache this
 #pylint: disable=too-many-arguments
-def return_list(data, start, end, period=365, freq=1, return_type='percent', annualize=None):
+def return_list(data, start, end, period=365, freq=1, return_type='percent'):
     """
     Calculates a list of rates of return over a range of time.
     INPUTS:
@@ -97,10 +95,10 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
     """
     if risk_type == 'stddev':
         return np.std(return_list(data, start, end, period=period, freq=freq,
-                                  return_type=return_type, annualize=annualize))
+                                  return_type=return_type))
     elif risk_type == 'proba':
         return np.mean(return_list(data, start, end, period=period, freq=freq,
-                                   return_type=return_type, annualize=annualize) < threshold)
+                                   return_type=return_type) < threshold)
     else:
         raise Exception('Risk measure must be sttdev or proba.')
 
@@ -126,12 +124,14 @@ def track_portfolio(initial, percent, rebal_time, start, end):
         shares = [(k, value * p / (k.loc[rebal_day][0])) for k, p in percent]
         portfolio_val = portfolio
         min_val = min(end, rebal_day + timedelta(days=rebal_time))
-        share_val = share_growth(shares=shares, start=rebal_day+timedelta(days=1), end=min_val)
+        share_val = share_growth(shares=shares, start=rebal_day + timedelta(days=1), end=min_val)
         portfolio = pd.concat([portfolio_val, share_val])
     return pd.DataFrame(portfolio, columns=['Value'])
 
+
 # Track portfolio with rebalancing and cacheing by creating an index to represent the portfolio
 PORTFOLIO_CACHE = {}
+
 
 def index_to_portfolio(initial, portfolio_index, start, end):
     """
@@ -142,9 +142,10 @@ def index_to_portfolio(initial, portfolio_index, start, end):
     start, end = start and end dates to compute portfolio values
     """
     portfolio = pd.DataFrame(initial / portfolio_index.loc[start]
-                             * portfolio_index.loc[start:end+timedelta(days=1)],
+                             * portfolio_index.loc[start:end + timedelta(days=1)],
                              columns=['Value'])
     return portfolio
+
 
 def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, investment_class_dict):
     """
@@ -163,8 +164,8 @@ def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, invest
         portfolio_index = PORTFOLIO_CACHE[(percent_tuple, rebal_time)]
     else:
         assert np.isclose(sum(p[1] for p in percent_tuple), 1)
-        #If not in cache, create a new index, then multiply by initial value
-        #NOTE: This does not allow flexibility in the start date for rebalancing counter...
+        # If not in cache, create a new index, then multiply by initial value
+        # NOTE: This does not allow flexibility in the start date for rebalancing counter...
         percent_list = [(investment_class_dict[k], v) for k, v in percent_tuple]
         index_start = max([min(data.index) for data, pct in percent_list])
         index_end = min([max(data.index) for data, pct in percent_list])

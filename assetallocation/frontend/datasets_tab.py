@@ -66,9 +66,9 @@ def get_component():
     return html.Div(children=[
         dcc.Dropdown(
             options=[
-                {'label': i, 'value': i} for i in user_input.investment_class_dict
+                {'label': i, 'value': i} for i in user_input.INVESTMENT_CLASS_DICT
             ],
-            value=list(user_input.investment_class_dict)[0],
+            value=list(user_input.INVESTMENT_CLASS_DICT)[0],
             id='datasets-dropdown'
         ),
         html.Div(id='datasets-container')
@@ -86,7 +86,7 @@ def attach_callbacks(app):
     def _update_output(value):
         if value is None:
             return ""
-        dataset = user_input.investment_class_dict[value]
+        dataset = user_input.INVESTMENT_CLASS_DICT[value]
         return dcc.Graph(
             id='datasets-graph',
             figure=get_params(dataset.index, dataset.values[:, 0]))

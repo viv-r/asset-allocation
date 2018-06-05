@@ -17,7 +17,7 @@ Classes:
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from backend.demo_portfolios import test_demo_portfolios_A as state
+from backend.demo_portfolios import TEST_DEMO_PORTFOLIOS_A as state
 
 
 def name_component(template):

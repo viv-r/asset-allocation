@@ -16,7 +16,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import backend.user_input as ui
-from backend.demo_portfolios import test_user_param_A as options
+from backend.demo_portfolios import TEST_USER_PARAM_A as options
 import frontend.portfolios_tab as pt
 import plotly.graph_objs as go
 
@@ -81,7 +81,7 @@ def measure_of_return_component():
         dcc.Dropdown(
             options=[
                 {'label': i, 'value': i}
-                for i in ui.return_type_dict
+                for i in ui.RETURN_TYPE_DICT
             ],
             value=options['Measure of return'],
             id=id
@@ -129,7 +129,7 @@ def measure_of_risk_component():
         dcc.Dropdown(
             options=[
                 {'label': i, 'value': i}
-                for i in ui.risk_type_dict
+                for i in ui.RISK_TYPE_DICT
             ],
             value=options['Measure of risk'],
             id=id
