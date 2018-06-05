@@ -89,11 +89,8 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent', ann
         List of rates of return for different time periods
     """
     # Use date_range
-    if annualize:
-        # todo: add annualized calculations
-        pass
-
-    return np.array([calc_return(data, day, day + timedelta(days=period), return_type=return_type)
+    return np.array([calc_return(data, day, day + timedelta(days=period), return_type=return_type,
+                                 annualize=annualize)
                      for day in pd.date_range(start, end - timedelta(days=period),
                                               freq=timedelta(days=freq))])
 
