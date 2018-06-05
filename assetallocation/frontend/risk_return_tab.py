@@ -18,6 +18,7 @@ import backend.user_input as ui
 from backend.demo_portfolios import TEST_USER_PARAM_A as options
 import frontend.portfolios_tab as pt
 
+
 def get_params(x_cords, y_cords, text):
     """
     Constructs the plotly specific graph parameters. This configuration
@@ -217,6 +218,7 @@ def threshold_component():
         html.Span(id=component_id + 'out', children=''),
         dcc.Input(
             type='number',
+            step=0.005,
             id=component_id,
             value=options['Threshold rate of return']
         ),
@@ -304,7 +306,7 @@ def annualized_component():
     """
     component_id = 'annualized_checkbox'
     component = html.Div(children=[
-        "Use annualized return",
+        "Use annualized risk/return measures",
         html.Span(id=component_id + 'out', children=''),
         dcc.Checklist(
             options=[
@@ -334,7 +336,7 @@ def annualized_callback(app):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(component_id, 'value')])
+        [Input(component_id, 'values')])
     def _callback(value):
         if value is None:
             value = []
