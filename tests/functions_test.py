@@ -20,11 +20,11 @@ import numpy as np
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
-GPARENT_DIR = os.path.dirname(PARENT_DIR)
+# GPARENT_DIR = os.path.dirname(PARENT_DIR)
 
-sys.path.insert(0, GPARENT_DIR)
+sys.path.insert(0, PARENT_DIR)
 
-from assetallocation import generate_portfolios, functions
+from assetallocation import functions
 
 FILE_NAME = "./Data/SP500.csv"
 
