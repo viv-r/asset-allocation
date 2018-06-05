@@ -3,7 +3,7 @@ chardet==3.0.4
 click==6.7
 cycler==0.10.0
 dash==0.21.1
-dash-core-components==0.13.0-rc4
+dash-core-components==0.21.rc01
 dash-html-components==0.10.1
 dash-renderer==0.12.1
 decorator==4.3.0
