@@ -13,11 +13,10 @@ Classes:
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+import plotly.graph_objs as go
 import backend.user_input as ui
 from backend.demo_portfolios import TEST_USER_PARAM_A as options
 import frontend.portfolios_tab as pt
-import plotly.graph_objs as go
-
 
 def get_params(x_cords, y_cords, text):
     """
