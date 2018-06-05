@@ -199,8 +199,8 @@ class UnitTests(unittest.TestCase):
             user_labels=[portfolio['name'] for portfolio in test_user_input],
             user_parameters=test_user_param_A
             )
-        actual_col_names = list(export_data)
-        expected_col_names = ["Risk", "Return", "Label"]
+        actual_col_names = sorted(list(export_data))
+        expected_col_names = ["Label", "Return", "Risk"]
         self.assertEqual(actual_col_names, expected_col_names)
 
     def test_export_portfolio_col_num(self):
