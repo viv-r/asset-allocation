@@ -1,7 +1,8 @@
 """
 This file contains the various functions which are used to extract
-the desired information (risk and return values) from the data.
-
+the desired information from the data on the backend, use it to
+calculate risk and return values for various portfolios,
+and prepare them for export to the graph on the frontend.
 """
 from datetime import timedelta
 import numpy as np

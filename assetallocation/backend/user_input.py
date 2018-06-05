@@ -1,5 +1,7 @@
 """
-Functions to translate user input into portfolio
+This file contains the functions which take the user inputs
+from the frontend, send them to the backend to interact with
+the data, then returns the information to the frontend for graphing.
 """
 import sys
 import os
@@ -10,7 +12,7 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 sys.path.insert(0, CURRENT_DIR)
 
 # Dictionary translating descriptions of investment classes to data sets
-# Expand as necessary, possibly including individual stock and bond data sets
+# Expand as necessary in the future
 INVESTMENT_CLASS_DICT = {
     'U.S. large-cap stocks (S&P 500 index)': invest_dataframe('./Data/SP500.csv'),
     'U.S. large-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLLRGCAP.csv'),
@@ -26,20 +28,23 @@ INVESTMENT_CLASS_DICT = {
     'U.S. municipal tax-exempt bonds': None,  # fill in
     'International growth stocks': None,  # fill in
     'International value stocks': None,  # fill in
-    'Cash at inflation': None  # fill in inflation data set
+    'Cash at inflation': None  # fill in
 }
 
 
 def portfolio_from_input(user_input):
-    """INPUTS:
-    user_input: dictionary of user inputs for a single portfolio including:
-    - Initial investment
-    - Investment classes
-        - Percentages of different investment classes
-    - Rebalancing frequency (days)
-    - Start date
-    - End date
-    OUTPUT: data for tracking portfolio
+    """
+    Translates user input (frontend) to portfolio data (backend).
+    Args:
+        user_input: dictionary of user inputs for a single portfolio including:
+        - Initial investment
+        - Investment classes
+            - Percentages of different investment classes
+        - Rebalancing frequency (days)
+        - Start date
+        - End date
+    Returns:
+        Dataframe of values of asset portfolio by date.
     """
     initial = user_input['Initial investment']
     rebal_time = user_input['Rebalancing frequency (days)']
@@ -67,19 +72,23 @@ RISK_TYPE_DICT = {
 
 
 def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
-    """INPUTS:
-    user_portfolio_list: portfolios user has built
-    user_labels: user-defined (or auto-generated?) labels for each portfolio
-    return_type: user's preferred return measure (percent or log)
-    risk_type: user's preferred risk measure
-    annualize_return = whether to display annualized return on y axis
-    annualize_risk = whether to use annualized return for risk calculation on x axis
-    period = period for measuring risk
-    freq = how often to sample for measuring risk
-    rate = threshold rate of return (for probability risk measure)
-    start = start date for graphing
-    end = end date for graphing
-    OUTPUT: data for graphing risk and return of user's chosen portfolios
+    """
+    Translates a list of user portfolios to a dataframe ready for export to graph.
+    Args:
+        user_portfolio_list: portfolios user has built
+        user_labels: user-defined (or auto-generated) labels for each portfolio
+        user_parameters: user specifications for graphing data, including:
+            return_type: user's preferred return measure (percent or log)
+            risk_type: user's preferred risk measure
+            annualize_return = whether to display annualized return on y axis
+            annualize_risk = whether to use annualized return for risk calculation on x axis
+            period = period for measuring risk
+            freq = how often to sample for measuring risk
+            rate = threshold rate of return (for probability risk measure)
+            start = start date for graphing
+            end = end date for graphing
+    Returns:
+        Dataframe with labels for graphing risk and return of user's chosen portfolios
     """
     portfolio_list = [portfolio_from_input(user_input) for user_input in user_portfolio_list]
     return_type = RETURN_TYPE_DICT[
