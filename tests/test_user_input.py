@@ -55,12 +55,12 @@ TEST_USER_PARAM_A = {
 }
 
 TEST_USER_PARAM_B = {
-    'Measure of return': 'Change in log of portfolio value',
-    'Measure of risk': 'Probability of return below a threshold',
-    'Period of return (days) to use for risk measure': 365,
-    'Threshold rate of return': 0.0,
-    'Frequency to measure return': 10,
-    'Start of period to display': pd.Timestamp('2013-01-01 00:00:00'),
+    'Measure of return': 'Percent change in portfolio value',
+    'Measure of risk': 'Standard deviation of return',
+    'Period of return (days) to use for risk measure': 30,
+    'Threshold rate of return': None,
+    'Frequency to measure return': 5,
+    'Start of period to display': pd.Timestamp('2011-01-01 00:00:00'),
     'End of period to display': pd.Timestamp('2018-01-01 00:00:00'),
     'Display annualized return': True,
     'Use annualized return for risk measure': True
