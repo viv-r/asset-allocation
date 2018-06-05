@@ -6,7 +6,7 @@ the data, then returns the information to the frontend for graphing.
 from backend.functions import invest_dataframe, track_portfolio_cache, label_risk_return
 
 # Dictionary translating descriptions of investment classes to data sets
-# Expand as necessary in the future
+# Expand as necessary in the future.
 INVESTMENT_CLASS_DICT = {
     'U.S. large-cap stocks (S&P 500 index)': invest_dataframe('./Data/SP500.csv'),
     'U.S. large-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLLRGCAP.csv'),
