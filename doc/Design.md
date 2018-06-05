@@ -3,10 +3,10 @@
 This is a brief overview of how a user will interact with the tool and how this ties in to the various components defined above:
 
 ### Deciding on a risk measure
-This is where the users interact with the first frontend component "Risk measure selection". A list of different risk measure models with a brief description of each will be available to users, who can then select one of these.
+This is where the users interact with the first frontend component 'Risk measure selection'. A list of different risk measure models with a brief description of each will be available to users, who can then select one of these.
 
 ### Selecting a list of portfolio (asset allocation models) for the chosen risk measure
-Users interact with the second frontend component "Asset allocation model selection" where from a list of different portfolios, they can select which ones they wish to compare.
+Users interact with the second frontend component 'Asset allocation model selection' where from a list of different portfolios, they can select which ones they wish to compare.
 
 ### Selecting a time period to view returns and risk
 Here the users interact with the third frontend component where they select the time period (in years) over which they wish to see returns vs. risk for the preselected combinations of risk measure and portfolios.

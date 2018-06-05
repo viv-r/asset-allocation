@@ -19,6 +19,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 from backend.demo_portfolios import TEST_DEMO_PORTFOLIOS_A as state
+from backend.demo_portfolios import TEST_USER_PARAM_A as options
 
 
 def name_component(template):
@@ -192,8 +193,19 @@ def time_period_callback(app, template):
         Output(component_id + 'out', 'children'),
         [Input(component_id, 'value')])
     def _callback(value):
-        template['input']['Start date'] = pd.Timestamp(year=value[0], month=1, day=1, hour=12)
-        template['input']['End date'] = pd.Timestamp(year=value[1], month=1, day=1, hour=12)
+
+        new_st = pd.Timestamp(str(value[0]) + '-01-01 00:00:00')
+        old_st = options['Start of period to display']
+        new_et = pd.Timestamp(str(value[1]) + '-01-01 00:00:00')
+        old_et = options['End of period to display']
+
+        if new_st > old_st:
+            options['Start of period to display'] = new_st
+        if new_et < old_et:
+            options['End of period to display'] = new_et
+
+        template['input']['Start date'] = new_st
+        template['input']['End date'] = new_et
         return ''
 
 

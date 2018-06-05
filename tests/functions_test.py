@@ -23,10 +23,11 @@ FINAL_DIR = os.path.join(str(PARENT_DIR), "assetallocation")
 sys.path.insert(0, PARENT_DIR)
 sys.path.insert(0, FINAL_DIR)
 #pylint: enable=duplicate-code
-#pylint: disable=wrong-import-position
+# pylint: disable=wrong-import-position
 from backend import functions
-#pylint: enable=wrong-import-position
+# pylint: enable=wrong-import-position
 FILE_NAME = "./Data/SP500.csv"
+
 
 class UnitTests(unittest.TestCase):
     """Set of unittests for the functions module.
@@ -69,11 +70,9 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         len_file = 0
-        #pylint: disable=unused-variable
         with open(FILE_NAME) as file_open:
-            for i, el_num in enumerate(file_open):
+            for _ in enumerate(file_open):
                 len_file += 1
-        #pylint: enable=unused-variable
         df_to_test = functions.invest_dataframe(FILE_NAME)
         rows_output = df_to_test.index.shape[0]
         self.assertGreater(rows_output, len_file)
@@ -98,7 +97,7 @@ class UnitTests(unittest.TestCase):
         char_two = "."
         break1 = [pos for pos, char in enumerate(FILE_NAME) if char == char_one]
         break2 = [pos for pos, char in enumerate(FILE_NAME) if char == char_two]
-        in_file_name = FILE_NAME[break1[-1]+1:break2[-1]]
+        in_file_name = FILE_NAME[break1[-1] + 1:break2[-1]]
         self.assertEqual(in_file_name, out_file_name)
 
     def test_num_rows(self):
@@ -229,7 +228,6 @@ class UnitTests(unittest.TestCase):
         out_return = functions.calc_risk(data_input, start, end)
         self.assertGreaterEqual(out_return, 0)
 
-
     def test_num_rows_portfolio(self):
         """check if track_portfolio returns a number of records
         equal to the number of unique date_time indices.
@@ -274,6 +272,7 @@ class UnitTests(unittest.TestCase):
         ror_percent = functions.calc_return(df_t, start, end, return_type='percent', annualize=True)
         self.assertGreaterEqual(ror_percent, 0)
         self.assertLessEqual(ror_percent, 100)
+
 
 SUITE = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE)
