@@ -18,7 +18,7 @@ def invest_dataframe(filename, sep=','):
     # Get rid of missing and non-numeric values
     data = data.apply(pd.to_numeric, errors='coerce').dropna()
     assert data.shape[1] == 1
-    assert type(data.index) == pd.core.indexes.datetimes.DatetimeIndex
+    assert isinstance(data.index, pd.core.indexes.datetimes.DatetimeIndex)
     assert data.index.nunique() == len(data)
     # Fill missing dates with most recent value
     # Source: https://stackoverflow.com/questions/19324453/add-missing-dates-to-pandas-dataframe
@@ -56,6 +56,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
 
 
 # We will want to cache this
+#pylint: disable=too-many-arguments
 def return_list(data, start, end, period=365, freq=1, return_type='percent', annualize=None):
     """
     Calculates a list of rates of return over a range of time.
@@ -125,11 +126,18 @@ def track_portfolio(initial, percent, rebal_time, start, end):
     return pd.DataFrame(portfolio, columns=['Value'])
 
 # Track portfolio with rebalancing and cacheing by creating an index to represent the portfolio
-portfolio_cache = {}
+PORTFOLIO_CACHE = {}
 
 def index_to_portfolio(initial, portfolio_index, start, end):
-    portfolio = pd.DataFrame(initial / portfolio_index.loc[start] 
-        * portfolio_index.loc[start:end+timedelta(days=1)], columns=['Value'])
+    """
+    INPUTS:
+
+    CACHE
+
+    """
+    portfolio = pd.DataFrame(initial / portfolio_index.loc[start]
+                             * portfolio_index.loc[start:end+timedelta(days=1)],
+                             columns=['Value'])
     return portfolio
 
 def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, investment_class_dict):
@@ -145,8 +153,8 @@ def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, invest
     CACHE:
     Contains index for each (percent_tuple, rebal) pair - no need for separate initial investments
     """
-    if (percent_tuple, rebal_time) in portfolio_cache:
-        portfolio_index = portfolio_cache[(percent_tuple, rebal_time)]
+    if (percent_tuple, rebal_time) in PORTFOLIO_CACHE:
+        portfolio_index = PORTFOLIO_CACHE[(percent_tuple, rebal_time)]
     else:
         assert np.isclose(sum(p[1] for p in percent_tuple), 1)
         #If not in cache, create a new index, then multiply by initial value
@@ -155,7 +163,7 @@ def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, invest
         index_start = max([min(data.index) for data, pct in percent_list])
         index_end = min([max(data.index) for data, pct in percent_list])
         portfolio_index = track_portfolio(100., percent_list, rebal_time, index_start, index_end)
-        portfolio_cache[(percent_tuple, rebal_time)] = portfolio_index
+        PORTFOLIO_CACHE[(percent_tuple, rebal_time)] = portfolio_index
     return index_to_portfolio(initial, portfolio_index, start, end)
 
 
@@ -213,7 +221,8 @@ def label_risk_return(labels, portfolios, start, end, return_type='percent',
     return df_rr
 
 
-# def plot_risk_return(portfolios, start, end, return_type='percent', risk_type='stddev', period=365, freq=None, rate=None):
+# def plot_risk_return(portfolios, start, end, return_type='percent',
+# risk_type='stddev', period=365, freq=None, rate=None):
 #     """
 #     INPUTS:
 #     see get_risk_return
