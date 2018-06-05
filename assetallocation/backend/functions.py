@@ -8,7 +8,6 @@ import numpy as np
 import pandas as pd
 # import matplotlib.pyplot as plt
 
-
 # Basic functions for asset allocation tool
 
 def invest_dataframe(filename, sep=','):

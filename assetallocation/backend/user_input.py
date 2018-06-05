@@ -2,21 +2,23 @@
 
 import numpy as np
 import pandas as pd
-
 import sys
 import os
 import inspect
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-
 sys.path.insert(0, CURRENT_DIR)
 
-# import functions
+#pylint: disable=import-error
+#pylint: disable=wildcard-import
 from functions import *
-
+#pylint: enable=import-error
+#pylint: enable=wildcard-import
 
 # Dictionary translating descriptions of investment classes to data sets
-investment_class_dict = {
+# Expand as necessary, possibly including individual stock and bond data sets
+#pylint: disable=undefined-variable
+INVESTMENT_CLASS_DICT = {
     'U.S. large-cap stocks (S&P 500 index)': invest_dataframe('./Data/SP500.csv'),
     'U.S. large-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLLRGCAP.csv'),
     'U.S. mid-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLMIDCAP.csv'),
@@ -32,7 +34,6 @@ investment_class_dict = {
     'International growth stocks': None,  # fill in
     'International value stocks': None,  # fill in
     'Cash at inflation': None  # fill in inflation data set
-    # Expand as necessary, possibly including individual stock and bond data sets
 }
 
 
@@ -57,15 +58,16 @@ def portfolio_from_input(user_input):
     percent_list = [(invest_class, pct)
                     for invest_class, pct in user_input['Investment classes'].items()]
     percent_tuple = tuple(percent_list)
-    return track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, investment_class_dict)
+    return track_portfolio_cache(initial, percent_tuple, rebal_time,
+                                 start, end, INVESTMENT_CLASS_DICT)
 
 
-return_type_dict = {
+RETURN_TYPE_DICT = {
     'Percent change in portfolio value': 'percent',
     'Change in log of portfolio value': 'log'
 }
 
-risk_type_dict = {
+RISK_TYPE_DICT = {
     'Standard deviation of return': 'stddev',
     'Probability of return below a threshold': 'proba'
 }
@@ -87,10 +89,10 @@ def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
     OUTPUT: data for graphing risk and return of user's chosen portfolios
     """
     portfolio_list = [portfolio_from_input(user_input) for user_input in user_portfolio_list]
-    return_type = return_type_dict[
+    return_type = RETURN_TYPE_DICT[
         user_parameters['Measure of return']
     ]
-    risk_type = risk_type_dict[
+    risk_type = RISK_TYPE_DICT[
         user_parameters['Measure of risk']
     ]
     period = user_parameters['Period of return (days) to use for risk measure']
@@ -100,9 +102,10 @@ def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
     threshold = user_parameters['Threshold rate of return']  # can be None if risk_type=stddev
     annualize_return = user_parameters['Display annualized return']
     annualize_risk = user_parameters['Use annualized return for risk measure']
-    assert type(period) == int or type(period) == float
+    assert isinstance(period, (float, int))
     return label_risk_return(labels=user_labels, portfolios=portfolio_list,
                              start=start, end=end,
                              return_type=return_type, annualize_return=annualize_return,
                              risk_type=risk_type, annualize_risk=annualize_risk,
                              period=period, freq=freq, threshold=threshold)
+#pylint: enable=undefined-variable

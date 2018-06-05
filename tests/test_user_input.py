@@ -253,7 +253,7 @@ class UnitTests(unittest.TestCase):
 SUITE1 = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE1)
 
-# portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
+# portfolio_1 = ui.portfolio_from_input(TEST_USER_INPUT[0]['input'])
 
 # s = time.time()
 # export_data_A = ui.export_user_portfolios(

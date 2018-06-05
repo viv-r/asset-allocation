@@ -9,4 +9,6 @@ init-hook='import sys; sys.path.append("./assetallocation")'
 disable=duplicate-code,
         too-many-arguments,
         unused-argument,
-        unused-import
+        unused-import,
+        wrong-import-position,
+        wrong-import-order
