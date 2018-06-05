@@ -1,7 +1,13 @@
+"""
+This file contains the various functions which are used to extract
+the desired information (risk and return values) from the data.
+
+"""
+from datetime import date, timedelta
 import numpy as np
 import pandas as pd
 # import matplotlib.pyplot as plt
-from datetime import date, timedelta
+
 
 # Basic functions for asset allocation tool
 
