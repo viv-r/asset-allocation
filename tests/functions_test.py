@@ -253,7 +253,7 @@ class UnitTests(unittest.TestCase):
         else:
             out_bool = 1
         self.assertEqual(out_bool, 1)
-    
+
     def test_probcalc_risk_return_type(self):
         """check if calc_risk function returns an output
         of type numpy.float64.
@@ -278,7 +278,7 @@ class UnitTests(unittest.TestCase):
         else:
             out_bool = 1
         self.assertEqual(out_bool, 1)
-    
+
     def test_exccalc_risk_return_type(self):
         """check if calc_risk function returns an output
         of type numpy.float64.
