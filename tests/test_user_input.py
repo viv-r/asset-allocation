@@ -14,30 +14,33 @@ sys.path.insert(0, FINAL_DIR)
 # pylint: disable=wrong-import-position
 from backend import user_input as ui
 # pylint: enable=wrong-import-position
-TEST_USER_INPUT = [{'name': 'Portfolio 1',
-                    'input': {
-                        'Initial investment': 10000,
-                        'Investment classes': {
-                            'U.S. large-cap stocks (Wilshire index)': 0.4,
-                            'U.S. mid-cap stocks (Wilshire index)': 0.3,
-                            'U.S. small-cap stocks (Wilshire index)': 0.3
-                        },
-                        'Rebalancing frequency (days)': 90,
-                        'Start date': pd.Timestamp('2008-01-01 00:00:00'),
-                        'End date': pd.Timestamp('2018-01-01 00:00:00')
-                    }},
-                   {'name': 'Portfolio 2',
-                    'input': {
-                        'Initial investment': 10000,
-                        'Investment classes': {
-                            'U.S. large-cap stocks (S&P 500 index)': 0.5,
-                            'U.S. Treasury bonds, 0-1 year (S&P index)': 0.25,
-                            'U.S. Treasury bonds, 3-5 year (S&P index)': 0.25
-                        },
-                        'Rebalancing frequency (days)': 90,
-                        'Start date': pd.Timestamp('2010-01-01 00:00:00'),
-                        'End date': pd.Timestamp('2018-01-01 00:00:00')
-                    }}]
+TEST_USER_INPUT = [{
+    'name': 'Portfolio 1',
+    'input': {
+        'Initial investment': 10000,
+        'Investment classes': {
+            'U.S. large-cap stocks (Wilshire index)': 0.4,
+            'U.S. mid-cap stocks (Wilshire index)': 0.3,
+            'U.S. small-cap stocks (Wilshire index)': 0.3
+        },
+        'Rebalancing frequency (days)': 90,
+        'Start date': pd.Timestamp('2008-01-01 00:00:00'),
+        'End date': pd.Timestamp('2018-01-01 00:00:00')
+    }
+}, {
+    'name': 'Portfolio 2',
+    'input': {
+        'Initial investment': 10000,
+        'Investment classes': {
+            'U.S. large-cap stocks (S&P 500 index)': 0.5,
+            'U.S. Treasury bonds, 0-1 year (S&P index)': 0.25,
+            'U.S. Treasury bonds, 3-5 year (S&P index)': 0.25
+        },
+        'Rebalancing frequency (days)': 90,
+        'Start date': pd.Timestamp('2010-01-01 00:00:00'),
+        'End date': pd.Timestamp('2018-01-01 00:00:00')
+    }
+}]
 
 TEST_USER_PARAM_A = {
     'Measure of return': 'Change in log of portfolio value',
@@ -252,23 +255,3 @@ class UnitTests(unittest.TestCase):
 
 SUITE1 = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE1)
-
-# portfolio_1 = ui.portfolio_from_input(TEST_USER_INPUT[0]['input'])
-
-# s = time.time()
-# export_data_A = ui.export_user_portfolios(
-#     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
-#     user_labels=[portfolio['name'] for portfolio in test_user_input],
-#     user_parameters=TEST_USER_PARAM_A
-#     )
-# e = time.time()
-# print("Total time to generate set A", e-s)
-
-# s = time.time()
-# export_data_B = ui.export_user_portfolios(
-#     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
-#     user_labels=[portfolio['name'] for portfolio in test_user_input],
-#     user_parameters=TEST_USER_PARAM_B
-#     )
-# e = time.time()
-# print("Total time to generate set B", e-s)
