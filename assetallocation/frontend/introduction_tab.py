@@ -11,4 +11,5 @@ def attach_callbacks(app):
 def get_component():
     text = requests.get(README_PATH).text
     return dcc.Markdown(text)
-    # return dcc.Markdown(''' *_Note: This file is pulled directly from github. Once README.md is updated, change this location to point to it._*\n\n''' + text)
+    # return dcc.Markdown(''' *_Note: This file is pulled directly from github. Once README.md 
+    # is updated, change this location to point to it._*\n\n''' + text)
