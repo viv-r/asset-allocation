@@ -24,6 +24,7 @@ sys.path.insert(0, FINAL_DIR)
 #pylint: disable=duplicate-code
 #pylint: disable=wrong-import-position
 from frontend import introduction_tab
+from frontend import page
 #pylint: enable=wrong-import-position
 
 class UnitTests(unittest.TestCase):
@@ -73,3 +74,4 @@ class UnitTests(unittest.TestCase):
 
 SUITE = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE)
+
