@@ -53,7 +53,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(str(type(df_to_test)), "<class 'Markdown'>")
 
     def test_attach_callback_return(self):
-        """check if intro tab's attach_callback does not 
+        """check if intro tab's attach_callback does not
         return anything.
 
         Args:
