@@ -6,5 +6,4 @@ ignored-modules = numpy, pandas, dash, dash_html_components, dash_core_component
 init-hook='import sys; sys.path.append("./assetallocation")'
 
 [MESSAGES CONTROL]
-disable=duplicate-code,
-        too-many-arguments
+disable=too-many-arguments

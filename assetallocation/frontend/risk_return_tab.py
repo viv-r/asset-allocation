@@ -84,7 +84,7 @@ def measure_of_return_component():
                 for i in ui.RETURN_TYPE_DICT
             ],
             value=options['Measure of return'],
-            id=id
+            id=component_id
         )
     ])
 
@@ -105,7 +105,7 @@ def measure_of_return_callback(app):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         options['Measure of return'] = value
         return ''
@@ -132,7 +132,7 @@ def measure_of_risk_component():
                 for i in ui.RISK_TYPE_DICT
             ],
             value=options['Measure of risk'],
-            id=id
+            id=component_id
         )
     ])
 
@@ -153,7 +153,7 @@ def measure_of_risk_callback(app):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         options['Measure of risk'] = value
         return ''
@@ -177,7 +177,7 @@ def return_period_component():
         html.Span(id=component_id + 'out', children=''),
         dcc.Input(
             type='number',
-            id=id,
+            id=component_id,
             value=options['Period of return (days) to use for risk measure']
         ),
         html.Div(),
@@ -200,7 +200,7 @@ def return_period_callback(app):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         options['Period of return (days) to use for risk measure'] = value
         return ''
@@ -223,7 +223,7 @@ def threshold_component():
         html.Span(id=component_id + 'out', children=''),
         dcc.Input(
             type='number',
-            id=id,
+            id=component_id,
             value=options['Threshold rate of return']
         ),
         html.Div(),
@@ -246,7 +246,7 @@ def threshold_callback(app):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         options['Threshold rate of return'] = value
         return ''
@@ -269,7 +269,7 @@ def frequency_component():
         html.Span(id=component_id + 'out', children=''),
         dcc.Input(
             type='number',
-            id=id,
+            id=component_id,
             value=options['Frequency to measure return']
         )
     ])
@@ -291,7 +291,7 @@ def frequency_callback(app):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         options['Frequency to measure return'] = value
         return ''
@@ -317,7 +317,7 @@ def annualized_component():
                 {'label': 'Return', 'value': 'return'},
                 {'label': 'Risk', 'value': 'risk'},
             ],
-            id=id,
+            id=component_id,
             values=(['return'] if options['Display annualized return'] else []) +
             (['risk'] if options['Use annualized return for risk measure'] else [])
         )
@@ -340,8 +340,11 @@ def annualized_callback(app):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
+        if value is None:
+            value = []
+
         options['Display annualized return'] = 'return' in value
         options['Use annualized return for risk measure'] = 'risk' in value
         return ''

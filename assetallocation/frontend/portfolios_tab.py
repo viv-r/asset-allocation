@@ -34,7 +34,7 @@ def name_component(template):
     component = html.Span(children=[
         "Portfolio name: ",
         html.Span(id=component_id + 'out', children=''),
-        dcc.Input(value=template['name'], id=id),
+        dcc.Input(value=template['name'], id=component_id),
         html.Div()
     ])
     return component
@@ -55,7 +55,7 @@ def name_callback(app, template):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         template['name'] = value
         return ''
@@ -75,7 +75,7 @@ def initial_investment_component(template):
     component = html.Span(children=[
         "Initial investment: ",
         html.Span(id=component_id + 'out', children=''),
-        dcc.Input(type='number', value=template['input']['Initial investment'], id=id),
+        dcc.Input(type='number', value=template['input']['Initial investment'], id=component_id),
         html.Div()
     ])
     return component
@@ -96,7 +96,7 @@ def initial_investment_callback(app, template):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         template['input']['Initial investment'] = value
         return ''
@@ -114,10 +114,11 @@ def rebal_freq_component(template):
         dcc.Div object containing the input
     """
     component_id = 'rebal-freq-' + template['id']
+    value = template['input']['Rebalancing frequency (days)']
     component = html.Span(children=[
         "Rebalancing frequency (days): ",
         html.Span(id=component_id + 'out', children=''),
-        dcc.Input(type='number', value=template['input']['Rebalancing frequency (days)'], id=id),
+        dcc.Input(type='number', value=value, id=component_id),
         html.Div()
     ])
     return component
@@ -138,7 +139,7 @@ def rebal_freq_callback(app, template):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(value):
         template['input']['Rebalancing frequency (days)'] = value
         return ''
@@ -161,7 +162,7 @@ def time_period_component(template):
         html.Span(id=component_id + 'out', children=''),
         html.Div(style={'margin': '10px', "padding": '5px'}, children=[
             dcc.RangeSlider(
-                id=id,
+                id=component_id,
                 marks={i: '{}'.format(i) for i in range(2008, 2019)},
                 min=2008,
                 max=2019,
@@ -188,7 +189,7 @@ def time_period_callback(app, template):
 
     @app.callback(
         Output(component_id + 'out', 'children'),
-        [Input(id, 'value')])
+        [Input(component_id, 'value')])
     def _callback(_value):
         # template['input']['Start date'] = pd.Timestamp(year=value[0], month=1, day=1, hour=12)
         # template['input']['End date'] = pd.Timestamp(year=value[1], month=1, day=1, hour=12)

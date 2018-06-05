@@ -59,8 +59,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
 
 
 # We will want to cache this
-#pylint: disable=too-many-arguments
-def return_list(data, start, end, period=365, freq=1, return_type='percent'):
+def return_list(data, start, end, period=365, freq=1, return_type='percent', annualize=None):
     """
     Calculates a list of rates of return over a range of time.
     INPUTS:
@@ -73,13 +72,17 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent'):
     Ignores partial periods at the end when freq > 1 day.
     """
     # Use date_range
+    if annualize:
+        # todo: add annualized calcultions
+        pass
+
     return np.array([calc_return(data, day, day + timedelta(days=period), return_type=return_type)
                      for day in pd.date_range(start, end - timedelta(days=period),
                                               freq=timedelta(days=freq))])
 
 
 def calc_risk(data, start, end, risk_type='stddev', period=365,
-              freq=1, threshold=0, return_type='percent'):
+              freq=1, threshold=0, return_type='percent', annualize=False):
     """
     Risk measure:
     - proba = historical probability of return below a certain value
@@ -91,13 +94,14 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
         Example: calculate return every day = 1, once a year = 365
     rate = threshold rate of return
     return_type = measure of return (percent or log)
+    annualize = whether to use annualized return
     """
     if risk_type == 'stddev':
         return np.std(return_list(data, start, end, period=period, freq=freq,
-                                  return_type=return_type))
+                                  return_type=return_type, annualize=annualize))
     elif risk_type == 'proba':
         return np.mean(return_list(data, start, end, period=period, freq=freq,
-                                   return_type=return_type) < threshold)
+                                   return_type=return_type, annualize=annualize) < threshold)
     else:
         raise Exception('Risk measure must be sttdev or proba.')
 
@@ -203,7 +207,7 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     ann_bool = annualize_return
     y_val = [calc_return(p, start, end, return_type=r_type, annualize=ann_bool) for p in portfolios]
     x_val = [calc_risk(p, start, end, threshold=threshold, period=period, freq=freq,
-                       risk_type=risk_type, return_type=r_type)
+                       risk_type=risk_type, return_type=r_type, annualize=annualize_risk)
              for p in portfolios]
     return pd.DataFrame({'Risk': x_val, 'Return': y_val})
 
