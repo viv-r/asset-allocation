@@ -1,5 +1,5 @@
 """
-Creates many portfolios for in-class demonstration
+This file creates many examples of portfolios for the in-class demonstration.
 """
 import pandas as pd
 
@@ -7,18 +7,17 @@ import pandas as pd
 def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
                     stock_only=True, bond_only=False, mix=False):
     """
-    Returns a list of demo portfolios, each containing a list of assets
+    Creates a list of demo portfolios, each containing a list of assets
     with varying weights.
 
-    INPUTS:
-        inital: initial investment amount
-        rebal_time: portfolio rebalancing period
+    Args:
+        initial: amount invested on first day
+        rebal_time: portfolio rebalancing frequency (in days)
         start, end: start and end dates
-        stock_only: if the portfolios should contain stocks
-        bond_only: if the portfolios should contain bonds
-        mix: if the portfolios should contain a mix of stocks and bonds
-
-    OUPUTS:
+        stock_only: whether to use stock-only portfolios
+        bond_only: whether to use bond-only portfolios
+        mix: whether to use stock-bond mix portfolios
+    Returns:
         A list of portfolios
     """
     # pylint: disable=invalid-name, too-many-locals, redefined-outer-name
@@ -82,12 +81,10 @@ def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
         }
     } for label, ivc in splits.items()]
 
-    # Needs refactoring - not efficient
-    # user_portfolio_list = portfolios.values()
-    # user_labels = portfolios.keys()
     return portfolios
 
 
+#Test sets of user parameters for graphing
 TEST_USER_PARAM_A = {
     'Measure of return': 'Change in log of portfolio value',
     'Measure of risk': 'Probability of return below a threshold',

@@ -140,6 +140,51 @@ class UnitTests(unittest.TestCase):
         out_return = functions.calc_return(data_input, start, end)
         self.assertEqual(float, type(out_return))
 
+    def test_logcalc_return_type(self):
+        """check if the value returned by the calc_return
+        function is of type float.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if different return type encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.calc_return(data_input, start, end, return_type='log')
+        out_type = str(type(out_return))
+        if out_type == "<class 'numpy.float64'>" or out_type == "<type 'numpy.float64'>":
+            out_bool = 1
+        else:
+            out_bool = 1
+        self.assertEqual(out_bool, 1)
+
+    def test_exccalc_return_type(self):
+        """check if the value returned by the calc_return
+        function is of type float.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if different return type encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        with self.assertRaises(Exception):
+            functions.calc_return(data_input, start, end, return_type='null')
+
     def test_return_list_type(self):
         """check if the output of the invest_dataframe function
         is a numpy array (numpy.ndarray).
@@ -183,7 +228,7 @@ class UnitTests(unittest.TestCase):
         num_days = int(num_days_str[:num_days_str.find(" ")])
         self.assertLessEqual(out_return.shape[0], num_days)
 
-    def test_calc_risk_return_type(self):
+    def test_stdcalc_risk_return_type(self):
         """check if calc_risk function returns an output
         of type numpy.float64.
 
@@ -200,13 +245,58 @@ class UnitTests(unittest.TestCase):
         data_input = functions.invest_dataframe(FILE_NAME)
         start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
         end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
-        out_return = functions.calc_risk(data_input, start, end)
+        out_return = functions.calc_risk(data_input, start, end, risk_type='stddev')
         out_type = str(type(out_return))
         if out_type == "<class 'numpy.float64'>" or out_type == "<type 'numpy.float64'>":
             out_bool = 1
         else:
             out_bool = 1
         self.assertEqual(out_bool, 1)
+
+    def test_probcalc_risk_return_type(self):
+        """check if calc_risk function returns an output
+        of type numpy.float64.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.calc_risk(data_input, start, end, risk_type='proba')
+        out_type = str(type(out_return))
+        if out_type == "<class 'numpy.float64'>" or out_type == "<type 'numpy.float64'>":
+            out_bool = 1
+        else:
+            out_bool = 1
+        self.assertEqual(out_bool, 1)
+
+    def test_exccalc_risk_return_type(self):
+        """check if calc_risk function returns an output
+        of type numpy.float64.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        with self.assertRaises(Exception):
+            functions.calc_risk(data_input, start, end, risk_type='null')
 
     def test_calc_risk_return_val(self):
         """verify that the output of the calc_risk function is
