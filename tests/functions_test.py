@@ -23,10 +23,10 @@ FINAL_DIR = os.path.join(str(PARENT_DIR), "assetallocation")
 sys.path.insert(0, PARENT_DIR)
 sys.path.insert(0, FINAL_DIR)
 
+#pylint: disable=wrong-import-position
 from backend import functions
-
+#pylint: enable=wrong-import-position
 FILE_NAME = "./Data/SP500.csv"
-
 
 class UnitTests(unittest.TestCase):
     """Set of unittests for the functions module.
@@ -69,9 +69,11 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         len_file = 0
+        #pylint: disable=unused-variable
         with open(FILE_NAME) as file_open:
-            for i, l in enumerate(file_open):
+            for i, el_num in enumerate(file_open):
                 len_file += 1
+        #pylint: enable=unused-variable
         df_to_test = functions.invest_dataframe(FILE_NAME)
         rows_output = df_to_test.index.shape[0]
         self.assertGreater(rows_output, len_file)
@@ -200,7 +202,7 @@ class UnitTests(unittest.TestCase):
         start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
         end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
         out_return = functions.calc_risk(data_input, start, end)
-        self.assertEqual(np.float64, type(out_return))
+        self.assertEqual("<class 'numpy.float64'>", str(type(out_return)))
 
     def test_calc_risk_return_val(self):
         """verify that the output of the calc_risk function is
