@@ -252,13 +252,15 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     return pd.DataFrame({'Risk': x_val, 'Return': y_val})
 
 
-def label_risk_return(labels, **kwargs):
+def label_risk_return(labels, portfolios, start, end, return_type='percent',
+                    annualize_return=False, risk_type='stddev', annualize_risk=False,
+                    period=365, freq=None, threshold=None):
     """
     Labels risk and return measures with portfolio names for export to graph.
     
     Args:
         labels = how we want the portfolios described/labeled in the graph
-        **kwargs = arguments of get_risk_return
+        other arguments = arguments of get_risk_return
     Returns:
         Dataframe of risk and return measures by portfolio with labels.
     """
