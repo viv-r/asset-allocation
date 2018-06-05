@@ -36,7 +36,7 @@ def invest_dataframe(filename, sep=','):
 def calc_return(data, start, end, return_type='percent', annualize=False):
     """
     Calculates rate of return on a data set between two dates.
-    Allows for either percentage rate or log growth.
+    Allows for either percentage rate or log growth. 
     INPUTS: start, end = datetimes; data = data frame of investment values
     Annualize = whether to return annualized return instead of total return
     """
@@ -73,7 +73,7 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent', ann
     """
     # Use date_range
     if annualize:
-        # todo: add annualized calcultions
+        # todo: add annualized calculations
         pass
 
     return np.array([calc_return(data, day, day + timedelta(days=period), return_type=return_type)
