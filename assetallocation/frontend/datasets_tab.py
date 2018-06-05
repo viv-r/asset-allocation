@@ -1,20 +1,42 @@
+"""
+UI component loaded on the 'Datasets' tab.
+
+Functions:
+    get_component():
+        returns a component containing the input dropdown
+        and a graph plot for each dataset we have.
+    attach_callbacks():
+        attaches the callback for the dropdown.
+
+Classes:
+    None
+"""
 import dash_core_components as dcc
 import dash_html_components as html
 import dash
-import os
-import pandas as pd
-import backend.user_input
+import backend.user_input as user_input
 
 
-def get_params(x, y):
+def get_params(x_cords, y_cords):
+    """
+    Constructs the plotly specific graph parameters. This configuration
+    object can be passed to a Graph dash component.
+
+    INPUTS:
+        x_cords = the vector containing the x-coordinates of all the points
+        y_cords = the vector containing the y-coordinates of all the points
+
+    OUTPUTS:
+        Plotly graph configuration object
+    """
     return {
         'data': [{
-            'x': x,
-            'y': y,
-            'text': x,
+            'x': x_cords,
+            'y': y_cords,
+            'text': x_cords,
             'textfont': dict(
                 family='sans serif',
-                size=18,
+                size=19,
                 color='#1f77b4'
             ),
             'type': 'line'
@@ -32,6 +54,15 @@ def get_params(x, y):
 
 
 def get_component():
+    """
+    Returns a div containing the dropdown and
+    the graph of the dataset selected.
+
+    INPUTS:
+        None
+    OUTPUTS:
+        div containing the component in this tab.
+    """
     return html.Div(children=[
         dcc.Dropdown(
             options=[
@@ -45,13 +76,17 @@ def get_component():
 
 
 def attach_callbacks(app):
+    """
+    Attaches the callback to the dropdown component in this tab.
+    Re-renders the graph when a new value is selected in the dropdown
+    """
     @app.callback(
         dash.dependencies.Output('datasets-container', 'children'),
         [dash.dependencies.Input('datasets-dropdown', 'value')])
-    def update_output(value):
+    def _update_output(value):
         if value is None:
             return ""
-        df = user_input.investment_class_dict[value]
+        dataset = user_input.investment_class_dict[value]
         return dcc.Graph(
             id='datasets-graph',
-            figure=get_params(df.index, df.values[:, 0]))
+            figure=get_params(dataset.index, dataset.values[:, 0]))

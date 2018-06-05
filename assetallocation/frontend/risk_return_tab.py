@@ -1,18 +1,43 @@
+"""
+UI component loaded on the 'Risk-return' tab.
+
+Functions:
+    get_component():
+        returns a component containing the graph specific
+        input components and the plotly Graph component
+    attach_callbacks():
+        attaches the callbacks for the input components.
+        The list of input components rendered here is:
+          -
+Classes:
+    None
+"""
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import backend.user_input as ui
-import pandas as pd
+from backend.demo_portfolios import test_user_param_A as options
 import frontend.portfolios_tab as pt
-from frontend.state import options
 import plotly.graph_objs as go
 
 
-def get_params(x, y, text):
+def get_params(x_cords, y_cords, text):
+    """
+    Constructs the plotly specific graph parameters. This configuration
+    object can be passed to a Graph dash component.
+
+    INPUTS:
+        x = the vector containing the x-coordinates of all the points
+        y = the vector containing the y-coordinates of all the points
+        text = the vector containing the labels of the points.
+
+    OUTPUTS:
+        Plotly graph configuration object
+    """
     return {
         'data': [go.Scatter({
-            'x': x,
-            'y': y,
+            'x': x_cords,
+            'y': y_cords,
             'text': text,
             'textfont': dict(
                 family='sans serif',
@@ -39,10 +64,20 @@ def get_params(x, y, text):
 
 
 def measure_of_return_component():
-    id = 'measure-return'
+    """
+    The dash input component that renders
+    a dropdown for selecting a measure of return.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        dcc.Div object containing the input
+    """
+    component_id = 'measure-return'
     component = html.Div(children=[
         "Measure of return",
-        html.Span(id=id + 'out', children=''),
+        html.Span(id=component_id + 'out', children=''),
         dcc.Dropdown(
             options=[
                 {'label': i, 'value': i}
@@ -57,21 +92,40 @@ def measure_of_return_component():
 
 
 def measure_of_return_callback(app):
-    id = 'measure-return'
+    """
+    Attaches the callback function for the component
+    rendered in the measure_of_return function
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
+    component_id = 'measure-return'
 
     @app.callback(
-        Output(id + 'out', 'children'),
+        Output(component_id + 'out', 'children'),
         [Input(id, 'value')])
-    def callback(value):
+    def _callback(value):
         options['Measure of return'] = value
         return ''
 
 
 def measure_of_risk_component():
-    id = 'measure-risk'
+    """
+    The dash input component that renders
+    a dropdown for selecting a measure of risk.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        dcc.Div object containing the input
+    """
+    component_id = 'measure-risk'
     component = html.Div(children=[
         "Measure of risk",
-        html.Span(id=id + 'out', children=''),
+        html.Span(id=component_id + 'out', children=''),
         dcc.Dropdown(
             options=[
                 {'label': i, 'value': i}
@@ -86,21 +140,41 @@ def measure_of_risk_component():
 
 
 def measure_of_risk_callback(app):
-    id = 'measure-risk'
+    """
+    Attaches the callback function for the component
+    rendered in the measure_of_risk function
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
+    component_id = 'measure-risk'
 
     @app.callback(
-        Output(id + 'out', 'children'),
+        Output(component_id + 'out', 'children'),
         [Input(id, 'value')])
-    def callback(value):
+    def _callback(value):
         options['Measure of risk'] = value
         return ''
 
 
 def return_period_component():
-    id = 'return-period'
+    """
+    Returns the dash input component that renders
+    a numeric input for specifying the period of
+    return to use for the risk measure.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        dcc.Div object containing the input
+    """
+    component_id = 'return-period'
     component = html.Span(children=[
         "Period of return (days) to use for risk measure",
-        html.Span(id=id + 'out', children=''),
+        html.Span(id=component_id + 'out', children=''),
         dcc.Input(
             type='number',
             id=id,
@@ -113,21 +187,40 @@ def return_period_component():
 
 
 def return_period_callback(app):
-    id = 'return-period'
+    """
+    Attaches the callback function for the input
+    rendered in the return_period_component function
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
+    component_id = 'return-period'
 
     @app.callback(
-        Output(id + 'out', 'children'),
+        Output(component_id + 'out', 'children'),
         [Input(id, 'value')])
-    def callback(value):
+    def _callback(value):
         options['Period of return (days) to use for risk measure'] = value
         return ''
 
 
 def threshold_component():
-    id = 'threshold-rate-of-return'
+    """
+    Returns the dash input component that renders
+    a numeric input for the rate of return threshold.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        dcc.Div object containing the input
+    """
+    component_id = 'threshold-rate-of-return'
     component = html.Span(children=[
         "Threshold rate of return",
-        html.Span(id=id + 'out', children=''),
+        html.Span(id=component_id + 'out', children=''),
         dcc.Input(
             type='number',
             id=id,
@@ -140,21 +233,40 @@ def threshold_component():
 
 
 def threshold_callback(app):
-    id = 'threshold-rate-of-return'
+    """
+    Attaches the callback function for the input
+    rendered in the threshold_component function
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
+    component_id = 'threshold-rate-of-return'
 
     @app.callback(
-        Output(id + 'out', 'children'),
+        Output(component_id + 'out', 'children'),
         [Input(id, 'value')])
-    def callback(value):
+    def _callback(value):
         options['Threshold rate of return'] = value
         return ''
 
 
 def frequency_component():
-    id = 'period-of-return'
+    """
+    Returns the dash input component that renders
+    a numeric input for return measure frequency.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        dcc.Div object containing the input
+    """
+    component_id = 'period-of-return'
     component = html.Span(children=[
         "Frequency to measure return",
-        html.Span(id=id + 'out', children=''),
+        html.Span(id=component_id + 'out', children=''),
         dcc.Input(
             type='number',
             id=id,
@@ -166,21 +278,40 @@ def frequency_component():
 
 
 def frequency_callback(app):
-    id = 'period-of-return'
+    """
+    Attaches the callback function for the input
+    rendered in the frequency_component function
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
+    component_id = 'period-of-return'
 
     @app.callback(
-        Output(id + 'out', 'children'),
+        Output(component_id + 'out', 'children'),
         [Input(id, 'value')])
-    def callback(value):
+    def _callback(value):
         options['Frequency to measure return'] = value
         return ''
 
 
 def annualized_component():
-    id = 'annualized_checkbox'
+    """
+    Renders two checkboxes, specifying if risk and
+    return should be calculated using annualized returns.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        dcc.Div object containing the input
+    """
+    component_id = 'annualized_checkbox'
     component = html.Div(children=[
         "Use annualized return",
-        html.Span(id=id + 'out', children=''),
+        html.Span(id=component_id + 'out', children=''),
         dcc.Checklist(
             options=[
                 {'label': 'Return', 'value': 'return'},
@@ -196,21 +327,41 @@ def annualized_component():
 
 
 def annualized_callback(app):
-    id = 'annualized_checkbox'
+    """
+    Attaches the callback function for the checkboxes
+    rendered in the annualized_component function
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
+    component_id = 'annualized_checkbox'
 
     @app.callback(
-        Output(id + 'out', 'children'),
+        Output(component_id + 'out', 'children'),
         [Input(id, 'value')])
-    def callback(value):
+    def _callback(value):
         options['Display annualized return'] = 'return' in value
         options['Use annualized return for risk measure'] = 'risk' in value
         return ''
 
 
 def render_component():
-    id = 'render'
+    """
+    Renders a button which the user has to press after
+    any modifications to the inputs inorder to
+    trigger a re-render of the graph component.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        dcc.Div object containing the input
+    """
+    component_id = 'render'
     component = html.Div(children=[
-        html.Button("Re-render graph", id=id, style={
+        html.Button("Re-render graph", id=component_id, style={
             'width': '80px',
             'height': '30px',
             'background-color': '#333',
@@ -221,26 +372,50 @@ def render_component():
 
 
 def render_callback(app):
-    id = 'render'
+    """
+    Attaches the callback function for the button
+    rendered in render_component function
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
+    component_id = 'render'
 
     @app.callback(
         Output('riskreturn_graph', 'figure'),
-        [Input(id, 'n_clicks')])
-    def callback(value):
-        s = ui.export_user_portfolios(
+        [Input(component_id, 'n_clicks')])
+    def _callback(_value):
+        graph_df = ui.export_user_portfolios(
             [s['input'] for s in pt.state],
             [s['name'] for s in pt.state], options)
 
-        x, y, text = s['Risk'].values, s['Return'].values, s['Label'].values
-        return get_params(x, y, text)
+        x_cords = graph_df['Risk'].values
+        y_cords = graph_df['Return'].values
+        text = graph_df['Label'].values
+
+        return get_params(x_cords, y_cords, text)
 
 
 def get_component():
-    s = ui.export_user_portfolios(
+    """
+    Returns a wrapper div contains all the input components in this file
+    and also the risk-return-graph component.
+
+    INPUTS:
+        None
+
+    OUTPUTS:
+        the div containing all the components on this tab
+    """
+    graph_df = ui.export_user_portfolios(
         [s['input'] for s in pt.state],
         [s['name'] for s in pt.state], options)
 
-    x, y, text = s['Risk'].values, s['Return'].values, s['Label'].values
+    x_cords = graph_df['Risk'].values
+    y_cords = graph_df['Return'].values
+    text = graph_df['Label'].values
 
     return html.Div(children=[
         measure_of_return_component(),
@@ -250,11 +425,20 @@ def get_component():
         frequency_component(),
         annualized_component(),
         render_component(),
-        dcc.Graph(id='riskreturn_graph', figure=get_params(x, y, text)),
+        dcc.Graph(id='riskreturn_graph', figure=get_params(x_cords, y_cords, text)),
     ])
 
 
 def attach_callbacks(app):
+    """
+    Calls the attach_callback functions for each
+    of the inputs components in this tab
+
+    INPUTS:
+        app = the dash app
+    OUTPUTS:
+        None
+    """
     measure_of_return_callback(app)
     measure_of_risk_callback(app)
     return_period_callback(app)
