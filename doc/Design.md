@@ -52,33 +52,36 @@ The user interacts with the third front-end component where they graph the relat
           - If to use annualized return for risk/reward.
         - A plotly graph component showing the final plot.
 
-![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/fontend.jpg)
+![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/frontend.png)
 
 ## Backend components:
-   ### Data processing and setup:
+   ### Data loader:
      - Description:
-       - Loads the csv data files into the app.
-       - Pre-processing and cleaning the raw data.
+       - Loads the CSV data files into the app.
+       - Pre-processes and cleans the raw data.
      - Inputs:
        - CSV files
      - Outputs:
-       - None
-   ### Data loader:
+       - Data frame for each investment class
+   ### Risk and reward calculator:
      - Description:
-       - Opens a connection to the database.
-       - Constructs a query to fetch the required data.
-     - Inputs: Fields to fetch from the data (time period, stock/bond name, etc.)
-     - Outputs: Rows from the DB
-   ### A function to calculate Risk/Reward values:
+        - Calculates number of shares of each investment class based on user input from the frontend.
+        - Combines data frames for different investment classes into a single portfolio.
+        - Calculates risk and reward on the portfolio over the given time period.
+     - Inputs: Data frames for individual investment classes
+     - Outputs: Risk and reward values
+   ### Graphing function:
      - Description:
-        - Call the data loader component.
-        - Calculates the output.
-     - Inputs: the user selection from the frontend
-     - Outputs: List of data points to be plotted.
-   ### Probabilistic model of future performance based on past:
+        - Bundles many portfolios together.
+        - Calculates the same measure of risk and reward on each portfolio.
+        - Exports a set of points to be graphed.
+     - Inputs: Set of portfolios and graph parameters
+     - Outputs: Set of points to be graphed
+   ### User input - backend translator:
      - Description:
-        - Calculates output of risk/reward value function as if it had been run at many different times in the past.
-     - Inputs: user selection from the front end
-     - Outputs: a measure of how robust the risk/reward measures are over different time periods
+        - Translates user input into data frames, then calls graphing function to send data back to frontend.
+        - Flow: Frontend --> backend --> frontend
+     - Inputs: User-defined portfolios and parameters
+     - Outputs: Set of points to be graphed
 
-![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/backend.jpg)
+![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/backend.png)

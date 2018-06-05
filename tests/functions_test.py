@@ -137,7 +137,29 @@ class UnitTests(unittest.TestCase):
         data_input = functions.invest_dataframe(FILE_NAME)
         start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
         end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
-        out_return = functions.calc_return(data_input, start, end)
+        out_return = functions.calc_return(data_input, start, end, return_type='percent')
+        self.assertEqual(float, type(out_return))
+
+    def test_calc_return_annualize(self):
+        """check if the value returned by the calc_return
+        function is of type float.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if different return type encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return = functions.calc_return(data_input, start, end,
+                                           return_type='percent',
+                                           annualize=True)
         self.assertEqual(float, type(out_return))
 
     def test_logcalc_return_type(self):
