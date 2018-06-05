@@ -6,14 +6,14 @@ import user_input as ui
 
 
 def demo_portfolios(initial, rebal_time, start, end, user_parameters,
-                    stock_only=True, bond_only=True, mix=True):
+                    stock_only=True, bond_only=False, mix=False):
 
     # Large-medium-small capitalization U.S. stock splits
 
     splits = {}
     if stock_only:
-        for x in range(0, 11, 2):
-            for y in range(0, 11 - x, 2):
+        for x in range(0, 5, 2):
+            for y in range(0, 5 - x, 2):
                 z = 10 - x - y
                 label = "Stock LMS %d-%d-%d" % (x, y, z)
                 splits[label] = \
@@ -54,6 +54,8 @@ def demo_portfolios(initial, rebal_time, start, end, user_parameters,
                     }
 
     portfolios = [{'name': label,
+                   'id': label,
+                   'has_callback': False,
                    'input': {'Initial investment': initial,
                              'Investment classes': ivc,
                              'Rebalancing frequency (days)': rebal_time,

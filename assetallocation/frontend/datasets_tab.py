@@ -3,7 +3,7 @@ import dash_html_components as html
 import dash
 import os
 import pandas as pd
-import user_input
+import backend.user_input
 
 
 def get_params(x, y):

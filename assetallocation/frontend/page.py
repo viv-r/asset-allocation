@@ -23,6 +23,7 @@ def init():
     app.css.append_css({'external_url': 'https://codepen.io/accsgs/pen/pVMmQM.css'})
 
     app.layout = html.Div(children=[
+        html.Div(id='state'),
         html.H1(children='Asset allocation',
                 style={'margin': '0',
                        'padding': '10px',
