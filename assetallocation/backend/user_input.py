@@ -11,7 +11,6 @@ sys.path.insert(0, CURRENT_DIR)
 
 # Dictionary translating descriptions of investment classes to data sets
 # Expand as necessary, possibly including individual stock and bond data sets
-#pylint: disable=undefined-variable
 INVESTMENT_CLASS_DICT = {
     'U.S. large-cap stocks (S&P 500 index)': invest_dataframe('./Data/SP500.csv'),
     'U.S. large-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLLRGCAP.csv'),
