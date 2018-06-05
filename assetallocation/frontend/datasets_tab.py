@@ -79,6 +79,11 @@ def attach_callbacks(app):
     """
     Attaches the callback to the dropdown component in this tab.
     Re-renders the graph when a new value is selected in the dropdown
+
+    Args:
+        app: the dash app
+    Returns:
+        None
     """
     @app.callback(
         dash.dependencies.Output('datasets-container', 'children'),

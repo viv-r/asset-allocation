@@ -3,13 +3,7 @@ This file contains the functions which take the user inputs
 from the frontend, send them to the backend to interact with
 the data, then returns the information to the frontend for graphing.
 """
-import sys
-import os
-import inspect
 from backend.functions import invest_dataframe, track_portfolio_cache, label_risk_return
-
-CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-sys.path.insert(0, CURRENT_DIR)
 
 # Dictionary translating descriptions of investment classes to data sets
 # Expand as necessary in the future
