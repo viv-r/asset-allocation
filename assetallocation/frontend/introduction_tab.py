@@ -11,7 +11,7 @@ import requests
 import dash_core_components as dcc
 
 README_PATH = ('https://raw.githubusercontent.com/viv-r/'
-               'asset-allocation/master/doc/Design.md')
+               'asset-allocation/master/README.md')
 
 
 def attach_callbacks(_app):

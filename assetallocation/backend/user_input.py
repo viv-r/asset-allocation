@@ -18,7 +18,10 @@ INVESTMENT_CLASS_DICT = {
     'U.S. large-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLLRGCAP.csv'),
     'U.S. mid-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLMIDCAP.csv'),
     'U.S. small-cap stocks (Wilshire index)': invest_dataframe('./Data/WILLSMLCAP.csv'),
-    'U.S. corporate bonds (investment-grade)': invest_dataframe('./Data/BAMLCC0A1AAATRIV.csv'),
+    'U.S. corporate bonds (investment-grade, AAA rated)':
+        invest_dataframe('./Data/BAMLCC0A1AAATRIV.csv'),
+    'U.S. corporate bonds (investment-grade, BBB rated)':
+        invest_dataframe('./Data/BAMLCC0A4BBBTRIV.csv'),
     'U.S. Treasury bonds, total market (S&P index)': invest_dataframe('./Data/SPUSBOND.csv'),
     'U.S. Treasury bonds, 0-1 year (S&P index)': invest_dataframe('./Data/SP01BOND.csv'),
     'U.S. Treasury bonds, 1-3 year (S&P index)': invest_dataframe('./Data/SP13BOND.csv'),
@@ -112,4 +115,3 @@ def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
                              return_type=return_type, annualize_return=annualize_return,
                              risk_type=risk_type, annualize_risk=annualize_risk,
                              period=period, freq=freq, threshold=threshold)
-#pylint: enable=undefined-variable

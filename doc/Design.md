@@ -7,17 +7,18 @@ The tab 'Portfolios' contains various inputs that the user can update to constru
 can update the initial investment amount, the time period of investment, the weights of various stocks/bonds in their
 portfolios and the portfolio re-balancing frequency.
 
-### Deciding on a risk measure
-This is where the users interact with the first frontend component 'Risk measure selection'. A list of different risk measure models with a brief description of each will be available to users, who can then select one of these.
+### Deciding on a risk and return measures
+The next step is configuring the risk-return calculation algorithm. Users can select a Risk measure (probability of return below a threshold or standard deviation of returns) and Return measure (change in log value or change in percentage). Additional options in this page include a threshold for the rate of return, a frequency at which to measure return and if to use annualized measures of risk and return.
 
-### Selecting a time period to view returns and risk
-Here the users interact with the third frontend component where they select the time period (in years) over which they wish to see returns vs. risk for the preselected combinations of risk measure and portfolios.
+### Graphing
+Once all the inputs are configured, the Risk-return tab of the UI shows a graph of all the portfolios. Each portfolio
+is a single point and represents the risk/return over the time period selected in the portfolio configuration tab.
 
 ### Seeing how choice of risk measure affects asset allocation decisions
-In the background, the user inputs will interact with all the backend components, returning a list of values to the frontend graph component which presents a plot of risk vs. reward to the user.
+The user can change the risk/return measures using the inputs on the page and re-render the graph.
 
 ### Seeing how well past risk and returns predict future risk and returns
-The user interacts with the third front-end component where they graph the relationship between risk and return, but restrict the data source to a certain time period in the past. This allows them to compare (for example) the results if they had run the same query 20 years ago to the results today, and gives a sense of how uncertain the risk and reward levels shown by our tool are.
+The user can go back to the previous tab and modify their set of portfolios and restrict the data source to a certain time period in the past. This allows them to compare (for example) the results if they had run the same query 20 years ago to the results today, and gives a sense of how uncertain the risk and reward levels shown by our tool are.
 
 # Overview
 ![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/components_diagram.jpg)
