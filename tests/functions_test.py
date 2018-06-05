@@ -20,11 +20,11 @@ import numpy as np
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
-# GPARENT_DIR = os.path.dirname(PARENT_DIR)
-
+FINAL_DIR = os.path.join(str(PARENT_DIR),"assetallocation")
 sys.path.insert(0, PARENT_DIR)
+sys.path.insert(0, FINAL_DIR)
 
-from assetallocation import functions
+from backend import functions
 
 FILE_NAME = "./Data/SP500.csv"
 
