@@ -162,6 +162,30 @@ class UnitTests(unittest.TestCase):
                                            annualize=True)
         self.assertEqual(float, type(out_return))
 
+    def test_calc_return_annualize_diff(self):
+        """check if the value returned by the calc_return
+        function is of type float when return type is percent.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if different return type encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        data_input = functions.invest_dataframe(FILE_NAME)
+        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        out_return_1 = functions.calc_return(data_input, start, end,
+                                           return_type='percent',
+                                           annualize=True)
+        out_return_2 = functions.calc_return(data_input, start, end,
+                                           return_type='percent')
+        self.assertNotEqual(out_return_1, out_return_2)
+
     def test_logcalc_return_type(self):
         """check if the value returned by the calc_return
         function is of type numpy.float64 when the return type
