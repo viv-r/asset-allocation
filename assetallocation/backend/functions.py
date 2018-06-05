@@ -85,12 +85,13 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent', ann
         freq = how often to sample
             Example: calculate return every day = 1, once a year = 365
         return_type = measure of return (percent or log)
+        annualize = whether to use annualized return
     Returns:
         List of rates of return for different time periods
     """
     # Use date_range
-    return np.array([calc_return(data, day, day + timedelta(days=period), return_type=return_type,
-                                 annualize=annualize)
+    return np.array([calc_return(data, day, day + timedelta(days=period),
+                                 return_type=return_type, annualize=annualize)
                      for day in pd.date_range(start, end - timedelta(days=period),
                                               freq=timedelta(days=freq))])
 
