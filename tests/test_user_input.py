@@ -5,13 +5,15 @@ import os
 import inspect
 import unittest
 import pandas as pd
-from backend import user_input as ui
 
-# CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-# PARENT_DIR = os.path.dirname(CURRENT_DIR)
-# FINAL_DIR = os.path.join(str(PARENT_DIR), "assetallocation")
-# sys.path.insert(0, PARENT_DIR)
-# sys.path.insert(0, FINAL_DIR)
+CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+PARENT_DIR = os.path.dirname(CURRENT_DIR)
+FINAL_DIR = os.path.join(str(PARENT_DIR), "assetallocation")
+sys.path.insert(0, PARENT_DIR)
+sys.path.insert(0, FINAL_DIR)
+# pylint: disable=wrong-import-position
+from backend import user_input as ui
+# pylint: enable=wrong-import-position
 TEST_USER_INPUT = [{'name': 'Portfolio 1',
                     'input': {
                         'Initial investment': 10000,
