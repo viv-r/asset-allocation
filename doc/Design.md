@@ -5,7 +5,7 @@ This is a brief overview of how a user will interact with the tool and how this 
 ### Building a list of portfolios (asset allocation models)
 The tab 'Portfolios' contains various inputs that the user can update to construct a list of different portfolios. Users
 can update the initial investment amount, the time period of investment, the weights of various stocks/bonds in their
-portfolios and the portfolio re-balancing frequency.
+portfolios and the portfolio re-balancing frequency. Users can also visualize the pre-loaded asset data in order to help them decide what portfolios to test.
 
 ### Deciding on a risk and return measures
 The next step is configuring the risk-return calculation algorithm. Users can select a Risk measure (probability of return below a threshold or standard deviation of returns) and Return measure (change in log value or change in percentage). Additional options in this page include a threshold for the rate of return, a frequency at which to measure return and if to use annualized measures of risk and return.
@@ -52,6 +52,9 @@ The user can go back to the previous tab and modify their set of portfolios and 
           - Frequency to measure return
           - If to use annualized return for risk/reward.
         - A plotly graph component showing the final plot.
+        
+   ### Tab 4: Dataset visualization:
+      - Allows user to visualize the raw investment class data.
 
 ![Interaction diagram](https://raw.githubusercontent.com/viv-r/asset-allocation/master/doc/frontend.png)
 
