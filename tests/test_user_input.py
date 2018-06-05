@@ -75,7 +75,7 @@ class UnitTests(unittest.TestCase):
     without using and global results or variables.
     """
 
-    def test_calc_return_type(self):
+    def test_portfolio_return_type(self):
         """check if number of records is as expected.
         We are using the fact that each date occurs only once.
         So number of records should be the number of unique
@@ -94,14 +94,169 @@ class UnitTests(unittest.TestCase):
         # file_name = "./Data/SP500.csv"
         portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
         self.assertEqual(pd.core.frame.DataFrame, type(portfolio_1))
+    
+    def test_portfolio_column_name(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
+        col_name = list(portfolio_1)[0]
+        self.assertEqual(col_name, "Value")
+
+    def test_portfolio_column_num(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
+        col_num = len(list(portfolio_1))
+        self.assertEqual(col_num, 1)
+
+    def test_portfolio_row_num(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
+        row_num = len(portfolio_1)
+        self.assertGreater(row_num, 0)
+        
+    def test_export_portfolio_return_type(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
+        export_data = ui.export_user_portfolios(
+            user_portfolio_list=[portfolio['input'] for portfolio in test_user_input], 
+            user_labels=[portfolio['name'] for portfolio in test_user_input], 
+            user_parameters=test_user_param_A)
+        self.assertEqual(pd.core.frame.DataFrame, type(export_data))
+    
+    def test_export_portfolio_col_names(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        export_data = ui.export_user_portfolios(
+            user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
+            user_labels=[portfolio['name'] for portfolio in test_user_input],
+            user_parameters=test_user_param_A
+            )
+        actual_col_names = list(export_data)
+        expected_col_names = ["Risk", "Return", "Label"]
+        self.assertEqual(actual_col_names, expected_col_names)
+
+    def test_export_portfolio_col_num(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        export_data = ui.export_user_portfolios(
+            user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
+            user_labels=[portfolio['name'] for portfolio in test_user_input],
+            user_parameters=test_user_param_A
+            )
+        col_num = len(list(export_data))
+        self.assertEqual(col_num, 3)
+
+    def test_export_portfolio_row_num(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        export_data = ui.export_user_portfolios(
+            user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
+            user_labels=[portfolio['name'] for portfolio in test_user_input],
+            user_parameters=test_user_param_A
+            )
+        actual_row_num = len(export_data)
+        expected_row_num = len(test_user_input)
+        self.assertEqual(actual_row_num, expected_row_num)
 
 SUITE1 = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE1)
 
 # portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
 
-# print(type(portfolio_1))
-# portfolio_2 = ui.portfolio_from_input(test_user_input[1]['input'])
 # s = time.time()
 # export_data_A = ui.export_user_portfolios(
 #     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
