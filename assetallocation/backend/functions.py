@@ -16,8 +16,8 @@ def invest_dataframe(filename, sep=','):
     Creates a DateTimeIndex.
     Fills in missing dates with most recent investment value
     Checks there is only one value per date.
-    
-    Args: 
+   
+    Args:
         filename = name of CSV file
         sep = separator in CSV file
     Returns:
@@ -229,7 +229,7 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     """
     Gets risk and return measures for a variety of portfolios,
     preparing for export to graph.
-    
+
     Args:
         portfolios = list of portfolio data frames
         start, end = start and end dates for measuring risk and return
@@ -257,7 +257,7 @@ def get_risk_return(portfolios, start, end, return_type='percent',
 #                     period=365, freq=None, threshold=None):
 #     """
 #     Labels risk and return measures with portfolio names for export to graph.
-    
+
 #     Args:
 #         labels = how we want the portfolios described/labeled in the graph
 #         other arguments = arguments of get_risk_return

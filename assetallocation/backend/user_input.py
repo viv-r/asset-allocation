@@ -35,7 +35,7 @@ INVESTMENT_CLASS_DICT = {
 def portfolio_from_input(user_input):
     """
     Translates user input (frontend) to portfolio data (backend).
-    
+
     Args:
         user_input: dictionary of user inputs for a single portfolio including:
         - Initial investment
@@ -75,7 +75,7 @@ RISK_TYPE_DICT = {
 def export_user_portfolios(user_portfolio_list, user_labels, user_parameters):
     """
     Translates a list of user portfolios to a dataframe ready for export to graph.
-    
+
     Args:
         user_portfolio_list: portfolios user has built
         user_labels: user-defined (or auto-generated) labels for each portfolio
