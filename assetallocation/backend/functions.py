@@ -79,7 +79,7 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent'):
 
 
 def calc_risk(data, start, end, risk_type='stddev', period=365,
-              freq=1, threshold=0, return_type='percent', annualize=False):
+              freq=1, threshold=0, return_type='percent'):
     """
     Risk measure:
     - proba = historical probability of return below a certain value
@@ -91,7 +91,6 @@ def calc_risk(data, start, end, risk_type='stddev', period=365,
         Example: calculate return every day = 1, once a year = 365
     rate = threshold rate of return
     return_type = measure of return (percent or log)
-    annualize = whether to use annualized return
     """
     if risk_type == 'stddev':
         return np.std(return_list(data, start, end, period=period, freq=freq,
@@ -204,7 +203,7 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     ann_bool = annualize_return
     y_val = [calc_return(p, start, end, return_type=r_type, annualize=ann_bool) for p in portfolios]
     x_val = [calc_risk(p, start, end, threshold=threshold, period=period, freq=freq,
-                       risk_type=risk_type, return_type=r_type, annualize=annualize_risk)
+                       risk_type=risk_type, return_type=r_type)
              for p in portfolios]
     return pd.DataFrame({'Risk': x_val, 'Return': y_val})
 

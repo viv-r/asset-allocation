@@ -6,6 +6,21 @@ import pandas as pd
 
 def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
                     stock_only=True, bond_only=False, mix=False):
+    """
+    Returns a list of demo portfolios, each containing a list of assets
+    with varying weights.
+
+    INPUTS:
+        inital: initial investment amount
+        rebal_time: portfolio rebalancing period
+        start, end: start and end dates
+        stock_only: if the portfolios should contain stocks
+        bond_only: if the portfolios should contain bonds
+        mix: if the portfolios should contain a mix of stocks and bonds
+
+    OUPUTS:
+        A list of portfolios
+    """
     # pylint: disable=invalid-name, too-many-locals, redefined-outer-name
     # Disabling a pylint errors since this function is readable
     # with the single loop variable names (invalid-name) and all of them
@@ -58,7 +73,6 @@ def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
     portfolios = [{
         'name': label,
         'id': label,
-        'has_callback': False,
         'input': {
             'Initial investment': initial,
             'Investment classes': ivc,
@@ -69,8 +83,8 @@ def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
     } for label, ivc in splits.items()]
 
     # Needs refactoring - not efficient
-    #user_portfolio_list = portfolios.values()
-    #user_labels = portfolios.keys()
+    # user_portfolio_list = portfolios.values()
+    # user_labels = portfolios.keys()
     return portfolios
 
 
@@ -98,7 +112,7 @@ TEST_USER_PARAM_B = {
     'Use annualized return for risk measure': True
 }
 
-start = pd.Timestamp('2009-01-01 00:00:00')
-end = pd.Timestamp('2018-01-01 00:00:00')
-TEST_DEMO_PORTFOLIOS_A = demo_portfolios(10000, 90, start, end, TEST_USER_PARAM_A)
-TEST_DEMO_PORTFOLIOS_B = demo_portfolios(10000, 90, start, end, TEST_USER_PARAM_B)
+START = pd.Timestamp('2009-01-01 00:00:00')
+END = pd.Timestamp('2018-01-01 00:00:00')
+TEST_DEMO_PORTFOLIOS_A = demo_portfolios(10000, 90, START, END, TEST_USER_PARAM_A)
+TEST_DEMO_PORTFOLIOS_B = demo_portfolios(10000, 90, START, END, TEST_USER_PARAM_B)
