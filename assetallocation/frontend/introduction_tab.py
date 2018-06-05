@@ -19,9 +19,9 @@ def attach_callbacks(_app):
     This component does not require any callbacks as there
     is no user interaction on the page.
 
-    INPUTS:
+    Args:
         _app: Dash application (unused)
-    OUTPUTS:
+    Returns:
         None
     """
     pass
@@ -32,9 +32,9 @@ def get_component():
     The UI component is a markdown web page that is pulled directly
     from the github repository specified in 'README_PATH'
 
-    INPUTS:
+    Args:
         None
-    OUTPUTS:
+    Returns:
         dcc.Markdown component
     """
     text = requests.get(README_PATH).text

@@ -26,10 +26,10 @@ def name_component(template):
     """
     Renders the name input for a portfolio
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'name-' + template['id']
@@ -47,10 +47,10 @@ def name_callback(app, template):
     Attaches the callback function for the portfolio
     name input component
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'name-' + template['id']
@@ -67,10 +67,10 @@ def initial_investment_component(template):
     """
     Renders the input for initial investment amount of the portfolio
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'initial-investment-' + template['id']
@@ -88,10 +88,10 @@ def initial_investment_callback(app, template):
     Attaches the callback function for the portfolio
     initial investment amount input
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'initial-investment-' + template['id']
@@ -109,10 +109,10 @@ def rebal_freq_component(template):
     Renders the input component to capture the rebalancing
     frequency
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'rebal-freq-' + template['id']
@@ -131,10 +131,10 @@ def rebal_freq_callback(app, template):
     Attaches the callback function for the portfolio
     rebalancing frequency
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'rebal-freq-' + template['id']
@@ -152,10 +152,10 @@ def time_period_component(template):
     Renders the time period slider for the start and end dates of the
     portfolio
 
-    INPUTS:
+    :
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'time-period-' + template['id']
@@ -181,10 +181,10 @@ def time_period_callback(app, template):
     Attaches the callback function for the portfolio
     time period
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'time-period-' + template['id']
@@ -215,10 +215,10 @@ def investment_classes_component(template):
     of assets in the portfolio template given and inputs to
     specify the weights of each asset.
 
-    INPUTS:
+    Args:
         template: Portfolio template
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing the input
     """
     component_id = 'investment-classes-' + template['id']
@@ -246,10 +246,10 @@ def investment_classes_callback(app, template):
     Attaches the callback function for all the asset weight
     input components.
 
-    INPUTS:
+    Args:
         app = the dash app
         template = portfolio object
-    OUTPUTS:
+    Returns:
         None
     """
     component_id = 'investment-classes-' + template['id']
@@ -260,7 +260,7 @@ def investment_classes_callback(app, template):
         of this asset in a closure, both of which are needed in
         the actual callback function.
 
-        INPUTS:
+        Args:
             cid: the id of the asset.
             investment_class: the name of the asset.
         """
@@ -279,10 +279,10 @@ def get_component():
     """
     Renders all the input component in this tab.
 
-    INPUTS:
+    Args:
         None
 
-    OUTPUTS:
+    Returns:
         dcc.Div object containing all the inputs on this tab
     """
     return html.Div(children=[
@@ -301,9 +301,9 @@ def attach_callbacks(app):
     """
     Attaches the callbacks for all the inputs in this tab.
 
-    INPUTS:
+    Args:
         app = the dash app
-    OUTPUTS:
+    Returns:
         None
     """
     for template in state:
