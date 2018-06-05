@@ -7,12 +7,9 @@ Functions:
         input components and the plotly Graph component
     attach_callbacks():
         attaches the callbacks for the input components.
-        The list of input components rendered here is:
-          -
 Classes:
     None
 """
-#pylint: disable=wrong-import-order
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -20,7 +17,7 @@ import backend.user_input as ui
 from backend.demo_portfolios import TEST_USER_PARAM_A as options
 import frontend.portfolios_tab as pt
 import plotly.graph_objs as go
-#pylint: enable=wrong-import-order
+
 
 def get_params(x_cords, y_cords, text):
     """
@@ -128,10 +125,7 @@ def measure_of_risk_component():
         "Measure of risk",
         html.Span(id=component_id + 'out', children=''),
         dcc.Dropdown(
-            options=[
-                {'label': i, 'value': i}
-                for i in ui.RISK_TYPE_DICT
-            ],
+            options=[{'label': i, 'value': i} for i in ui.RISK_TYPE_DICT],
             value=options['Measure of risk'],
             id=component_id
         )

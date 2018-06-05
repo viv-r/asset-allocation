@@ -14,6 +14,7 @@ Classes:
     None
 """
 
+import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -158,7 +159,7 @@ def time_period_component(template):
     """
     component_id = 'time-period-' + template['id']
     component = html.Div(style={'padding-bottom': '5px'}, children=[
-        "Rebalancing frequency (days): ",
+        "Start and End dates",
         html.Span(id=component_id + 'out', children=''),
         html.Div(style={'margin': '10px', "padding": '5px'}, children=[
             dcc.RangeSlider(
@@ -190,9 +191,9 @@ def time_period_callback(app, template):
     @app.callback(
         Output(component_id + 'out', 'children'),
         [Input(component_id, 'value')])
-    def _callback(_value):
-        # template['input']['Start date'] = pd.Timestamp(year=value[0], month=1, day=1, hour=12)
-        # template['input']['End date'] = pd.Timestamp(year=value[1], month=1, day=1, hour=12)
+    def _callback(value):
+        template['input']['Start date'] = pd.Timestamp(year=value[0], month=1, day=1, hour=12)
+        template['input']['End date'] = pd.Timestamp(year=value[1], month=1, day=1, hour=12)
         return ''
 
 
