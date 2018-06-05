@@ -66,22 +66,56 @@ test_user_param_B = {
     'Use annualized return for risk measure': True
 }
 
-portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
-portfolio_2 = ui.portfolio_from_input(test_user_input[1]['input'])
-s = time.time()
-export_data_A = ui.export_user_portfolios(
-    user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
-    user_labels=[portfolio['name'] for portfolio in test_user_input],
-    user_parameters=test_user_param_A
-    )
-e = time.time()
-print("Total time to generate set A", e-s)
+class UnitTests(unittest.TestCase):
+    """Set of unittests for the functions and generate_portfolios
+     modules.
 
-s = time.time()
-export_data_B = ui.export_user_portfolios(
-    user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
-    user_labels=[portfolio['name'] for portfolio in test_user_input],
-    user_parameters=test_user_param_B
-    )
-e = time.time()
-print("Total time to generate set B", e-s)
+    Each function in this class is a self contained unittest.
+    All queries necessary for execution are run inside the functions
+    without using and global results or variables.
+    """
+
+    def test_calc_return_type(self):
+        """check if number of records is as expected.
+        We are using the fact that each date occurs only once.
+        So number of records should be the number of unique
+        date_time indices.
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected num_rows encountered.
+
+        Raises:
+            Raises AssertionError Values not equal
+        """
+        # file_name = "./Data/SP500.csv"
+        portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
+        self.assertEqual(pd.core.frame.DataFrame, type(portfolio_1))
+
+SUITE1 = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
+_ = unittest.TextTestRunner().run(SUITE1)
+
+# portfolio_1 = ui.portfolio_from_input(test_user_input[0]['input'])
+
+# print(type(portfolio_1))
+# portfolio_2 = ui.portfolio_from_input(test_user_input[1]['input'])
+# s = time.time()
+# export_data_A = ui.export_user_portfolios(
+#     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
+#     user_labels=[portfolio['name'] for portfolio in test_user_input],
+#     user_parameters=test_user_param_A
+#     )
+# e = time.time()
+# print("Total time to generate set A", e-s)
+
+# s = time.time()
+# export_data_B = ui.export_user_portfolios(
+#     user_portfolio_list=[portfolio['input'] for portfolio in test_user_input],
+#     user_labels=[portfolio['name'] for portfolio in test_user_input],
+#     user_parameters=test_user_param_B
+#     )
+# e = time.time()
+# print("Total time to generate set B", e-s)
