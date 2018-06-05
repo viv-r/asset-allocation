@@ -36,7 +36,7 @@ class UnitTests(unittest.TestCase):
     """
 
     def test_intro_tab_return(self):
-        """check if into tab returns a markdown doc as
+        """check if intro tab returns a markdown doc as
         expected.
 
         Args:
@@ -53,8 +53,8 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(str(type(df_to_test)), "<class 'Markdown'>")
 
     def test_attach_callback_return(self):
-        """check if into tab returns a markdown doc as
-        expected.
+        """check if intro tab's attach_callback does not 
+        return anything.
 
         Args:
             No special arguments as it is a unittest.
@@ -72,6 +72,22 @@ class UnitTests(unittest.TestCase):
         # pylint: enable = assignment-from-no-return
         self.assertEqual(df_to_test, None)
 
+    def test_page_init_return(self):
+        """check if page tab returns a Dash module as output
+
+        Args:
+            No special arguments as it is a unittest.
+
+        Returns:
+            No return values. Passes the test if all okay else
+            raises an error if unexpected return type encountered.
+
+        Raises:
+            Raises AssertionError: Type not equal
+        """
+        out_to_test = page.init()
+        out_type = str(type(out_to_test))
+        self.assertEqual(out_type, "<class 'dash.dash.Dash'>")
+
 SUITE = unittest.TestLoader().loadTestsFromTestCase(UnitTests)
 _ = unittest.TextTestRunner().run(SUITE)
-

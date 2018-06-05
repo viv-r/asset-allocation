@@ -142,7 +142,7 @@ class UnitTests(unittest.TestCase):
 
     def test_calc_return_annualize(self):
         """check if the value returned by the calc_return
-        function is of type float.
+        function is of type float when return type is percent.
 
         Args:
             No special arguments as it is a unittest.
@@ -164,7 +164,8 @@ class UnitTests(unittest.TestCase):
 
     def test_logcalc_return_type(self):
         """check if the value returned by the calc_return
-        function is of type float.
+        function is of type numpy.float64 when the return type
+        is log.
 
         Args:
             No special arguments as it is a unittest.
@@ -188,15 +189,16 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(out_bool, 1)
 
     def test_exccalc_return_type(self):
-        """check if the value returned by the calc_return
-        function is of type float.
+        """check if exception raised when return type is neither
+        log or percent.
 
         Args:
             No special arguments as it is a unittest.
 
         Returns:
             No return values. Passes the test if all okay else
-            raises an error if different return type encountered.
+            raises an error if no exception raised with an unexpected
+            return type.
 
         Raises:
             Raises AssertionError Values not equal
@@ -216,7 +218,7 @@ class UnitTests(unittest.TestCase):
 
         Returns:
             No return values. Passes the test if all okay else
-            raises an error if unexpected num_rows encountered.
+            raises an error if unexpected return type encountered.
 
         Raises:
             Raises AssertionError Values not equal
@@ -259,7 +261,7 @@ class UnitTests(unittest.TestCase):
 
         Returns:
             No return values. Passes the test if all okay else
-            raises an error if unexpected num_rows encountered.
+            raises an error if unexpected type encountered.
 
         Raises:
             Raises AssertionError Values not equal
@@ -277,14 +279,14 @@ class UnitTests(unittest.TestCase):
 
     def test_probcalc_risk_return_type(self):
         """check if calc_risk function returns an output
-        of type numpy.float64.
+        of type numpy.float64 when risk type = proba
 
         Args:
             No special arguments as it is a unittest.
 
         Returns:
             No return values. Passes the test if all okay else
-            raises an error if unexpected num_rows encountered.
+            raises an error if unexpected return type encountered.
 
         Raises:
             Raises AssertionError Values not equal
@@ -301,18 +303,18 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(out_bool, 1)
 
     def test_exccalc_risk_return_type(self):
-        """check if calc_risk function returns an output
-        of type numpy.float64.
+        """check if calc_risk function raises an exception
+        when risk type is neither proba or stddev.
 
         Args:
             No special arguments as it is a unittest.
 
         Returns:
             No return values. Passes the test if all okay else
-            raises an error if unexpected num_rows encountered.
+            raises an error if unexpected risk_type encountered.
 
         Raises:
-            Raises AssertionError Values not equal
+            Raises AssertionError if Exception not raised
         """
         data_input = functions.invest_dataframe(FILE_NAME)
         start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
@@ -372,8 +374,8 @@ class UnitTests(unittest.TestCase):
             No special arguments as it is a unittest.
 
         Returns:
-            No return values. Passes the test if all okay else
-            raises an error if unexpected num_rows encountered.
+            No return values. Passes the test if all okay else raises
+            an error if unexpected return value encountered.
 
         Raises:
             Raises AssertionError Values not equal
