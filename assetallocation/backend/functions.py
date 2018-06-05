@@ -135,10 +135,11 @@ PORTFOLIO_CACHE = {}
 
 def index_to_portfolio(initial, portfolio_index, start, end):
     """
+    Translates index to portfolio value by multiplying by initial investment.
     INPUTS:
-
-    CACHE
-
+    portfolio_index = portfolio index created by track_portfolio_cache
+    initial = amount invested on starting day
+    start, end = start and end dates to compute portfolio values
     """
     portfolio = pd.DataFrame(initial / portfolio_index.loc[start]
                              * portfolio_index.loc[start:end+timedelta(days=1)],
