@@ -252,9 +252,28 @@ def get_risk_return(portfolios, start, end, return_type='percent',
     return pd.DataFrame({'Risk': x_val, 'Return': y_val})
 
 
-def label_risk_return(labels, portfolios, start, end, return_type='percent',
-                    annualize_return=False, risk_type='stddev', annualize_risk=False,
-                    period=365, freq=None, threshold=None):
+# def label_risk_return(labels, portfolios, start, end, return_type='percent',
+#                     annualize_return=False, risk_type='stddev', annualize_risk=False,
+#                     period=365, freq=None, threshold=None):
+#     """
+#     Labels risk and return measures with portfolio names for export to graph.
+    
+#     Args:
+#         labels = how we want the portfolios described/labeled in the graph
+#         other arguments = arguments of get_risk_return
+#     Returns:
+#         Dataframe of risk and return measures by portfolio with labels.
+#     """
+#     r_type = return_type  # storing return_type
+#     ar_bool = annualize_return  # storing annualize_return boolean value
+#     df_rr = get_risk_return(portfolios, start, end, return_type=r_type, annualize_return=ar_bool,
+#                             risk_type=risk_type, annualize_risk=annualize_risk, period=period,
+#                             freq=freq, threshold=threshold)
+#     assert len(labels) == len(df_rr)
+#     df_rr['Label'] = labels
+#     return df_rr
+
+def label_risk_return(labels, **kwargs):
     """
     Labels risk and return measures with portfolio names for export to graph.
     
@@ -264,11 +283,7 @@ def label_risk_return(labels, portfolios, start, end, return_type='percent',
     Returns:
         Dataframe of risk and return measures by portfolio with labels.
     """
-    r_type = return_type  # storing return_type
-    ar_bool = annualize_return  # storing annualize_return boolean value
-    df_rr = get_risk_return(portfolios, start, end, return_type=r_type, annualize_return=ar_bool,
-                            risk_type=risk_type, annualize_risk=annualize_risk, period=period,
-                            freq=freq, threshold=threshold)
+    df_rr = get_risk_return(**kwargs)
     assert len(labels) == len(df_rr)
     df_rr['Label'] = labels
     return df_rr
