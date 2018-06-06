@@ -15,42 +15,71 @@ sys.path.insert(0, FINAL_DIR)
 from backend import user_input as ui
 #pylint: enable=wrong-import-position
 #pylint: enable=duplicate-code
+# pylint: enable=wrong-import-position
+
+#Constants
+YEAR = 365
+QUARTER = 90
+MONTH = 30
+INITIAL_INV_P1 = 10000
+INITIAL_INV_P2 = 10000
+LARGE_CAP_P1 = 0.4
+MED_CAP_P1 = 0.3
+SMALL_CAP_P1 = 0.2
+LARGE_CAP_P2 = 0.5
+BOND_01_P2 = 0.25
+BOND_35_P2 = 0.25
+START_P1 = pd.Timestamp('2008-01-01 00:00:00')
+START_P2 = pd.Timestamp('2010-01-01 00:00:00')
+END_P1 = pd.Timestamp('2018-01-01 00:00:00')
+END_P2 = pd.Timestamp('2018-01-01 00:00:00')
+
+THRESHOLD_A = 0
+THRESHOLD_B = None
+RETURN_FREQ_A = 10
+RETURN_FREQ_B = 5
+START_GRAPH_A = pd.Timestamp('2013-01-01 00:00:00')
+START_GRAPH_B = pd.Timestamp('2011-01-01 00:00:00')
+END_GRAPH_A = pd.Timestamp('2018-01-01 00:00:00')
+END_GRAPH_B = pd.Timestamp('2018-01-01 00:00:00')
+
+
 TEST_USER_INPUT = [{
     'name': 'Portfolio 1',
     'input': {
-        'Initial investment': 10000,
+        'Initial investment': INITIAL_INV_P1,
         'Investment classes': {
-            'U.S. large-cap stocks (Wilshire index)': 0.4,
-            'U.S. mid-cap stocks (Wilshire index)': 0.3,
-            'U.S. small-cap stocks (Wilshire index)': 0.3
+            'U.S. large-cap stocks (Wilshire index)': LARGE_CAP_P1,
+            'U.S. mid-cap stocks (Wilshire index)': MED_CAP_P1,
+            'U.S. small-cap stocks (Wilshire index)': SMALL_CAP_P1
         },
-        'Rebalancing frequency (days)': 90,
-        'Start date': pd.Timestamp('2008-01-01 00:00:00'),
-        'End date': pd.Timestamp('2018-01-01 00:00:00')
+        'Rebalancing frequency (days)': QUARTER,
+        'Start date': START_P1,
+        'End date': END_P1
     }
 }, {
     'name': 'Portfolio 2',
     'input': {
-        'Initial investment': 10000,
+        'Initial investment': INITIAL_INV_P2,
         'Investment classes': {
-            'U.S. large-cap stocks (S&P 500 index)': 0.5,
-            'U.S. Treasury bonds, 0-1 year (S&P index)': 0.25,
-            'U.S. Treasury bonds, 3-5 year (S&P index)': 0.25
+            'U.S. large-cap stocks (S&P 500 index)': LARGE_CAP_P2,
+            'U.S. Treasury bonds, 0-1 year (S&P index)': BOND_01_P2,
+            'U.S. Treasury bonds, 3-5 year (S&P index)': BOND_35_P2
         },
-        'Rebalancing frequency (days)': 90,
-        'Start date': pd.Timestamp('2010-01-01 00:00:00'),
-        'End date': pd.Timestamp('2018-01-01 00:00:00')
+        'Rebalancing frequency (days)': QUARTER,
+        'Start date': START_P2,
+        'End date': END_P2
     }
 }]
 
 TEST_USER_PARAM_A = {
     'Measure of return': 'Change in log of portfolio value',
     'Measure of risk': 'Probability of return below a threshold',
-    'Period of return (days) to use for risk measure': 365,
-    'Threshold rate of return': 0.0,
-    'Frequency to measure return': 10,
-    'Start of period to display': pd.Timestamp('2013-01-01 00:00:00'),
-    'End of period to display': pd.Timestamp('2018-01-01 00:00:00'),
+    'Period of return (days) to use for risk measure': YEAR,
+    'Threshold rate of return': THRESHOLD_A,
+    'Frequency to measure return': RETURN_FREQ_A,
+    'Start of period to display': START_GRAPH_A,
+    'End of period to display': END_GRAPH_A,
     'Display annualized return': False,
     'Use annualized return for risk measure': False
 }
@@ -58,11 +87,11 @@ TEST_USER_PARAM_A = {
 TEST_USER_PARAM_B = {
     'Measure of return': 'Percent change in portfolio value',
     'Measure of risk': 'Standard deviation of return',
-    'Period of return (days) to use for risk measure': 30,
-    'Threshold rate of return': None,
-    'Frequency to measure return': 5,
-    'Start of period to display': pd.Timestamp('2011-01-01 00:00:00'),
-    'End of period to display': pd.Timestamp('2018-01-01 00:00:00'),
+    'Period of return (days) to use for risk measure': MONTH,
+    'Threshold rate of return': THRESHOLD_B,
+    'Frequency to measure return': RETURN_FREQ_B,
+    'Start of period to display': START_GRAPH_B,
+    'End of period to display': END_GRAPH_B,
     'Display annualized return': True,
     'Use annualized return for risk measure': True
 }

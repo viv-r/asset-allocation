@@ -9,6 +9,11 @@ import numpy as np
 import pandas as pd
 
 
+#Constants
+YEAR = 365
+INDEX_BASE = 100
+
+
 def invest_dataframe(filename, sep=','):
     """
     Loads a data set containing an investment (stock or bond index).
@@ -57,7 +62,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
     endval = float(data.loc[end][0])
     # Divisor = number of years if annualized return, else 1
     if annualize:
-        div = (end - start) / timedelta(days=365.2425)
+        div = (end - start) / timedelta(years=1)
     else:
         div = 1
     # Calculate percentage or log return
@@ -72,7 +77,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
 
 
 # We will want to cache this
-def return_list(data, start, end, period=365, freq=1, return_type='percent', annualize=False):
+def return_list(data, start, end, period=YEAR, freq=1, return_type='percent', annualize=False):
     """
     Calculates a list of rates of return over a range of time.
     Ignores partial periods at the end when freq > 1 day.
@@ -96,7 +101,7 @@ def return_list(data, start, end, period=365, freq=1, return_type='percent', ann
                                               freq=timedelta(days=freq))])
 
 
-def calc_risk(data, start, end, risk_type='stddev', period=365,
+def calc_risk(data, start, end, risk_type='stddev', period=YEAR,
               freq=1, threshold=0, return_type='percent', annualize=False):
     """
     Calculates measure of risk on an investment over a period of time.
@@ -202,7 +207,8 @@ def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, invest
         percent_list = [(investment_class_dict[k], v) for k, v in percent_tuple]
         index_start = max([min(data.index) for data, pct in percent_list])
         index_end = min([max(data.index) for data, pct in percent_list])
-        portfolio_index = track_portfolio(100., percent_list, rebal_time, index_start, index_end)
+        portfolio_index = track_portfolio(INDEX_BASE, percent_list, 
+                                          rebal_time, index_start, index_end)
         PORTFOLIO_CACHE[(percent_tuple, rebal_time)] = portfolio_index
     return index_to_portfolio(initial, portfolio_index, start, end)
 

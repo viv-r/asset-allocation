@@ -4,6 +4,21 @@ This file creates many examples of portfolios for the in-class demonstration.
 import pandas as pd
 
 
+#Constants
+YEAR = 365
+QUARTER = 90
+MONTH = 30
+
+THRESHOLD_A = 0
+THRESHOLD_B = None
+RETURN_FREQ_A = 10
+RETURN_FREQ_B = 5
+START_GRAPH_A = pd.Timestamp('2009-01-01 00:00:00')
+START_GRAPH_B = pd.Timestamp('2009-01-01 00:00:00')
+END_GRAPH_A = pd.Timestamp('2018-01-01 00:00:00')
+END_GRAPH_B = pd.Timestamp('2018-01-01 00:00:00')
+
+
 def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
                     stock_only=True, bond_only=False, mix=False):
     """
@@ -29,8 +44,8 @@ def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
 
     splits = {}
     if stock_only:
-        for x in range(0, 5, 2):
-            for y in range(0, 5 - x, 2):
+        for x in range(0, 11, 2):
+            for y in range(0, 11 - x, 2):
                 z = 10 - x - y
                 label = "Stock LMS %d-%d-%d" % (x, y, z)
                 splits[label] = {
@@ -88,11 +103,11 @@ def demo_portfolios(initial, rebal_time, start, end, _user_parameters,
 TEST_USER_PARAM_A = {
     'Measure of return': 'Change in log of portfolio value',
     'Measure of risk': 'Probability of return below a threshold',
-    'Period of return (days) to use for risk measure': 365,
-    'Threshold rate of return': 0.0,
-    'Frequency to measure return': 10,
-    'Start of period to display': pd.Timestamp('2009-01-01 00:00:00'),
-    'End of period to display': pd.Timestamp('2018-01-01 00:00:00'),
+    'Period of return (days) to use for risk measure': YEAR,
+    'Threshold rate of return': THRESHOLD_A,
+    'Frequency to measure return': RETURN_FREQ_A,
+    'Start of period to display': START_GRAPH_A,
+    'End of period to display': END_GRAPH_A,
     'Display annualized return': False,
     'Use annualized return for risk measure': False
 }
@@ -100,16 +115,18 @@ TEST_USER_PARAM_A = {
 TEST_USER_PARAM_B = {
     'Measure of return': 'Percent change in portfolio value',
     'Measure of risk': 'Standard deviation of return',
-    'Period of return (days) to use for risk measure': 30,
-    'Threshold rate of return': None,
-    'Frequency to measure return': 5,
-    'Start of period to display': pd.Timestamp('2009-01-01 00:00:00'),
-    'End of period to display': pd.Timestamp('2018-01-01 00:00:00'),
+    'Period of return (days) to use for risk measure': MONTH,
+    'Threshold rate of return': THRESHOLD_B,
+    'Frequency to measure return': RETURN_FREQ_B,
+    'Start of period to display': START_GRAPH_B,
+    'End of period to display': END_GRAPH_B,
     'Display annualized return': True,
     'Use annualized return for risk measure': True
 }
 
-START = pd.Timestamp('2009-01-01 00:00:00')
-END = pd.Timestamp('2018-01-01 00:00:00')
-TEST_DEMO_PORTFOLIOS_A = demo_portfolios(10000, 90, START, END, TEST_USER_PARAM_A)
-TEST_DEMO_PORTFOLIOS_B = demo_portfolios(10000, 90, START, END, TEST_USER_PARAM_B)
+START_PORTFOLIOS = pd.Timestamp('2009-01-01 00:00:00')
+END_PORTFOLIOS = pd.Timestamp('2018-01-01 00:00:00')
+TEST_DEMO_PORTFOLIOS_A = demo_portfolios(10000, 90, START_PORTFOLIOS,
+                                         END_PORTFOLIOS, TEST_USER_PARAM_A)
+TEST_DEMO_PORTFOLIOS_B = demo_portfolios(10000, 90, START_PORTFOLIOS,
+                                         END_PORTFOLIOS, TEST_USER_PARAM_B)
