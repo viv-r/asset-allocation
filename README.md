@@ -141,3 +141,9 @@ Our app allows a user to:
     ├── test_frontend.py
     └── test_user_input.py
 ```
+
+## Team members
+
+- Vamsy Alturi
+- Will Bishop
+- Vivek Pagadala
