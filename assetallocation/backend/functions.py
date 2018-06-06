@@ -10,6 +10,7 @@ import pandas as pd
 
 
 #Constants
+YEAR_EXACT = 365.2425
 YEAR = 365
 INDEX_BASE = 100
 
@@ -62,7 +63,7 @@ def calc_return(data, start, end, return_type='percent', annualize=False):
     endval = float(data.loc[end][0])
     # Divisor = number of years if annualized return, else 1
     if annualize:
-        div = (end - start) / timedelta(years=1)
+        div = (end - start) / timedelta(days=YEAR_EXACT)
     else:
         div = 1
     # Calculate percentage or log return
@@ -207,7 +208,7 @@ def track_portfolio_cache(initial, percent_tuple, rebal_time, start, end, invest
         percent_list = [(investment_class_dict[k], v) for k, v in percent_tuple]
         index_start = max([min(data.index) for data, pct in percent_list])
         index_end = min([max(data.index) for data, pct in percent_list])
-        portfolio_index = track_portfolio(INDEX_BASE, percent_list, 
+        portfolio_index = track_portfolio(INDEX_BASE, percent_list,
                                           rebal_time, index_start, index_end)
         PORTFOLIO_CACHE[(percent_tuple, rebal_time)] = portfolio_index
     return index_to_portfolio(initial, portfolio_index, start, end)

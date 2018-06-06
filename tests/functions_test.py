@@ -24,7 +24,15 @@ sys.path.insert(0, FINAL_DIR)
 #pylint: disable=wrong-import-position
 from backend import functions
 #pylint: enable=wrong-import-position
-FILE_NAME = "./Data/SP500.csv"
+FILE_NAME = './Data/SP500.csv'
+BOND_FILE_NAME = './Data/BAMLCC0A1AAATRIV.csv'
+TEST_START = pd.Timestamp('1990-01-02 00:00:00', tz=None)
+TEST_END = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+INITIAL_INV = 10000
+QUARTER = 90
+TEST_STOCKSHARE = 0.7
+BOND_START_YEAR = 2016
+BOND_END_YEAR = 2018
 #pylint: enable=duplicate-code
 
 
@@ -134,8 +142,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.calc_return(data_input, start, end, return_type='percent')
         self.assertEqual(float, type(out_return))
 
@@ -154,8 +162,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.calc_return(data_input, start, end,
                                            return_type='percent',
                                            annualize=True)
@@ -176,8 +184,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return_1 = functions.calc_return(data_input, start, end,
                                              return_type='percent',
                                              annualize=True)
@@ -201,8 +209,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.calc_return(data_input, start, end, return_type='log')
         out_type = str(type(out_return))
         if out_type == "<class 'numpy.float64'>" or out_type == "<type 'numpy.float64'>":
@@ -227,8 +235,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         with self.assertRaises(Exception):
             functions.calc_return(data_input, start, end, return_type='null')
 
@@ -247,8 +255,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.return_list(data_input, start, end)
         self.assertEqual(np.ndarray, type(out_return))
 
@@ -268,8 +276,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.return_list(data_input, start, end)
         num_days_str = str(end - start)
         num_days = int(num_days_str[:num_days_str.find(" ")])
@@ -290,8 +298,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.calc_risk(data_input, start, end, risk_type='stddev')
         out_type = str(type(out_return))
         if out_type == "<class 'numpy.float64'>" or out_type == "<type 'numpy.float64'>":
@@ -315,8 +323,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.calc_risk(data_input, start, end, risk_type='proba')
         out_type = str(type(out_return))
         if out_type == "<class 'numpy.float64'>" or out_type == "<type 'numpy.float64'>":
@@ -340,8 +348,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError if Exception not raised
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         with self.assertRaises(Exception):
             functions.calc_risk(data_input, start, end, risk_type='null')
 
@@ -360,8 +368,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         data_input = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
-        end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
+        start = TEST_START
+        end = TEST_END
         out_return = functions.calc_risk(data_input, start, end)
         self.assertGreaterEqual(out_return, 0)
 
@@ -379,13 +387,13 @@ class UnitTests(unittest.TestCase):
         Raises:
             Raises AssertionError Values not equal
         """
-        stock = functions.invest_dataframe('./Data/SP500.csv')
-        bond = functions.invest_dataframe('./Data/BAMLCC0A1AAATRIV.csv')
-        stockshare = 0.7
+        stock = functions.invest_dataframe(FILE_NAME)
+        bond = functions.invest_dataframe(BOND_FILE_NAME)
+        stockshare = TEST_STOCKSHARE
         alloc = [(stock, stockshare), (bond, 1 - stockshare)]
-        start = pd.Timestamp(str(2016) + '-01-02 00:00:00', tz=None)
-        end = pd.Timestamp(str(2018) + '-01-03 00:00:00', tz=None)
-        x_portfolio = functions.track_portfolio(10000, alloc, 90, start, end)
+        start = pd.Timestamp(str(BOND_START_YEAR) + '-01-02 00:00:00', tz=None)
+        end = pd.Timestamp(str(BOND_END_YEAR) + '-01-03 00:00:00', tz=None)
+        x_portfolio = functions.track_portfolio(INITIAL_INV, alloc, QUARTER, start, end)
         rows_to_have = x_portfolio.index.nunique()
         self.assertEqual(len(x_portfolio), rows_to_have)
 
@@ -404,8 +412,8 @@ class UnitTests(unittest.TestCase):
             Raises AssertionError Values not equal
         """
         df_t = functions.invest_dataframe(FILE_NAME)
-        start = pd.Timestamp(str(2016) + '-01-02 00:00:00', tz=None)
-        end = pd.Timestamp(str(2018) + '-01-03 00:00:00', tz=None)
+        start = pd.Timestamp(str(BOND_START_YEAR) + '-01-02 00:00:00', tz=None)
+        end = pd.Timestamp(str(BOND_END_YEAR) + '-01-03 00:00:00', tz=None)
         ror_percent = functions.calc_return(df_t, start, end, return_type='percent', annualize=True)
         self.assertGreaterEqual(ror_percent, 0)
         self.assertLessEqual(ror_percent, 100)
