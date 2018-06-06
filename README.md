@@ -34,7 +34,7 @@ Our app allows a user to:
   - See how well past risk and return predict the future
 
 ## Project structure
-
+```
 .
 ├── Data
 │   ├── AGG.csv
@@ -140,3 +140,4 @@ Our app allows a user to:
     ├── functions_test.py
     ├── test_frontend.py
     └── test_user_input.py
+```
