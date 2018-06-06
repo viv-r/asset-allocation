@@ -9,24 +9,23 @@ Functions:
 Exceptions:
     None.
 """
-
+#pylint: disable=duplicate-code
 import sys
 import os
 import inspect
 import unittest
 import pandas as pd
 import numpy as np
-
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
 FINAL_DIR = os.path.join(str(PARENT_DIR), "assetallocation")
 sys.path.insert(0, PARENT_DIR)
 sys.path.insert(0, FINAL_DIR)
-#pylint: enable=duplicate-code
-# pylint: disable=wrong-import-position
+#pylint: disable=wrong-import-position
 from backend import functions
-# pylint: enable=wrong-import-position
+#pylint: enable=wrong-import-position
 FILE_NAME = "./Data/SP500.csv"
+#pylint: enable=duplicate-code
 
 
 class UnitTests(unittest.TestCase):
@@ -180,10 +179,10 @@ class UnitTests(unittest.TestCase):
         start = pd.Timestamp('1990-01-02 00:00:00', tz=None)
         end = pd.Timestamp('2018-01-03 00:00:00', tz=None)
         out_return_1 = functions.calc_return(data_input, start, end,
-                                           return_type='percent',
-                                           annualize=True)
+                                             return_type='percent',
+                                             annualize=True)
         out_return_2 = functions.calc_return(data_input, start, end,
-                                           return_type='percent')
+                                             return_type='percent')
         self.assertNotEqual(out_return_1, out_return_2)
 
     def test_logcalc_return_type(self):

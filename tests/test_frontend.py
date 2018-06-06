@@ -10,22 +10,21 @@ Functions:
 Exceptions:
     None.
 """
-#pylint: enable=duplicate-code
+#pylint: disable=duplicate-code
 import sys
 import os
 import inspect
 import unittest
-
 CURRENT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
 FINAL_DIR = os.path.join(str(PARENT_DIR), "assetallocation")
 sys.path.insert(0, PARENT_DIR)
 sys.path.insert(0, FINAL_DIR)
-#pylint: disable=duplicate-code
 #pylint: disable=wrong-import-position
 from frontend import introduction_tab
 from frontend import page
 #pylint: enable=wrong-import-position
+#pylint: enable=duplicate-code
 
 class UnitTests(unittest.TestCase):
     """Set of unittests for the frontend folder.

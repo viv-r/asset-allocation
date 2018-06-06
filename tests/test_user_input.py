@@ -1,5 +1,5 @@
 '''Tests user_input.py module'''
-
+#pylint: disable=duplicate-code
 import sys
 import os
 import inspect
@@ -11,9 +11,10 @@ PARENT_DIR = os.path.dirname(CURRENT_DIR)
 FINAL_DIR = os.path.join(str(PARENT_DIR), 'assetallocation')
 sys.path.insert(0, PARENT_DIR)
 sys.path.insert(0, FINAL_DIR)
-# pylint: disable=wrong-import-position
+#pylint: disable=wrong-import-position
 from backend import user_input as ui
-# pylint: enable=wrong-import-position
+#pylint: enable=wrong-import-position
+#pylint: enable=duplicate-code
 TEST_USER_INPUT = [{
     'name': 'Portfolio 1',
     'input': {
